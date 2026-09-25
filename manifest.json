@@ -1,6 +1,9 @@
 {
-    "display_name": "Multihog D&D 规则框架",
-    "version": "2026.8.96",
+
+    "display_name": "Multihog D&D Framework",
+
+    "version": "2026.8.97",
+
     "author": "Disgusting Fatbody",
     "js": "index.js",
     "css": "style.css",

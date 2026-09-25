@@ -38,7 +38,7 @@ const DETACHED_CHAT_KEY = 'rpg_tracker_adventure_companion_detached';
 const DETACHED_CHAT_GEO_KEY = 'rpg_tracker_geometry_adventure_companion';
 const CHAT_OPEN_KEY = 'rpg_tracker_adventure_companion_open';
 const CHAT_COLLAPSED_KEY = 'rpg_tracker_adventure_companion_collapsed';
-const COMPANION_HEADER_TITLE = 'Adventure Companion';
+const COMPANION_HEADER_TITLE = '冒险伙伴';
 
 export const COMPANION_PERSONA = `You are the Adventure Companion — a witty, imaginative friend sitting beside the player of a Multihog D&D Framework campaign in SillyTavern.
 
@@ -642,7 +642,7 @@ function activeModePrefs() {
 }
 
 function botLabel() {
-    return 'Adventure Companion';
+    return '冒险伙伴';
 }
 
 /**
@@ -1575,53 +1575,53 @@ function ensureChatShell(panel) {
     const mp = activeModePrefs();
     host.innerHTML = `
         <div class="rt-tutorial-header">
-            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-back" id="rt-tutorial-back" title="Back to State Tracker">← Back</button>
-            <button type="button" class="rpg-tracker-icon-btn rt-chat-detach-btn" id="rt-chat-detach-btn" title="Detach Adventure Companion" aria-label="Detach Adventure Companion">⧉</button>
+            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-back" id="rt-tutorial-back" title="返回状态追踪器">← 返回</button>
+            <button type="button" class="rpg-tracker-icon-btn rt-chat-detach-btn" id="rt-chat-detach-btn" title="分离冒险伙伴" aria-label="分离冒险伙伴">⧉</button>
             <div class="rt-chat-tutorial-mode-wrap">
-                <label class="rt-chat-tutorial-mode-toggle" title="Attach the Multihog guide to every Adventure Companion request">
+                <label class="rt-chat-tutorial-mode-toggle" title="在每次冒险伙伴请求中附带 Multihog 指南">
                     <input type="checkbox" id="rt-chat-tutorial-mode" ${_prefs.tutorialMode ? 'checked' : ''}>
-                    <span>TUTORIAL MODE</span>
+                    <span>教程模式</span>
                 </label>
-                <button type="button" class="rt-chat-tutorial-info-btn" id="rt-chat-tutorial-info-btn" aria-label="About Tutorial Mode" aria-haspopup="dialog" aria-expanded="false">?</button>
-                <div class="rt-chat-tutorial-info" id="rt-chat-tutorial-info" role="dialog" aria-label="About Tutorial Mode" style="display:none;">
-                    <strong>TUTORIAL MODE</strong>
-                    <span>Injects the Multihog documentation Markdown file into every Adventure Companion request. It is great while learning the system, but veterans can leave it off to avoid a few thousand extra input tokens. That added cost is usually negligible with inexpensive models such as Gemini Flash-Lite/Flash, Deepseek V4 Flash 0731, or GPT-5.6 Luna.</span>
+                <button type="button" class="rt-chat-tutorial-info-btn" id="rt-chat-tutorial-info-btn" aria-label="关于教程模式" aria-haspopup="dialog" aria-expanded="false">?</button>
+                <div class="rt-chat-tutorial-info" id="rt-chat-tutorial-info" role="dialog" aria-label="关于教程模式" style="display:none;">
+                    <strong>教程模式</strong>
+                    <span>在每次冒险伙伴请求中注入 Multihog 文档 Markdown 文件。适合初学上手该系统时开启，熟悉后可关闭以避免额外的输入 Token 消耗。使用廉价模型（如 Gemini Flash-Lite/Flash、Deepseek V4 Flash 0731 或 GPT-5.6 Luna）时，该成本通常可以忽略不计。</span>
                 </div>
             </div>
             <div class="rt-chat-gear-wrap">
-                <button type="button" class="rpg-tracker-icon-btn rt-chat-gear-btn" id="rt-chat-gear-btn" title="CHAT options" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i></button>
+                <button type="button" class="rpg-tracker-icon-btn rt-chat-gear-btn" id="rt-chat-gear-btn" title="聊天选项" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i></button>
                 <div class="rt-chat-gear-menu" id="rt-chat-gear-menu" style="display:none;" role="menu">
                     <div class="rt-chat-gear-section">
-                        <span class="rt-chat-gear-section-label">Story lookback</span>
-                        <div class="rt-tutorial-lookback" title="Include SillyTavern chat messages as story context.">
-                            <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-tutorial-lookback" value="${mp.lookback}" min="0" max="100" aria-label="Story lookback message count">
-                            <span class="rt-tutorial-lookback-unit">msgs</span>
-                            <label class="rt-tutorial-lookback-all" title="Include the entire chat history">
+                        <span class="rt-chat-gear-section-label">故事回溯</span>
+                        <div class="rt-tutorial-lookback" title="包含 SillyTavern 聊天消息作为故事上下文。">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-tutorial-lookback" value="${mp.lookback}" min="0" max="100" aria-label="故事回溯消息条数">
+                            <span class="rt-tutorial-lookback-unit">条</span>
+                            <label class="rt-tutorial-lookback-all" title="包含全部聊天记录">
                                 <input type="checkbox" id="rt-tutorial-lookback-all" ${mp.lookbackAll ? 'checked' : ''}>
-                                <span>all</span>
+                                <span>全部</span>
                             </label>
                         </div>
                     </div>
                     <label class="rt-chat-gear-item" role="menuitemcheckbox">
                         <input type="checkbox" id="rt-chat-inject-lore" ${_prefs.injectLore ? 'checked' : ''}>
-                        <span>Inject Lorebook Agent lore</span>
+                        <span>注入世界书智能体条目</span>
                     </label>
                     <label class="rt-chat-gear-item" role="menuitemcheckbox">
                         <input type="checkbox" id="rt-chat-inject-memo" ${_prefs.injectMemo ? 'checked' : ''}>
-                        <span>Inject State Tracker</span>
+                        <span>注入状态追踪器</span>
                     </label>
-                    <label class="rt-chat-gear-item" role="menuitemcheckbox" title="Attach the player-facing current site map (Visuals/Map knowledge).">
+                    <label class="rt-chat-gear-item" role="menuitemcheckbox" title="附带面向玩家的当前地点地图（视觉/地图已知信息）。">
                         <input type="checkbox" id="rt-chat-inject-map" ${_prefs.injectMap ? 'checked' : ''}>
-                        <span>Inject current site map</span>
+                        <span>注入当前地点地图</span>
                     </label>
                 </div>
             </div>
-            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-clear" id="rt-tutorial-clear" title="Clear the Adventure Companion conversation">Clear</button>
+            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-clear" id="rt-tutorial-clear" title="清空冒险伙伴对话">清空</button>
         </div>
         <div class="rt-tutorial-messages" id="rt-tutorial-messages" role="log" aria-live="polite"></div>
         <div class="rt-tutorial-composer">
             <textarea class="rt-tutorial-input" id="rt-tutorial-input" rows="2" placeholder=""></textarea>
-            <button type="button" class="rpg-tracker-prompt-send rt-tutorial-send" id="rt-tutorial-send" title="Send">▶</button>
+            <button type="button" class="rpg-tracker-prompt-send rt-tutorial-send" id="rt-tutorial-send" title="发送">▶</button>
         </div>
     `;
     host.dataset.rtTutorialReady = SHELL_VERSION;
@@ -1636,8 +1636,8 @@ function getMessageEl() {
 function welcomeHtml() {
     return `
         <div class="rt-tutorial-msg rt-tutorial-msg-bot rt-tutorial-welcome">
-            <div class="rt-tutorial-msg-label">Adventure Companion</div>
-            <div class="rt-tutorial-msg-body">Ask me about Multihog, brainstorm or discuss your adventure, or ask me to do one of four things: update the State Tracker, update the Lorebook Agent, update the active site map (Map Updater), or take your next turn (chat message / CYOA)—no special command wording required. I can't operate Multihog UI menus myself. Enable Tutorial Mode when you want the framework guide attached to every request.</div>
+            <div class="rt-tutorial-msg-label">冒险伙伴</div>
+            <div class="rt-tutorial-msg-body">你可以向我咨询 Multihog 相关问题、头脑风暴或讨论你的冒险故事，或者让我执行以下四项操作之一：更新状态追踪器、更新世界书智能体、更新当前地点地图（地图更新器），或代你执行下一回合行动（聊天消息 / CYOA）——无需特殊的命令措辞。我无法直接操作 Multihog 的界面菜单。需要每次请求都附带框架指南时，请开启教程模式。</div>
         </div>`;
 }
 
@@ -1653,7 +1653,7 @@ function renderTranscript() {
     box.innerHTML = history.map((m) => {
         const isUser = m.role === 'user';
         const cls = isUser ? 'rt-tutorial-msg-user' : 'rt-tutorial-msg-bot';
-        const who = isUser ? 'You' : label;
+        const who = isUser ? '你' : label;
         const body = isUser ? escapeHtml(m.content).replace(/\n/g, '<br>') : formatBotHtml(m.content);
         return `<div class="rt-tutorial-msg ${cls}"><div class="rt-tutorial-msg-label">${escapeHtml(who)}</div><div class="rt-tutorial-msg-body">${body}</div></div>`;
     }).join('');
@@ -1699,8 +1699,8 @@ function syncChatButton(on) {
     if (!(btn instanceof HTMLElement)) return;
     btn.classList.toggle('active', on);
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    btn.title = on ? 'Exit CHAT' : 'CHAT';
-    btn.textContent = 'CHAT';
+    btn.title = on ? '退出聊天' : '聊天';
+    btn.textContent = '聊天';
     if (!on) btn.blur();
 }
 
@@ -1815,7 +1815,7 @@ function updateChatDetachButton() {
     if (!(button instanceof HTMLElement)) return;
     const detached = !!_detachedChatPanel;
     button.textContent = detached ? '↓' : '⧉';
-    button.title = detached ? 'Re-attach Adventure Companion' : 'Detach Adventure Companion';
+    button.title = detached ? '重新吸附冒险伙伴' : '分离冒险伙伴';
     button.setAttribute('aria-label', button.title);
 }
 
@@ -1833,7 +1833,7 @@ function syncDetachedChatCollapseUi() {
         icon.className = `fa-solid ${collapsed ? 'fa-chevron-down' : 'fa-chevron-up'}`;
     }
     if (button instanceof HTMLElement) {
-        const label = collapsed ? 'Expand Adventure Companion' : 'Collapse Adventure Companion';
+        const label = collapsed ? '展开冒险伙伴' : '折叠冒险伙伴';
         button.title = label;
         button.setAttribute('aria-label', label);
         button.setAttribute('aria-expanded', String(!collapsed));
@@ -1914,13 +1914,13 @@ export function detachAdventureCompanion({ persist = true } = {}) {
                 <span>${COMPANION_HEADER_TITLE}</span>
             </div>
             <div class="rpg-tracker-header-right">
-                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-collapse-btn" title="Collapse Adventure Companion" aria-label="Collapse Adventure Companion" aria-expanded="true"><i class="fa-solid fa-chevron-up"></i></button>
-                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-reattach-btn" title="Re-attach Adventure Companion" aria-label="Re-attach Adventure Companion">↓</button>
+                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-collapse-btn" title="折叠冒险伙伴" aria-label="折叠冒险伙伴" aria-expanded="true"><i class="fa-solid fa-chevron-up"></i></button>
+                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-reattach-btn" title="重新吸附冒险伙伴" aria-label="重新吸附冒险伙伴">↓</button>
             </div>
         </div>
         <div class="rt-chat-detached-body"></div>
-        <div class="rt-resizer-br" title="Resize"></div>
-        <div class="rt-resizer-bl" title="Resize"></div>
+        <div class="rt-resizer-br" title="调整大小"></div>
+        <div class="rt-resizer-bl" title="调整大小"></div>
     `;
     const body = floating.querySelector('.rt-chat-detached-body');
     if (!(body instanceof HTMLElement)) return;
@@ -2009,7 +2009,7 @@ export function showAdventureCompanion() {
         _panel = /** @type {HTMLElement|null} */ (document.getElementById('rpg-tracker-panel'));
     }
     if (!_panel) {
-        toastr['warning']('State Tracker panel is not available yet.', 'CHAT');
+        toastr['warning']('状态追踪器面板尚不可用。', '聊天');
         return;
     }
 
@@ -2053,7 +2053,7 @@ export function toggleAdventureCompanion() {
 export function openAdventureCompanion() {
     let panel = document.getElementById('rpg-tracker-panel');
     if (!(panel instanceof HTMLElement)) {
-        toastr['warning']('State Tracker panel is not available yet.', 'CHAT');
+        toastr['warning']('状态追踪器面板尚不可用。', '聊天');
         return;
     }
     _panel = panel;
@@ -2105,7 +2105,7 @@ async function sendMessage() {
         const pending = document.createElement('div');
         pending.className = 'rt-tutorial-msg rt-tutorial-msg-bot rt-tutorial-pending';
         pending.id = 'rt-tutorial-pending';
-        pending.innerHTML = `<div class="rt-tutorial-msg-label">${escapeHtml(botLabel())}</div><div class="rt-tutorial-msg-body">Thinking…</div>`;
+        pending.innerHTML = `<div class="rt-tutorial-msg-label">${escapeHtml(botLabel())}</div><div class="rt-tutorial-msg-body">思考中…</div>`;
         box.appendChild(pending);
         box.scrollTop = box.scrollHeight;
     }
@@ -2163,15 +2163,15 @@ async function sendMessage() {
             // Departing-chat history was already flushed on switch; do not
             // append cancel/error noise into the arriving companion session.
         } else if (err?.name === 'AbortError') {
-            mp.history.push({ role: 'assistant', content: '(Cancelled.)' });
+            mp.history.push({ role: 'assistant', content: '（已取消。）' });
         } else {
             console.error('[CHAT]', err);
             const msg = err?.message || String(err);
             mp.history.push({
                 role: 'assistant',
-                content: `I could not reach the model. Check Adventure Companion connection settings.\n\n${msg}`,
+                content: `无法连接到模型。请检查冒险伙伴的连接设置。\n\n${msg}`,
             });
-            toastr['error']('CHAT request failed — see conversation.', 'CHAT');
+            toastr['error']('聊天请求失败——请查看对话记录。', '聊天');
         }
     } finally {
         // A cancelled request may finish after a new chat starts another request.
@@ -2206,8 +2206,8 @@ export function bindAdventureCompanion(panel) {
     // Ensure header button label is CHAT even before opening
     const btn = panel.querySelector('#rpg-tracker-help-btn');
     if (btn instanceof HTMLElement) {
-        btn.textContent = 'CHAT';
-        btn.title = 'CHAT';
+        btn.textContent = '聊天';
+        btn.title = '聊天';
     }
     if (!_chatResizeBound && typeof window !== 'undefined') {
         _chatResizeBound = true;
@@ -2248,8 +2248,8 @@ function bindAdventureCompanionControls(panel) {
     const helpBtn = panel.querySelector('#rpg-tracker-help-btn');
     if (helpBtn && !helpBtn.dataset.rtTutorialBound) {
         helpBtn.dataset.rtTutorialBound = '1';
-        helpBtn.textContent = 'CHAT';
-        helpBtn.title = 'CHAT';
+        helpBtn.textContent = '聊天';
+        helpBtn.title = '聊天';
         helpBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();

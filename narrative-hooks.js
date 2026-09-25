@@ -464,7 +464,7 @@ export async function doDiceRoll(customDiceFormula, quiet = false) {
 
     if (value === 'custom') {
         const { Popup } = SillyTavern.getContext();
-        value = await Popup.show.input('Enter the dice formula:<br><i>(for example, <tt>2d6</tt>)</i>', '', 'Roll', { cancelButton: 'Cancel' });
+        value = await Popup.show.input('输入掷骰表达式：<br><i>(例如 <tt>2d6</tt>)</i>', '', '投掷', { cancelButton: '取消' });
     }
 
     if (!value) return nullValue;
@@ -476,7 +476,7 @@ export async function doDiceRoll(customDiceFormula, quiet = false) {
     if (customResult) {
         if (!quiet) {
             const context = SillyTavern.getContext();
-            context.sendSystemMessage('generic', `${context.name1} rolls a ${value}. The result is: ${customResult.total} (${customResult.rolls.join(', ')})`, { isSmallSys: true });
+            context.sendSystemMessage('generic', `${context.name1} 投掷了 ${value}。结果为：${customResult.total} (${customResult.rolls.join(', ')})`, { isSmallSys: true });
         }
         return { ...customResult, formula: value };
     }
@@ -490,21 +490,21 @@ export async function doDiceRoll(customDiceFormula, quiet = false) {
             if (result) {
                 if (!quiet) {
                     const context = SillyTavern.getContext();
-                    context.sendSystemMessage('generic', `${context.name1} rolls a ${value}. The result is: ${result.total} (${result.rolls.join(', ')})`, { isSmallSys: true });
+                    context.sendSystemMessage('generic', `${context.name1} 掷骰 ${value}。结果为：${result.total} (${result.rolls.join(', ')})`, { isSmallSys: true });
                 }
                 return { total: String(result.total), rolls: result.rolls.map(String), formula: value };
             }
         }
     } else {
-        toastr['error']('Dice library (droll) not found.');
+        toastr['error']('未找到骰子库 (droll)。');
     }
 
     // Failsafe: never return empty/zero — that would auto-fail any DC check.
-    toastr['warning'](`Invalid dice formula "${value}" — defaulting to ${defaultFormula}.`);
+    toastr['warning'](`无效的掷骰公式“${value}”——默认使用 ${defaultFormula}。`);
     const fallbackRoll = rollDie(d100Mode ? 100 : 20);
     if (!quiet) {
         const context = SillyTavern.getContext();
-        context.sendSystemMessage('generic', `${context.name1} tried to roll an invalid formula ("${value}"), defaulting to ${defaultFormula}. The result is: ${fallbackRoll}`, { isSmallSys: true });
+        context.sendSystemMessage('generic', `${context.name1} 尝试掷骰无效公式 (“${value}”)，默认使用 ${defaultFormula}。结果为：${fallbackRoll}`, { isSmallSys: true });
     }
     return { total: String(fallbackRoll), rolls: [String(fallbackRoll)], formula: defaultFormula, invalidFormula: value };
 }
@@ -802,8 +802,8 @@ export function registerDiceSlashCommand() {
             const combinedNarrative = getNarrativeBlocks(chat, -1, !!settings.routerIncludeHidden);
             if (!quiet && typeof toastr !== 'undefined') {
                 toastr.info(
-                    manualPrompt ? 'Running Lorebook Agent with specific command...' : 'Starting Lorebook Agent pass...',
-                    'Lorebook Agent',
+                    manualPrompt ? '正在执行世界书智能体特定指令...' : '正在启动世界书智能体处理轮次...',
+                    '世界书智能体',
                 );
             }
             await runRouterPass(combinedNarrative, manualPrompt, lookback, true);
@@ -899,7 +899,7 @@ export function registerDiceSlashCommand() {
 
             if (!quiet && typeof toastr !== 'undefined') {
                 toastr.info(
-                    isFullAudit ? 'Triggering Full Context Audit...' : 'Triggering manual State Update...',
+                    isFullAudit ? '正在触发全上下文审计...' : '正在触发手动状态更新...',
                     'RPG Tracker',
                 );
             }
@@ -2258,9 +2258,9 @@ export async function handleRelationshipSwipeChange() {
 
         const sign = m.delta > 0 ? '+' : '';
         const icon = m.field === 'friendship' ? '🤝' : '💗';
-        const label = m.field === 'friendship' ? 'Friendship' : 'Affection';
+        const label = m.field === 'friendship' ? '友情' : '好感';
         // @ts-ignore
-        if (typeof toastr !== 'undefined' && settings.npcRelationshipToast !== false) toastr.info(`${icon} ${m.name}: ${sign}${m.delta} ${label}`, 'Relationship', { timeOut: 3500, positionClass: 'toast-bottom-right' });
+        if (typeof toastr !== 'undefined' && settings.npcRelationshipToast !== false) toastr.info(`${icon} ${m.name}: ${sign}${m.delta} ${label}`, '好感度', { timeOut: 3500, positionClass: 'toast-bottom-right' });
         
         console.log(`[RPG Tracker] Narrative rel applied: ${m.name} → ${resolvedId} | ${m.field} ${sign}${m.delta} → ${newVal} (Actual applied: ${actualAppliedDelta})`);
 
@@ -2746,8 +2746,8 @@ async function maybeRunMapArchitectTextOpener({ chat, settings, currentType, sou
         if (!createAreaMapCommandIsComplete(args)) {
             logMapArchitectTextOpener('skip', { reason: 'incomplete_command', source, generationType: type, args });
             globalThis.toastr?.error?.(
-                'Map Architect text command is missing site, entrance, kind, prompt, or brief_description. Stay outside and try again next turn.',
-                'Map Architect',
+                '地图架构师文本命令缺少地点 (site)、入口 (entrance)、类型 (kind)、提示词 (prompt) 或简述 (brief_description)。请停留在外部并在下一回合重试。',
+                '地图架构师',
                 { timeOut: 10000 },
             );
             return true;

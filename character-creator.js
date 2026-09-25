@@ -33,53 +33,53 @@ function assertDirectPromptOwned(result, label = 'Character generation') {
 
 const _CR_CLASS_LISTS = {
     fantasy: [
-        ['⚔️ Fighter','Fighter'],['🗡️ Rogue','Rogue'],['🧙 Wizard','Wizard'],
-        ['🔥 Sorcerer','Sorcerer'],['🌑 Warlock','Warlock'],['🙏 Paladin','Paladin'],
-        ['🏹 Ranger','Ranger'],['🐻 Druid','Druid'],['🎵 Bard','Bard'],
-        ['☯️ Monk','Monk'],['🛡️ Barbarian','Barbarian'],['🧝 Cleric','Cleric'],
-        ['🔮 Artificer','Artificer'],['🩸 Blood Hunter','Blood Hunter'],
-        ['🐉 Draconic Bloodline','Draconic Bloodline'],['🌿 Nature Shaman','Nature Shaman'],
-        ['🔱 Death Knight','Death Knight'],['🎯 Arcane Archer','Arcane Archer'],
-        ['🌟 Celestial Chosen','Celestial Chosen'],['💀 Necromancer','Necromancer'],
+        ['⚔️ 战士','Fighter'],['🗡️ 游荡者','Rogue'],['🧙 法师','Wizard'],
+        ['🔥 术士','Sorcerer'],['🌑 邪术师','Warlock'],['🙏 圣武士','Paladin'],
+        ['🏹 游侠','Ranger'],['🐻 德鲁伊','Druid'],['🎵 吟游诗人','Bard'],
+        ['☯️ 武僧','Monk'],['🛡️ 野蛮人','Barbarian'],['🧝 牧师','Cleric'],
+        ['🔮 奇械师','Artificer'],['🩸 血猎者','Blood Hunter'],
+        ['🐉 龙族血统','Draconic Bloodline'],['🌿 自然萨满','Nature Shaman'],
+        ['🔱 死亡骑士','Death Knight'],['🎯 奥术射手','Arcane Archer'],
+        ['🌟 天界神选','Celestial Chosen'],['💀 死灵法师','Necromancer'],
     ],
     realistic: [
-        ['💼 Detective','Detective'],['🩺 Doctor','Doctor'],['💊 Medic','Medic'],
-        ['🔬 Scientist','Scientist'],['🔫 Soldier','Soldier'],['🕵️ Agent','Agent'],
-        ['🚑 Paramedic','Paramedic'],['⚖️ Lawyer','Lawyer'],['🔧 Mechanic','Mechanic'],
-        ['💻 Hacker','Hacker'],['🎤 Journalist','Journalist'],['🏋️ Athlete','Athlete'],
-        ['👮 Officer','Officer'],['🎭 Con Artist','Con Artist'],['📦 Smuggler','Smuggler'],
-        ['🧑‍🍳 Chef','Chef'],['💰 Entrepreneur','Entrepreneur'],
-        ['📡 Tech Specialist','Tech Specialist'],['🪖 Contractor','Contractor'],
-        ['🧠 Psychologist','Psychologist'],
+        ['💼 侦探','Detective'],['🩺 医生','Doctor'],['💊 医护兵','Medic'],
+        ['🔬 科学家','Scientist'],['🔫 士兵','Soldier'],['🕵️ 特工','Agent'],
+        ['🚑 急救员','Paramedic'],['⚖️ 律师','Lawyer'],['🔧 机械师','Mechanic'],
+        ['💻 黑客','Hacker'],['🎤 记者','Journalist'],['🏋️ 运动员','Athlete'],
+        ['👮 警官','Officer'],['🎭 诈骗犯','Con Artist'],['📦 走私者','Smuggler'],
+        ['🧑‍🍳 主厨','Chef'],['💰 企业家','Entrepreneur'],
+        ['📡 技术专家','Tech Specialist'],['🪖 雇佣兵','Contractor'],
+        ['🧠 心理学家','Psychologist'],
     ],
     scifi: [
-        ['🚀 Starship Pilot','Starship Pilot'],['🔫 Space Marine','Space Marine'],
-        ['🤖 Cyberneticist','Cyberneticist'],['🌌 Navigator','Navigator'],
-        ['🧬 Xenobiologist','Xenobiologist'],['💻 Netrunner','Netrunner'],
-        ['⚡ Power Armor Trooper','Power Armor Trooper'],['🛰️ Recon Scout','Recon Scout'],
-        ['☢️ Reactor Tech','Reactor Tech'],['🩺 Combat Medic','Combat Medic'],
-        ['💀 Bounty Hunter','Bounty Hunter'],['📡 Comms Officer','Comms Officer'],
-        ['🔬 Research Scientist','Research Scientist'],['🛠️ Ship Engineer','Ship Engineer'],
-        ['🌍 Terraformer','Terraformer'],['🔮 Psyker','Psyker'],
-        ['🕵️ Intel Operative','Intel Operative'],['🏴‍☠️ Space Pirate','Space Pirate'],
-        ['🧙 Biopunk Shaman','Biopunk Shaman'],['⚖️ Colonial Administrator','Colonial Administrator'],
+        ['🚀 星舰驾驶员','Starship Pilot'],['🔫 星际战士','Space Marine'],
+        ['🤖 赛博义体专家','Cyberneticist'],['🌌 领航员','Navigator'],
+        ['🧬 异星生物学家','Xenobiologist'],['💻 网络行者','Netrunner'],
+        ['⚡ 动力装甲步兵','Power Armor Trooper'],['🛰️ 侦察兵','Recon Scout'],
+        ['☢️ 反应堆技术员','Reactor Tech'],['🩺 战地医护兵','Combat Medic'],
+        ['💀 赏金猎人','Bounty Hunter'],['📡 通讯官','Comms Officer'],
+        ['🔬 科研学者','Research Scientist'],['🛠️ 飞船工程师','Ship Engineer'],
+        ['🌍 行星改造师','Terraformer'],['🔮 灵能者','Psyker'],
+        ['🕵️ 情报特工','Intel Operative'],['🏴‍☠️ 太空海盗','Space Pirate'],
+        ['🧙 生物朋克萨满','Biopunk Shaman'],['⚖️ 殖民地行政官','Colonial Administrator'],
     ],
     horror: [
-        ['🕵️ Paranormal Investigator','Paranormal Investigator'],['📖 Occultist','Occultist'],
-        ['🔪 Survivor','Survivor'],['🏥 Traumatized Doctor','Traumatized Doctor'],
-        ['👮 Sheriff','Sheriff'],['🎤 Journalist','Journalist'],['🧠 Psychologist','Psychologist'],
-        ['🕯️ Cult Escapee','Cult Escapee'],['🔫 Vigilante','Vigilante'],
-        ['🧛 Reluctant Monster','Reluctant Monster'],['🌙 Cursed Bloodline','Cursed Bloodline'],
-        ['📜 Forbidden Scholar','Forbidden Scholar'],['⛪ Fallen Priest','Fallen Priest'],
-        ['🎲 Desperate Gambler','Desperate Gambler'],['🔧 Doomsday Prepper','Doomsday Prepper'],
-        ['💀 Ghost Whisperer','Ghost Whisperer'],['🩹 Haunted Soldier','Haunted Soldier'],
-        ['🏚️ Urban Explorer','Urban Explorer'],['🔍 Cold Case Detective','Cold Case Detective'],
-        ['🌊 Sea-Cursed Sailor','Sea-Cursed Sailor'],
+        ['🕵️ 超自然调查员','Paranormal Investigator'],['📖 秘术学家','Occultist'],
+        ['🔪 幸存者','Survivor'],['🏥 饱受创伤的医生','Traumatized Doctor'],
+        ['👮 警长','Sheriff'],['🎤 记者','Journalist'],['🧠 心理学家','Psychologist'],
+        ['🕯️ 邪教逃脱者','Cult Escapee'],['🔫 义警','Vigilante'],
+        ['🧛 身不由己的怪物','Reluctant Monster'],['🌙 受诅血脉','Cursed Bloodline'],
+        ['📜 禁忌学者','Forbidden Scholar'],['⛪ 堕落祭司','Fallen Priest'],
+        ['🎲 亡命赌徒','Desperate Gambler'],['🔧 末日预备者','Doomsday Prepper'],
+        ['💀 通灵人','Ghost Whisperer'],['🩹 饱受梦魇折磨的士兵','Haunted Soldier'],
+        ['🏚️ 废墟探险家','Urban Explorer'],['🔍 悬案侦探','Cold Case Detective'],
+        ['🌊 受海诅的水手','Sea-Cursed Sailor'],
     ],
 };
 const _CR_CLASS_CONSTANTS = [
-    ['📝 Other — type below…','__other__'],
-    ['✨ AI decides','__story__'],
+    ['📝 其它 — 请在下方输入…','__other__'],
+    ['✨ 由 AI 决定','__story__'],
 ];
 
 /**
@@ -664,7 +664,7 @@ export function showCharacterRollPanel(el) {
             const preset = (getSettings().characterCreatorPresets || []).find(p => p.id === id);
             if (!preset) return;
             applyCharacterCreatorDraft(panel, preset.data, populateClasses);
-            toastr['success'](`Preset "${preset.name}" loaded.`, 'Character Creator');
+            toastr['success'](`预设 "${preset.name}" 已加载。`, '角色创建器');
         });
     }
 
@@ -679,7 +679,7 @@ export function showCharacterRollPanel(el) {
             st.characterCreatorPresets = st.characterCreatorPresets.filter(p => p.id !== id);
             saveSettings();
             renderPresetPills();
-            toastr['info'](`Preset "${preset.name}" deleted.`, 'Character Creator');
+            toastr['info'](`预设 "${preset.name}" 已删除。`, '角色创建器');
         });
     }
 
@@ -689,9 +689,9 @@ export function showCharacterRollPanel(el) {
             const { Popup } = SillyTavern.getContext();
             let presetName = null;
             if (Popup?.show?.input) {
-                presetName = await Popup.show.input('Character Creator', 'Name this preset:', 'My Preset');
+                presetName = await Popup.show.input('角色创建器', '为该预设命名：', '我的预设');
             } else {
-                presetName = prompt('Name this preset:');
+                presetName = prompt('为该预设命名：');
             }
             if (!presetName || !presetName.trim()) return;
             const trimmedName = presetName.trim();
@@ -703,12 +703,12 @@ export function showCharacterRollPanel(el) {
                 let overwrite = false;
                 if (Popup?.show?.confirm) {
                     overwrite = !!(await Popup.show.confirm(
-                        'Overwrite Character Creator Preset?',
-                        `A preset named "<b>${escapeHtml(trimmedName)}</b>" already exists. Replace it with the current fields?`,
-                        { okButton: 'Overwrite', cancelButton: 'Cancel' },
+                        '覆盖角色创建器预设？',
+                        `名为 "<b>${escapeHtml(trimmedName)}</b>" 的预设已存在。是否用当前设置覆盖？`,
+                        { okButton: '覆盖', cancelButton: '取消' },
                     ));
                 } else {
-                    overwrite = confirm(`A preset named "${trimmedName}" already exists. Overwrite it?`);
+                    overwrite = confirm(`名为 "${trimmedName}" 的预设已存在。是否覆盖？`);
                 }
                 if (!overwrite) return;
             }
@@ -723,8 +723,8 @@ export function showCharacterRollPanel(el) {
             renderPresetPills();
             if (presetSelect) presetSelect.value = result.preset.id;
             toastr['success'](
-                `Preset "${trimmedName}" ${result.overwritten ? 'overwritten' : 'saved'}!`,
-                'Character Creator',
+                `预设 "${trimmedName}" ${result.overwritten ? '已覆盖' : '已保存'}！`,
+                '角色创建器',
             );
         });
     }
@@ -813,13 +813,13 @@ async function handleCharRollGenerate(el, panel) {
         }
     } catch (error) {
         console.error('[Character Creator]', error);
-        toastr['error'](error?.message || String(error), 'Character Creator', { timeOut: 8000 });
+        toastr['error'](error?.message || String(error), '角色创建器', { timeOut: 8000 });
     } finally {
         const resetEl = resolveOnboardingEl(el) || el;
         const resetPanel = resetEl.querySelector('#rt-char-roll-panel') || panel;
         resetEl.querySelectorAll('.rt-random-char-btn').forEach(b => { /** @type {HTMLButtonElement} */ (b).disabled = false; });
         const resetBtn = /** @type {HTMLButtonElement|null} */ (resetPanel?.querySelector('#rt-cr-generate-btn'));
-        if (resetBtn) { resetBtn.disabled = false; resetBtn.textContent = '🎲 Generate Character'; }
+        if (resetBtn) { resetBtn.disabled = false; resetBtn.textContent = '🎲 生成角色'; }
     }
 }
 
@@ -881,7 +881,7 @@ Rules:
         const result = await sendStateRequest(getCharacterCreationConnectionSettings(s), systemPrompt, userPrompt);
         return (result || '').trim() || null;
     } catch (e) {
-        toastr['warning']('Player Card generation failed.', 'Character Creator');
+        toastr['warning']('玩家卡生成失败。', '角色创建器');
         return null;
     }
 }
@@ -1026,16 +1026,16 @@ export function showPersonaConfirmOverlay(bioText, charName, wordCount, extraHin
     box.style.cssText = 'background:var(--black80a,#1a1a2e);border:1px solid rgba(120,80,220,0.5);border-radius:8px;padding:18px;max-width:520px;width:90%;max-height:80vh;display:flex;flex-direction:column;gap:10px;overflow:hidden;';
     box.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;">
-            <b style="color:var(--rt-accent,#a78bfa);font-size:1em;">👤 Player Card Preview — ${escapeHtml(charName)}</b>
+            <b style="color:var(--rt-accent,#a78bfa);font-size:1em;">👤 玩家卡预览 — ${escapeHtml(charName)}</b>
             <button id="rt-pco-close" style="background:none;border:none;color:inherit;font-size:1.1em;cursor:pointer;opacity:0.6;">✕</button>
         </div>
-        <small style="opacity:0.6;line-height:1.3;">Edit the Lorebook Agent Player Card below, then add it to this chat or copy the bio.</small>
+        <small style="opacity:0.6;line-height:1.3;">在下方编辑世界书代理玩家卡，然后将其添加到当前聊天或复制生平简介。</small>
         <textarea id="rt-pco-bio" style="flex:1;min-height:180px;max-height:300px;resize:vertical;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:8px;color:inherit;font-size:0.88em;line-height:1.6;">${escapeHtml(bioText)}</textarea>
         <div style="display:flex;flex-direction:column;gap:12px;">
-            <button id="rt-pco-add-pc" title="Adds this character as the Player entry in the Lorebook Agent for this chat. It will automatically load whenever you open this chat." style="width:100%;padding:12px;background:rgba(0,180,255,0.25);border:2px solid #00b4ff;border-radius:6px;color:inherit;cursor:pointer;font-weight:bold;font-size:1.1em;box-shadow:0 4px 12px rgba(0,180,255,0.15);transition:all 0.2s ease;">👤 Add as Player into Lorebook Agent</button>
+            <button id="rt-pco-add-pc" title="将此角色作为“玩家”条目添加到当前聊天的世界书代理中。每次打开此聊天时它都将自动加载。" style="width:100%;padding:12px;background:rgba(0,180,255,0.25);border:2px solid #00b4ff;border-radius:6px;color:inherit;cursor:pointer;font-weight:bold;font-size:1.1em;box-shadow:0 4px 12px rgba(0,180,255,0.15);transition:all 0.2s ease;">👤 作为玩家添加到世界书代理</button>
             <div style="display:flex;gap:8px;">
-                <button id="rt-pco-regen" style="flex:1;padding:8px;background:rgba(120,80,220,0.18);border:1px solid rgba(120,80,220,0.6);border-radius:4px;color:inherit;cursor:pointer;">🔄 Regenerate</button>
-                <button id="rt-pco-copy" style="flex:1;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);border-radius:4px;color:inherit;cursor:pointer;">📋 Copy Bio</button>
+                <button id="rt-pco-regen" style="flex:1;padding:8px;background:rgba(120,80,220,0.18);border:1px solid rgba(120,80,220,0.6);border-radius:4px;color:inherit;cursor:pointer;">🔄 重新生成</button>
+                <button id="rt-pco-copy" style="flex:1;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);border-radius:4px;color:inherit;cursor:pointer;">📋 复制简介</button>
             </div>
         </div>`;
 
@@ -1051,17 +1051,17 @@ export function showPersonaConfirmOverlay(bioText, charName, wordCount, extraHin
         try {
             await navigator.clipboard.writeText(bio);
             const btn = /** @type {HTMLButtonElement} */ (overlay.querySelector('#rt-pco-copy'));
-            btn.textContent = '✅ Copied!';
-            setTimeout(() => { btn.textContent = '📋 Copy Bio'; }, 1800);
+            btn.textContent = '✅ 已复制！';
+            setTimeout(() => { btn.textContent = '📋 复制简介'; }, 1800);
         } catch (_) {
-            toastr['info']('Could not access clipboard — please select and copy manually.', 'Character Creator');
+            toastr['info']('无法访问剪贴板 — 请手动选中并复制。', '角色创建器');
         }
     });
 
      // ── Add as Player into Lorebook Agent ────────────────────────────────────
      overlay.querySelector('#rt-pco-add-pc').addEventListener('click', async () => {
          if (!ownsChat()) {
-             toastr['warning']('This Player Card belongs to a previous chat session. Generate it again in the intended chat.', 'Character Creator');
+             toastr['warning']('此玩家卡属于先前的聊天会话。请在目标聊天中重新生成。', '角色创建器');
              overlay.remove();
              return;
          }
@@ -1069,9 +1069,9 @@ export function showPersonaConfirmOverlay(bioText, charName, wordCount, extraHin
          const safeName = charName.replace(/['"\\]/g, '').trim() || 'My Character';
          const ok = await addPlayerCardToLorebookAgent(safeName, finalBio, wordCount || 100, { chatId: passChatId, canCommit: ownsChat });
          if (ok) {
-             toastr['success'](`"${safeName}" added as Player in Lorebook Agent.`, 'Character Creator');
+             toastr['success'](`"${safeName}" 已作为玩家添加到世界书代理中。`, '角色创建器');
          } else {
-             toastr['error']('No active chat found to link the Player Character.', 'Character Creator');
+             toastr['error']('未找到可关联玩家角色的活动聊天。', '角色创建器');
          }
          overlay.remove();
      });
@@ -1081,16 +1081,16 @@ export function showPersonaConfirmOverlay(bioText, charName, wordCount, extraHin
          if (!ownsChat()) { overlay.remove(); return; }
          const regenBtn = /** @type {HTMLButtonElement} */ (overlay.querySelector('#rt-pco-regen'));
          regenBtn.disabled = true;
-         regenBtn.textContent = '⏳ Regenerating...';
+         regenBtn.textContent = '⏳ 正在重新生成...';
          const newBio = await generatePersonaBio(charName, wordCount, extraHints, opts);
          if (!ownsChat()) { overlay.remove(); return; }
          if (newBio) {
              /** @type {HTMLTextAreaElement} */ (overlay.querySelector('#rt-pco-bio')).value = newBio;
          } else {
-             toastr['warning']('Regeneration failed. Please try again.', 'Character Creator');
+             toastr['warning']('重新生成失败，请重试。', '角色创建器');
          }
          regenBtn.disabled = false;
-         regenBtn.textContent = '🔄 Regenerate';
+         regenBtn.textContent = '🔄 重新生成';
      });
 }
 
@@ -1184,7 +1184,7 @@ export function showPcImportPanel(el) {
             ? allChars.filter(c => c.name.toLowerCase().includes(currentFilter.toLowerCase()))
             : allChars;
         if (filtered.length === 0) {
-            listEl.innerHTML = '<div style="color:rgba(255,255,255,0.35);font-size:11px;padding:6px;">No characters found.</div>';
+            listEl.innerHTML = '<div style="color:rgba(255,255,255,0.35);font-size:11px;padding:6px;">未找到匹配角色。</div>';
             return;
         }
         const visible = filtered.slice(0, displayCount);
@@ -1215,7 +1215,7 @@ export function showPcImportPanel(el) {
             nameEl.textContent = char.name;
             const descEl = document.createElement('div');
             descEl.style.cssText = 'font-size:10px;color:rgba(255,255,255,0.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
-            descEl.textContent = (char.description || char.personality || 'No description').substring(0, 80);
+            descEl.textContent = (char.description || char.personality || '无描述').substring(0, 80);
             info.appendChild(nameEl);
             info.appendChild(descEl);
 
@@ -1224,13 +1224,13 @@ export function showPcImportPanel(el) {
             btns.style.cssText = 'display:flex;flex-direction:column;gap:3px;flex-shrink:0;';
 
             const fitBtn = document.createElement('button');
-            fitBtn.textContent = '🤖 Fit into Story';
-            fitBtn.title = 'Full AI adaptation: character is rewritten to fit the current campaign setting.';
+            fitBtn.textContent = '🤖 融入故事';
+            fitBtn.title = 'AI 完整重构适配：重写角色以契合当前的战役跑团世界观设定。';
             fitBtn.style.cssText = 'font-size:10px;padding:3px 7px;background:rgba(0,180,100,0.2);border:1px solid rgba(0,180,100,0.5);border-radius:4px;color:inherit;cursor:pointer;white-space:nowrap;';
 
             const addAsIsBtn = document.createElement('button');
-            addAsIsBtn.textContent = '📋 Add as is';
-            addAsIsBtn.title = 'Minimal AI review: only fixes logical world/era impossibilities. Original writing preserved.';
+            addAsIsBtn.textContent = '📋 原样添加';
+            addAsIsBtn.title = 'AI 最小化审核：仅修正时代/世界观逻辑冲突，保留原文描述与风格。';
             addAsIsBtn.style.cssText = 'font-size:10px;padding:3px 7px;background:rgba(120,80,220,0.2);border:1px solid rgba(120,80,220,0.5);border-radius:4px;color:inherit;cursor:pointer;white-space:nowrap;';
 
             const handleImport = async (mode) => {
@@ -1239,10 +1239,10 @@ export function showPcImportPanel(el) {
                 try {
                     await importPcFromCard(char, mode, el);
                 } catch (err) {
-                    toastr['error'](`Import failed: ${String(err.message || err).substring(0, 120)}`, 'PC Import');
+                    toastr['error'](`导入失败: ${String(err.message || err).substring(0, 120)}`, 'PC 导入');
                 } finally {
                     addAsIsBtn.disabled = false; fitBtn.disabled = false;
-                    addAsIsBtn.textContent = '📋 Add as is'; fitBtn.textContent = '🤖 Fit into Story';
+                    addAsIsBtn.textContent = '📋 原样添加'; fitBtn.textContent = '🤖 融入故事';
                 }
             };
             fitBtn.addEventListener('click', () => handleImport('full'));
@@ -1258,7 +1258,7 @@ export function showPcImportPanel(el) {
         if (visible.length < filtered.length) {
             const more = document.createElement('div');
             more.style.cssText = 'text-align:center;font-size:10px;color:rgba(255,255,255,0.4);cursor:pointer;padding:4px;';
-            more.textContent = `Show more (${visible.length} of ${filtered.length})`;
+            more.textContent = `显示更多（${visible.length} / ${filtered.length}）`;
             more.addEventListener('click', () => { displayCount += 10; renderPcList(); });
             listEl.appendChild(more);
         }
@@ -1352,7 +1352,7 @@ ${worldCtx}`;
 
     const memoPrompt = mode === 'minimal' ? memoPromptMinimal : memoPromptFull;
 
-    toastr['info'](`Importing "${name}" as PC… generating state memo.`, 'PC Import');
+    toastr['info'](`正在将 "${name}" 导入为 PC… 正在生成状态备忘录。`, 'PC 导入');
     el.querySelectorAll('.rt-random-char-btn').forEach(b => { /** @type {HTMLButtonElement} */ (b).disabled = true; });
 
     const passChatId = getActiveChatId();
@@ -1400,7 +1400,7 @@ ${worldCtx}`;
         }
     } catch (error) {
         console.error('[PC Import]', error);
-        toastr['error'](error?.message || String(error), 'PC Import', { timeOut: 8000 });
+        toastr['error'](error?.message || String(error), 'PC 导入', { timeOut: 8000 });
         el.querySelectorAll('.rt-random-char-btn').forEach(b => { /** @type {HTMLButtonElement} */ (b).disabled = false; });
         return;
     }
@@ -1414,7 +1414,7 @@ ${worldCtx}`;
             await activateSillyTavernPersona(name, { chatId: passChatId, canCommit: ownsChat });
         } catch (error) {
             console.error('[PC Import] Could not create name-only ST persona:', error);
-            toastr['warning'](`PC imported, but the ST persona for "${name}" could not be created.`, 'PC Import');
+            toastr['warning'](`PC 已导入，但无法为 "${name}" 创建酒馆角色形象（Persona）。`, 'PC 导入');
         }
     }
 
@@ -1422,14 +1422,14 @@ ${worldCtx}`;
 
     // --- Step 3: Optional Lorebook Agent Player Card ---
     if (!s.onboardingCreatePersona) return;
-    toastr['info'](`Generating Lorebook Agent Player Card for "${name}"…`, 'PC Import');
+    toastr['info'](`正在为 "${name}" 生成世界书代理玩家卡…`, 'PC 导入');
     
     const bio = await generatePcImportBio(charCard, mode, wordCountStr);
     if (!ownsChat()) return;
     if (bio) {
         showPersonaConfirmOverlay(bio, name, wordCountStr === 'same' ? 150 : parseInt(wordCountStr, 10), '', { chatId: passChatId, canCommit: ownsChat });
     } else {
-        toastr['warning']('State memo sent, but Player Card generation failed. You can add the Player Card manually.', 'PC Import');
+        toastr['warning']('状态备忘录已发送，但玩家卡生成失败。你可以手动添加玩家卡。', 'PC 导入');
     }
 }
 
@@ -1489,7 +1489,7 @@ RULES — read carefully:
             const result = await sendStateRequest(getCharacterCreationConnectionSettings(s), systemPrompt, userPrompt);
             return (result || '').trim() || null;
         } catch (err) {
-            toastr['error'](`Bio generation failed: ${String(err.message || err).substring(0, 120)}`, 'PC Import');
+            toastr['error'](`简介生成失败: ${String(err.message || err).substring(0, 120)}`, 'PC 导入');
             return null;
         }
     }
@@ -1530,7 +1530,7 @@ ${wordCount === 'same'
         const result = await sendStateRequest(getCharacterCreationConnectionSettings(s), systemPrompt, userPrompt);
         return (result || '').trim() || null;
     } catch (err) {
-        toastr['error'](`Bio generation failed: ${String(err.message || err).substring(0, 120)}`, 'PC Import');
+        toastr['error'](`简介生成失败: ${String(err.message || err).substring(0, 120)}`, 'PC 导入');
         return null;
     }
 }

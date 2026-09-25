@@ -70,11 +70,11 @@ export function wireAgentMapEvolution({
         const lastEl = agentPanel.querySelector('#rt-agent-map-evo-last-fired');
         const nextEl = agentPanel.querySelector('#rt-agent-map-evo-next-fire');
         const badge = agentPanel.querySelector('#rt-agent-map-evo-enabled-badge');
-        if (lastEl) lastEl.textContent = schedule.lastMins >= 0 ? formatInWorldTime(schedule.lastMins) : 'Never';
+        if (lastEl) lastEl.textContent = schedule.lastMins >= 0 ? formatInWorldTime(schedule.lastMins) : '从未';
         if (nextEl) nextEl.textContent = schedule.nextMins >= 0 ? formatInWorldTime(schedule.nextMins) : '—';
         if (badge) {
             const on = s.mapEvolutionEnabled !== false;
-            badge.textContent = on ? 'ON' : 'OFF';
+            badge.textContent = on ? '开启' : '关闭';
             badge.style.cssText = on ? BADGE_ON : BADGE_OFF;
         }
 
@@ -203,11 +203,11 @@ export function wireAgentMapEvolution({
             const { isMapUpdaterRunning } = chatCommitResult(ownsChat, await import('../../../map-updater.js'));
             const { isRouterRunning } = chatCommitResult(ownsChat, await import('../../../router.js'));
             if (isRouterRunning() || isMapUpdaterRunning() || isMapEvolutionRunning()) {
-                toastr.warning('An agent is already running.', 'Map Evolution');
+                toastr.warning('已有智能体正在运行。', '地图演进');
                 return;
             }
             /** @type {HTMLButtonElement} */ (fireNowBtn).disabled = true;
-            fireNowBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Evolving…';
+            fireNowBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在演进…';
             try {
                 const result = typeof runtimeState.runMapEvolutionPassRef === 'function'
                     ? chatCommitResult(ownsChat, await runtimeState.runMapEvolutionPassRef({ trigger: 'manual', isManual: true }))
@@ -218,30 +218,30 @@ export function wireAgentMapEvolution({
                 }
                 const skipped = result?.skipped;
                 if (skipped === 'location_mapping_off' || skipped === 'dungeon_reality_off') {
-                    toastr.warning('Persistent Maps is off.', 'Map Evolution');
+                    toastr.warning('持久化地图未开启。', '地图演进');
                 } else if (skipped === 'no_maps' || skipped === 'no_active_map' || skipped === 'no_matching_sites' || skipped === 'no_selection') {
-                    toastr.warning('No mapped site to evolve.', 'Map Evolution');
+                    toastr.warning('没有可供演进的已建图地点。', '地图演进');
                 } else if (skipped === 'disabled') {
-                    toastr.warning('Map Evolution is disabled.', 'Map Evolution');
+                    toastr.warning('地图演进已禁用。', '地图演进');
                 } else if (skipped === 'busy') {
-                    toastr.warning('An agent is already running.', 'Map Evolution');
+                    toastr.warning('已有智能体正在运行。', '地图演进');
                 } else if (skipped === 'stopped') {
-                    toastr['info']('Stopped.', 'Map Evolution');
+                    toastr['info']('已停止。', '地图演进');
                 } else if (result?.baseline) {
-                    toastr['info']('Interval baseline stamped. Evolution will fire after the interval elapses.', 'Map Evolution');
+                    toastr['info']('周期基准时间已标记。演进将在间隔时间过去后触发。', '地图演进');
                 } else if (result?.ok && result?.applied === 0) {
-                    toastr['info']('Nothing durable changed.', 'Map Evolution');
+                    toastr['info']('未发生持久性变更。', '地图演进');
                 } else if (result?.ok) {
-                    toastr['success']('Map Evolution applied.', 'Map Evolution');
+                    toastr['success']('地图演进已应用。', '地图演进');
                 } else {
-                    toastr.error('Could not apply a valid evolution update.', 'Map Evolution');
+                    toastr.error('无法应用有效的演进更新。', '地图演进');
                 }
             } catch (e) {
                 if (!ownsChat()) return;
-                toastr.error(`Map Evolution error: ${e.message}`, 'Map Evolution');
+                toastr.error(`地图演进错误: ${e.message}`, '地图演进');
             } finally {
                 /** @type {HTMLButtonElement} */ (fireNowBtn).disabled = false;
-                fireNowBtn.innerHTML = '<i class="fa-solid fa-map-location-dot"></i> Evolve Now';
+                fireNowBtn.innerHTML = '<i class="fa-solid fa-map-location-dot"></i> 立即演进';
             }
         }));
     }
@@ -257,7 +257,7 @@ export function wireAgentMapEvolution({
             if (typeof runtimeState.updateMapEvolutionScheduleDisplayRef === 'function') {
                 runtimeState.updateMapEvolutionScheduleDisplayRef();
             }
-            toastr['info']('Map Evolution timeline reset. Next interval starts from the current time.', 'Map Evolution');
+            toastr['info']('地图演进时间线已重置。下个周期将从当前时间重新起算。', '地图演进');
         });
     }
 

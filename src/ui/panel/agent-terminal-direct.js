@@ -106,27 +106,27 @@ export function wireAgentTerminalDirectPrompts({
     const summarizeMapUpdater = (result) => {
         const skipped = result?.skipped;
         if (skipped === 'location_mapping_off' || skipped === 'dungeon_reality_off') {
-            return { kind: 'warning', message: 'Persistent Maps is off.' };
+            return { kind: 'warning', message: '持久化地图未开启。' };
         }
-        if (skipped === 'no_active_map') return { kind: 'warning', message: 'No active dungeon or settlement map.' };
-        if (skipped === 'no_such_map') return { kind: 'warning', message: 'That mapped site could not be loaded.' };
-        if (skipped === 'disabled') return { kind: 'warning', message: 'Map Updater is disabled.' };
-        if (skipped === 'busy') return { kind: 'warning', message: 'Another agent is already running.' };
-        if (skipped === 'stopped') return { kind: 'info', message: 'Stopped.' };
-        if (result?.ok && result?.noop) return { kind: 'info', message: 'Nothing durable changed.' };
-        if (result?.ok) return { kind: 'success', message: 'Occupancy update applied.' };
-        return { kind: 'error', message: 'Could not apply a valid occupancy update.' };
+        if (skipped === 'no_active_map') return { kind: 'warning', message: '无活动的地下城或定居点地图。' };
+        if (skipped === 'no_such_map') return { kind: 'warning', message: '无法加载该映射地点。' };
+        if (skipped === 'disabled') return { kind: 'warning', message: '地图更新器已禁用。' };
+        if (skipped === 'busy') return { kind: 'warning', message: '已有其他智能体在运行中。' };
+        if (skipped === 'stopped') return { kind: 'info', message: '已停止。' };
+        if (result?.ok && result?.noop) return { kind: 'info', message: '没有持久性更改。' };
+        if (result?.ok) return { kind: 'success', message: '已应用占位状态更新。' };
+        return { kind: 'error', message: '无法应用有效的占位状态更新。' };
     };
 
     const summarizeMapEvolution = (result) => {
         const skipped = result?.skipped;
-        if (skipped === 'location_mapping_off') return { kind: 'warning', message: 'Persistent Maps is off.' };
-        if (skipped === 'no_maps' || skipped === 'no_matching_sites') return { kind: 'warning', message: 'No mapped site to evolve.' };
-        if (skipped === 'disabled') return { kind: 'warning', message: 'Map Evolution is disabled.' };
-        if (skipped === 'busy') return { kind: 'warning', message: 'Another agent is already running.' };
-        if (result?.ok && result?.baseline) return { kind: 'info', message: 'Baseline stamps only — nothing to evolve yet.' };
-        if (result?.ok) return { kind: 'success', message: 'Map Evolution pass complete.' };
-        return { kind: 'error', message: 'Map Evolution could not complete.' };
+        if (skipped === 'location_mapping_off') return { kind: 'warning', message: '持久化地图未开启。' };
+        if (skipped === 'no_maps' || skipped === 'no_matching_sites') return { kind: 'warning', message: '无映射地点可供演化。' };
+        if (skipped === 'disabled') return { kind: 'warning', message: '地图演化已禁用。' };
+        if (skipped === 'busy') return { kind: 'warning', message: '已有其他智能体在运行中。' };
+        if (result?.ok && result?.baseline) return { kind: 'info', message: '仅基线标记——尚无内容可供演化。' };
+        if (result?.ok) return { kind: 'success', message: '地图演化轮次已完成。' };
+        return { kind: 'error', message: '地图演化无法完成。' };
     };
 
     const resolveCurrentSiteRoot = ignoreChatCancellation(async () => {
@@ -157,7 +157,7 @@ export function wireAgentTerminalDirectPrompts({
         }
 
         if (tabId !== 'state_tracker' && typeof agentsBusy === 'function' && agentsBusy()) {
-            toastr.warning('An agent is already running.', 'Terminal/Direct Prompt');
+            toastr.warning('已有智能体在运行中。', '终端/直接提示词');
             return;
         }
 
@@ -167,7 +167,7 @@ export function wireAgentTerminalDirectPrompts({
             const s = getSettings();
             s.directPromptContext = lookback;
             saveSettings();
-            toastr['info']('Running State Tracker with specific command...');
+            toastr['info']('正在根据指定命令运行状态追踪器…');
             chatCommitResult(ownsChat, await sendDirectPrompt(msg));
             return;
         }
@@ -176,13 +176,13 @@ export function wireAgentTerminalDirectPrompts({
             const s = getSettings();
             const { chat } = SillyTavern.getContext();
             const combinedNarrative = getNarrativeBlocks(chat, -1, !!s.routerIncludeHidden);
-            toastr['info']('Running Lorebook Agent with specific command...');
+            toastr['info']('正在根据指定命令运行世界书智能体…');
             chatCommitResult(ownsChat, await runRouterPass(combinedNarrative, msg, lookback, true));
             return;
         }
 
         if (tabId === 'map_updater') {
-            toastr['info']('Running Map Updater with specific command...');
+            toastr['info']('正在根据指定命令运行地图更新器…');
             if (typeof updateAgentStatusIndicator === 'function' && typeof isRouterRunning === 'function') {
                 updateAgentStatusIndicator(isRouterRunning());
             }
@@ -197,7 +197,7 @@ export function wireAgentTerminalDirectPrompts({
             const summary = summarizeMapUpdater(result);
             toastr[summary.kind === 'success' ? 'success' : summary.kind === 'warning' ? 'warning' : summary.kind === 'error' ? 'error' : 'info'](
                 summary.message,
-                'Map Updater',
+                '地图更新器',
             );
             return;
         }
@@ -207,7 +207,7 @@ export function wireAgentTerminalDirectPrompts({
                 ? chatCommitResult(ownsChat, await listMappedEvolutionSites())
                 : [];
             if (!sites.length) {
-                toastr.warning('No mapped site to evolve.', 'Map Evolution');
+                toastr.warning('无映射地点可供演化。', '地图演化');
                 return;
             }
             let siteRoots = sites.filter(site => site.current).map(site => site.siteRoot);
@@ -215,11 +215,11 @@ export function wireAgentTerminalDirectPrompts({
                 siteRoots = chatCommitResult(ownsChat, await promptMappedEvolutionSites(sites, escapeHtml));
                 if (!siteRoots) return;
                 if (!siteRoots.length) {
-                    toastr.warning('Check at least one mapped site.', 'Map Evolution');
+                    toastr.warning('请勾选至少一个映射地点。', '地图演化');
                     return;
                 }
             }
-            toastr['info']('Running Map Evolution with specific command...');
+            toastr['info']('正在根据指定命令运行地图演化…');
             if (typeof updateAgentStatusIndicator === 'function' && typeof isRouterRunning === 'function') {
                 updateAgentStatusIndicator(isRouterRunning());
             }
@@ -236,7 +236,7 @@ export function wireAgentTerminalDirectPrompts({
             const summary = summarizeMapEvolution(result);
             toastr[summary.kind === 'success' ? 'success' : summary.kind === 'warning' ? 'warning' : summary.kind === 'error' ? 'error' : 'info'](
                 summary.message,
-                'Map Evolution',
+                '地图演化',
             );
             return;
         }
@@ -246,10 +246,10 @@ export function wireAgentTerminalDirectPrompts({
             const activeSiteRoot = chatCommitResult(ownsChat, await resolveCurrentSiteRoot());
             const siteRoot = directive?.site || activeSiteRoot;
             if (!siteRoot) {
-                toastr.warning('Name a site with “Create INTERIOR/DUNGEON/SETTLEMENT map for \"Site Name\"”, or open a mapped location first.', 'Map Architect');
+                toastr.warning('请使用“Create INTERIOR/DUNGEON/SETTLEMENT map for \"地点名\"”命名地点，或先打开一个已映射的位置。', '地图构筑师');
                 return;
             }
-            toastr['info'](`Running Map Architect for ${siteRoot}...`);
+            toastr['info'](`正在为 ${siteRoot} 运行地图构筑师…`);
             try {
                 const args = chatCommitResult(ownsChat, await inferMapArchitectArgs({
                     site: siteRoot,
@@ -258,12 +258,12 @@ export function wireAgentTerminalDirectPrompts({
                 }));
                 if (directive) args.kind = directive.kind;
                 chatCommitResult(ownsChat, await runMapArchitect(args));
-                toastr['success'](`Map Architect finished for ${siteRoot}.`, 'Map Architect');
+                toastr['success'](`已完成 ${siteRoot} 的地图构筑。`, '地图构筑师');
             } catch (error) {
                 if (!ownsChat()) return;
 
                 console.error('[RPG Tracker] Map Architect direct prompt failed:', error);
-                toastr.error(String(error?.message || error), 'Map Architect');
+                toastr.error(String(error?.message || error), '地图构筑师');
             }
         }
     });

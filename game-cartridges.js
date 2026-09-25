@@ -65,8 +65,8 @@ function formatCartridgeDate(ts) {
 function getStockCartridge() {
     return {
         id: STOCK_CARTRIDGE_ID,
-        name: 'Stock (Factory Default)',
-        description: 'The shipped default configuration — no custom sections, Game Systems, or tracker modules.',
+        name: '预设卡带 (出厂默认)',
+        description: '出厂默认配置——无自定义区域、游戏系统或追踪器模块。',
         icon: '📦',
         isStock: true,
         payload: getFactoryCartridgePayload(),
@@ -173,7 +173,7 @@ export function createCartridgeFromCurrent(name, description, icon) {
     };
     settings.gameCartridges.push(cartridge);
     saveSettings();
-    toastr['success'](`Cartridge "${finalName}" saved! 💾`, 'Game Cartridges');
+    toastr['success'](`卡带“${finalName}”已保存！💾`, '游戏卡带');
     return cartridge;
 }
 
@@ -182,7 +182,7 @@ export function updateCartridgeFromCurrent(cartridge) {
     cartridge.payload = buildCartridgePayload(settings);
     cartridge.updatedAt = Date.now();
     saveSettings();
-    toastr['success'](`Cartridge "${cartridge.name}" updated! 💾`, 'Game Cartridges');
+    toastr['success'](`卡带“${cartridge.name}”已更新！💾`, '游戏卡带');
 }
 
 /**
@@ -206,8 +206,8 @@ export async function loadCartridge(cartridge) {
     // Build the checklist HTML rows.
     const rowsHtml = groupStatus.map(g => {
         const badge = g.isModified
-            ? `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(255,180,60,0.25); color:#ffcc66; border:1px solid rgba(255,180,60,0.4); white-space:nowrap;">✏️ modified</span>`
-            : `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(120,120,120,0.25); border:1px solid rgba(120,120,120,0.35); opacity:0.85; white-space:nowrap;">~ stock ~</span>`;
+            ? `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(255,180,60,0.25); color:#ffcc66; border:1px solid rgba(255,180,60,0.4); white-space:nowrap;">✏️ 已修改</span>`
+            : `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(120,120,120,0.25); border:1px solid rgba(120,120,120,0.35); opacity:0.85; white-space:nowrap;">~ 默认 ~</span>`;
         return `
         <label style="display:flex; align-items:center; gap:10px; padding:9px 10px; border:1px solid rgba(255,255,255,0.08); border-radius:6px; background:rgba(0,0,0,0.15); cursor:pointer;">
             <input type="checkbox" class="rt-gc-load-group-cb" data-group-id="${g.id}" checked
@@ -225,16 +225,16 @@ export async function loadCartridge(cartridge) {
     const content = `
         <div style="display:flex; flex-direction:column; gap:8px; width:100%; box-sizing:border-box;">
             <p style="margin:0 0 4px; font-size:12px; opacity:0.75; line-height:1.45;">
-                Choose which sections to import from <b>${escapeHtml(cartridge.name)}</b>.
-                Only checked sections will replace your current configuration.
-                <b style="color:#ffaa55;">✏️ modified</b> means the cartridge differs from factory defaults.
+                选择要从 <b>${escapeHtml(cartridge.name)}</b> 导入的区域。
+                只有勾选的区域会替换你当前的配置。
+                <b style="color:#ffaa55;">✏️ 已修改</b> 表示该卡带与出厂默认设置不同。
             </p>
             <div id="rt-gc-load-group-list" style="display:flex; flex-direction:column; gap:6px;">
                 ${rowsHtml}
             </div>
             <p style="margin:6px 0 0; font-size:10px; opacity:0.45;">
-                ⚠️ Checked sections will fully replace your current settings for those areas.
-                This cannot be undone unless you first saved your current setup as a cartridge.
+                ⚠️ 勾选的区域将完全替换你当前在这些区域的设置。
+                该操作无法撤销，除非你预先将当前配置保存为卡带。
             </p>
         </div>`;
 
@@ -258,9 +258,9 @@ export async function loadCartridge(cartridge) {
         });
     }, 100);
 
-    const result = chatCommitResult(ownsChat, await Popup.show.confirm(`🎮 Load Cartridge: ${escapeHtml(cartridge.name)}`, content, {
-        okButton: 'Load Selected',
-        cancelButton: 'Cancel',
+    const result = chatCommitResult(ownsChat, await Popup.show.confirm(`🎮 加载卡带：${escapeHtml(cartridge.name)}`, content, {
+        okButton: '加载所选项',
+        cancelButton: '取消',
         ...GC_POPUP_LARGE,
     }));
 
@@ -273,7 +273,7 @@ export async function loadCartridge(cartridge) {
     });
 
     if (keysToApply.length === 0) {
-        toastr['warning']('No sections selected — nothing was changed.', 'Game Cartridges');
+        toastr['warning']('未选择任何区域——未作任何更改。', '游戏卡带');
         return false;
     }
 
@@ -287,16 +287,16 @@ export async function loadCartridge(cartridge) {
     if (typeof globalThis._rpgSyncSettingsUi === 'function') {
         globalThis._rpgSyncSettingsUi();
     }
-    toastr['success'](`Cartridge "${cartridge.name}" loaded! 🎮`, 'Game Cartridges');
+    toastr['success'](`卡带“${cartridge.name}”已加载！🎮`, '游戏卡带');
     return true;
 }
 
 export function deleteCartridgeWithConfirm(cartridge) {
-    if (!confirm(`Delete the cartridge "${cartridge.name}"? This cannot be undone.`)) return false;
+    if (!confirm(`确定删除卡带“${cartridge.name}”吗？此操作无法撤销。`)) return false;
     const settings = getSettings();
     settings.gameCartridges = (settings.gameCartridges || []).filter(c => c.id !== cartridge.id);
     saveSettings();
-    toastr['info'](`Cartridge "${cartridge.name}" deleted.`, 'Game Cartridges');
+    toastr['info'](`卡带“${cartridge.name}”已删除。`, '游戏卡带');
     return true;
 }
 
@@ -325,23 +325,23 @@ function showCartridgeSharePopup(jsonString, cartridgeName) {
     const content = `
             <div style="display:flex; flex-direction:column; gap:8px; min-width:360px;">
                 <p style="margin:0; font-size:12px; opacity:0.7;">
-                    Copy this code and share it anywhere. Others can load it using the <b>Import</b> button in Game Cartridges.
+                    复制此代码即可在任何地方分享。其他人可以使用游戏卡带中的 <b>导入</b> 按钮进行加载。
                 </p>
                 <textarea id="rt_gc_share_blob" readonly rows="14" class="text_pole"
                     style="font-family:monospace; font-size:11px; resize:vertical; width:100%;"
                 >${escaped}</textarea>
                 <div style="display:flex; gap:8px;">
                     <button id="rt_gc_share_copy" class="menu_button interactable" style="flex:1;">
-                        <i class="fa-solid fa-copy"></i> Copy to Clipboard
+                        <i class="fa-solid fa-copy"></i> 复制到剪贴板
                     </button>
                     <button id="rt_gc_share_download" class="menu_button interactable" style="flex:1;">
-                        <i class="fa-solid fa-file-download"></i> Export .json
+                        <i class="fa-solid fa-file-download"></i> 导出 .json
                     </button>
                 </div>
             </div>
         `;
-    Popup.show.confirm(`📤 Export Cartridge: ${escapeHtml(cartridgeName)}`, content, {
-        okButton: 'Done',
+    Popup.show.confirm(`📤 导出卡带：${escapeHtml(cartridgeName)}`, content, {
+        okButton: '完成',
         cancelButton: false,
     });
     setTimeout(() => {
@@ -351,7 +351,7 @@ function showCartridgeSharePopup(jsonString, cartridgeName) {
                 try {
                     if (navigator.clipboard && window.isSecureContext) {
                         await navigator.clipboard.writeText(jsonString);
-                        toastr['success']('Cartridge code copied to clipboard!', 'Game Cartridges');
+                        toastr['success']('卡带代码已复制到剪贴板！', '游戏卡带');
                         return;
                     }
 
@@ -370,13 +370,13 @@ function showCartridgeSharePopup(jsonString, cartridgeName) {
                     document.body.removeChild(ta);
 
                     if (success) {
-                        toastr['success']('Cartridge code copied to clipboard!', 'Game Cartridges');
+                        toastr['success']('卡带代码已复制到剪贴板！', '游戏卡带');
                     } else {
                         throw new Error('execCommand returned false');
                     }
                 } catch (err) {
                     console.error('[RPG Tracker] Cartridge clipboard copy failed:', err);
-                    toastr['error']('Could not copy automatically. Please select the text manually.', 'Game Cartridges');
+                    toastr['error']('无法自动复制，请手动选中文本复制。', '游戏卡带');
                 }
             });
         }
@@ -423,14 +423,14 @@ async function showCartridgeImportPopup() {
     const content = `
             <div style="display:flex; flex-direction:column; gap:8px; width:100%; box-sizing:border-box;">
                 <p style="margin:0; font-size:12px; opacity:0.7;">
-                    Paste a Game Cartridge export code (JSON) below, or load it from a file.
+                    在下方粘贴游戏卡带导出代码 (JSON)，或从文件加载。
                 </p>
                 <textarea id="rt_gc_import_blob" rows="12" class="text_pole"
                     style="font-family:monospace; font-size:11px; resize:vertical; width:100%;"
                     placeholder='{"format": "multihog-game-cartridge", ...}'
                 ></textarea>
                 <button id="rt_gc_import_file_btn" class="menu_button interactable" style="width:100%;">
-                    <i class="fa-solid fa-file-upload"></i> Load from File
+                    <i class="fa-solid fa-file-upload"></i> 从文件加载
                 </button>
             </div>
         `;
@@ -466,7 +466,7 @@ async function showCartridgeImportPopup() {
         });
     }, 100);
 
-    const result = await Popup.show.confirm('📥 Import Game Cartridge', content, { okButton: 'Import', cancelButton: 'Cancel' });
+    const result = await Popup.show.confirm('📥 导入游戏卡带', content, { okButton: '导入', cancelButton: '取消' });
     document.body.removeChild(fileInput);
 
     if (!result || !pastedValue.trim()) return null;
@@ -487,12 +487,12 @@ export async function importCartridgeFromJson() {
     try {
         parsed = JSON.parse(text.trim());
     } catch (err) {
-        toastr['error']('Could not parse that as JSON.', 'Game Cartridges');
+        toastr['error']('无法解析为有效 JSON。', '游戏卡带');
         return;
     }
 
     if (!parsed || parsed.format !== CARTRIDGE_FORMAT) {
-        toastr['error'](`Not a recognized Game Cartridge (expected format "${CARTRIDGE_FORMAT}").`, 'Game Cartridges');
+        toastr['error'](`非可识别的游戏卡带格式（期望格式为“${CARTRIDGE_FORMAT}”）。`, '游戏卡带');
         return;
     }
 
@@ -505,7 +505,7 @@ export async function importCartridgeFromJson() {
         payload[key] = (parsed.payload && parsed.payload[key] !== undefined) ? parsed.payload[key] : factory[key];
     }
 
-    const name = uniqueCartridgeName((parsed.name || 'Imported Cartridge').trim() || 'Imported Cartridge', settings);
+    const name = uniqueCartridgeName((parsed.name || '导入的卡带').trim() || '导入的卡带', settings);
     const cartridge = {
         id: Date.now().toString(),
         name,
@@ -519,9 +519,9 @@ export async function importCartridgeFromJson() {
     };
     settings.gameCartridges.push(cartridge);
     saveSettings();
-    toastr['success'](`Cartridge "${name}" imported! ✅`, 'Game Cartridges');
+    toastr['success'](`卡带“${name}”已导入！✅`, '游戏卡带');
 
-    if (confirm(`Load "${name}" into your current configuration now?`)) {
+    if (confirm(`立即将“${name}”加载到当前配置中吗？`)) {
         await loadCartridge(cartridge);
     }
 }
@@ -536,15 +536,15 @@ async function promptCartridgeMeta({ title, okButton, initialName = '', initialD
     const content = `
         <div style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box; text-align:left;">
             <div>
-                <label style="font-size:11px; opacity:0.8;">Icon (emoji)</label>
+                <label style="font-size:11px; opacity:0.8;">图标 (Emoji)</label>
                 <input id="rt_gc_meta_icon" type="text" class="text_pole" maxlength="4" value="${escapeHtml(initialIcon)}" style="width:70px; text-align:center; font-size:16px;">
             </div>
             <div>
-                <label style="font-size:11px; opacity:0.8;">Name</label>
+                <label style="font-size:11px; opacity:0.8;">名称</label>
                 <input id="rt_gc_meta_name" type="text" class="text_pole" value="${escapeHtml(initialName)}" style="width:100%;">
             </div>
             <div>
-                <label style="font-size:11px; opacity:0.8;">Description</label>
+                <label style="font-size:11px; opacity:0.8;">描述</label>
                 <textarea id="rt_gc_meta_desc" rows="3" class="text_pole" style="width:100%; resize:vertical; font-size:12px;">${escapeHtml(initialDescription)}</textarea>
             </div>
         </div>
@@ -560,17 +560,17 @@ async function promptCartridgeMeta({ title, okButton, initialName = '', initialD
         if (iconEl) iconEl.addEventListener('input', () => { values.icon = iconEl.value; });
     }, 100);
 
-    const result = await Popup.show.confirm(title, content, { okButton, cancelButton: 'Cancel', wide: true });
+    const result = await Popup.show.confirm(title, content, { okButton, cancelButton: '取消', wide: true });
     if (!result) return null;
     if (!values.name.trim()) {
-        toastr['warning']('Please enter a name for the cartridge.', 'Game Cartridges');
+        toastr['warning']('请输入卡带名称。', '游戏卡带');
         return null;
     }
     return values;
 }
 
 async function createCartridgeViaPrompt() {
-    const values = await promptCartridgeMeta({ title: '💾 Save Current as New Cartridge', okButton: 'Save' });
+    const values = await promptCartridgeMeta({ title: '💾 将当前配置保存为新卡带', okButton: '保存' });
     if (!values) return;
     createCartridgeFromCurrent(values.name, values.description, values.icon);
 }
@@ -583,8 +583,8 @@ async function createCartridgeViaPrompt() {
  */
 export async function promptAndSaveCurrentAsCartridge(opts = {}) {
     const values = await promptCartridgeMeta({
-        title: opts.title || '💾 Save Current as New Cartridge',
-        okButton: opts.okButton || 'Save',
+        title: opts.title || '💾 将当前配置保存为新卡带',
+        okButton: opts.okButton || '保存',
         initialName: opts.initialName || '',
         initialDescription: opts.initialDescription || '',
         initialIcon: opts.initialIcon || '🎮',
@@ -596,8 +596,8 @@ export async function promptAndSaveCurrentAsCartridge(opts = {}) {
 async function editCartridgeMeta(cartridge) {
     const settings = getSettings();
     const values = await promptCartridgeMeta({
-        title: '✏️ Edit Cartridge Details',
-        okButton: 'Save',
+        title: '✏️ 编辑卡带详情',
+        okButton: '保存',
         initialName: cartridge.name,
         initialDescription: cartridge.description || '',
         initialIcon: cartridge.icon || '🎮',
@@ -608,7 +608,7 @@ async function editCartridgeMeta(cartridge) {
     cartridge.icon = sanitizeCartridgeIcon(values.icon);
     cartridge.updatedAt = Date.now();
     saveSettings();
-    toastr['success'](`Cartridge "${cartridge.name}" updated.`, 'Game Cartridges');
+    toastr['success'](`卡带“${cartridge.name}”已更新。`, '游戏卡带');
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -629,16 +629,16 @@ export async function openManageGameCartridges() {
             <div class="rt-gc-item" style="display:flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2); padding:10px;">
                 <div style="font-size:18px; width:26px; text-align:center;">${escapeHtml(c.icon || (isStock ? '📦' : '🎮'))}</div>
                 <div style="flex:1; min-width:0;">
-                    <div style="font-weight:bold; font-size:13px;">${escapeHtml(c.name)}${isStock ? '<span style="font-size:9px; padding:1px 5px; border-radius:3px; margin-left:6px; background:rgba(150,150,150,0.25); opacity:0.85;">FACTORY</span>' : ''}</div>
+                    <div style="font-weight:bold; font-size:13px;">${escapeHtml(c.name)}${isStock ? '<span style="font-size:9px; padding:1px 5px; border-radius:3px; margin-left:6px; background:rgba(150,150,150,0.25); opacity:0.85;">出厂预设</span>' : ''}</div>
                     <div style="font-size:10px; opacity:0.6; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${escapeHtml(c.description || '')}">${escapeHtml(c.description || '')}</div>
-                    ${!isStock && c.updatedAt ? `<div style="font-size:9px; opacity:0.45;">Updated ${formatCartridgeDate(c.updatedAt)}</div>` : ''}
+                    ${!isStock && c.updatedAt ? `<div style="font-size:9px; opacity:0.45;">更新于 ${formatCartridgeDate(c.updatedAt)}</div>` : ''}
                 </div>
-                <button class="rt-gc-load menu_button interactable" data-index="${isStock ? 'stock' : realIndex}" style="font-size:11px; padding:2px 10px; white-space:nowrap; background:rgba(80,180,120,0.15); border-color:rgba(80,180,120,0.4);">Load</button>
+                <button class="rt-gc-load menu_button interactable" data-index="${isStock ? 'stock' : realIndex}" style="font-size:11px; padding:2px 10px; white-space:nowrap; background:rgba(80,180,120,0.15); border-color:rgba(80,180,120,0.4);">加载</button>
                 ${!isStock ? `
-                <button class="rt-gc-rename" data-index="${realIndex}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="Rename / Edit Details"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button class="rt-gc-save-current" data-index="${realIndex}" style="background:none; border:none; color:#ffb43c; cursor:pointer; padding:4px;" title="Overwrite with current configuration"><i class="fa-solid fa-floppy-disk"></i></button>
-                <button class="rt-gc-export" data-index="${realIndex}" style="background:none; border:none; color:#aaddff; cursor:pointer; padding:4px;" title="Export"><i class="fa-solid fa-file-export"></i></button>
-                <button class="rt-gc-delete" data-index="${realIndex}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="Delete"><i class="fa-solid fa-trash-can"></i></button>
+                <button class="rt-gc-rename" data-index="${realIndex}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="重命名 / 编辑详情"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="rt-gc-save-current" data-index="${realIndex}" style="background:none; border:none; color:#ffb43c; cursor:pointer; padding:4px;" title="用当前配置覆盖"><i class="fa-solid fa-floppy-disk"></i></button>
+                <button class="rt-gc-export" data-index="${realIndex}" style="background:none; border:none; color:#aaddff; cursor:pointer; padding:4px;" title="导出"><i class="fa-solid fa-file-export"></i></button>
+                <button class="rt-gc-delete" data-index="${realIndex}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="删除"><i class="fa-solid fa-trash-can"></i></button>
                 ` : ''}
             </div>
         `;
@@ -648,14 +648,14 @@ export async function openManageGameCartridges() {
     const html = `
         <div id="rt-gc-manage-container" style="display:flex; flex-direction:column; gap:12px; width:100%; box-sizing:border-box; max-height:85vh;">
             <div style="font-size:11px; opacity:0.8; line-height:1.4;">
-                Save your entire configuration — system prompt sections, ordering, on/off toggles, Game Systems, tracker modules, block order, stock prompts, and the State Tracker's extractor prompt — as a named <b>Game Cartridge</b>. Export it to share with others, or Import one someone else made. Loading a cartridge <b>fully replaces</b> your current configuration.
+                将你的整个配置——系统提示词区域、顺序、开关、游戏系统、追踪器模块、区块顺序、预设提示词以及状态追踪器的提取提示词——保存为指定名称的<b>游戏卡带</b>。可导出与他人分享，或导入他人制作的卡带。加载卡带将<b>完全替换</b>你当前的对应配置。
             </div>
             <div style="display:flex; gap:6px;">
                 <button id="rt_gc_btn_save_new" class="menu_button interactable" style="flex:1; background:rgba(80,180,120,0.15); border-color:rgba(80,180,120,0.4); font-size:11px; padding:4px 8px;">
-                    <i class="fa-solid fa-floppy-disk"></i> Save Current as New Cartridge
+                    <i class="fa-solid fa-floppy-disk"></i> 将当前配置保存为新卡带
                 </button>
                 <button id="rt_gc_btn_import" class="menu_button interactable" style="flex:1; background:rgba(50,150,255,0.15); border-color:rgba(50,150,255,0.4); font-size:11px; padding:4px 8px;">
-                    <i class="fa-solid fa-file-import"></i> Import
+                    <i class="fa-solid fa-file-import"></i> 导入
                 </button>
             </div>
             <div id="rt-gc-manage-list-wrap" style="overflow-y:auto; padding-right:10px; flex:1;">
@@ -697,7 +697,7 @@ export async function openManageGameCartridges() {
                     const idx = parseInt(e.currentTarget.dataset.index);
                     const cartridge = settings.gameCartridges[idx];
                     if (!cartridge) return;
-                    if (!confirm(`Overwrite "${cartridge.name}" with your CURRENT configuration? This cannot be undone.`)) return;
+                    if (!confirm(`确定用你“当前的”配置覆盖“${cartridge.name}”吗？此操作无法撤销。`)) return;
                     updateCartridgeFromCurrent(cartridge);
                     const w = document.getElementById('rt-gc-manage-list-wrap');
                     if (w) { w.innerHTML = generateListHtml(); bindEvents(); }
@@ -746,7 +746,7 @@ export async function openManageGameCartridges() {
         }
     }, 100);
 
-    await Popup.show.confirm('🎮 Manage Game Cartridges', html, { okButton: 'Close', cancelButton: false, ...GC_POPUP_LARGE });
+    await Popup.show.confirm('🎮 管理游戏卡带', html, { okButton: '关闭', cancelButton: false, ...GC_POPUP_LARGE });
     if (typeof globalThis._rpgSyncSettingsUi === 'function') {
         globalThis._rpgSyncSettingsUi();
     }

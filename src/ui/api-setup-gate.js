@@ -26,24 +26,24 @@ const API_LABELS = {
 const CHECKLIST_ITEMS = [
     {
         id: 'chatCompletion',
-        title: 'Chat Completion is enabled',
-        body: 'Text Completion is a legacy API that was relevant before ChatGPT came out. Do not use it.',
+        title: '已启用聊天补全 (Chat Completion)',
+        body: '文本补全 (Text Completion) 是在 ChatGPT 问世前使用的过时 API。请勿使用它。',
         shot: true,
     },
     {
         id: 'functionCalling',
-        title: 'Function calling is enabled',
-        body: 'This is crucial to use the more effective version of tools in Multihog D&D, though there is a "MacGyver" path available if you absolutely can\'t use tools.',
+        title: '已启用函数调用 (Function calling)',
+        body: '这对于在 Multihog D&D 中使用更高效的工具版本至关重要，当然如果确实无法使用工具，也提供了备用方案。',
     },
     {
         id: 'maxContextUnlocked',
-        title: 'Maximum context size is unlimited',
-        body: 'There is no reason to limit this today, and in fact there are reasons not to. You\'re supposed to use a {{summarizer}}, which hides messages, so your context is never larger than 30k or so anyway. Imposing an artificial context limit does nothing but destroy your cache hits, which means you pay more. Context caps are from an era before people figured out how to summarize context.',
+        title: '最大上下文长度无限制',
+        body: '如今没有任何理由去限制它，实际上更有不应限制的理由。你理应搭配使用 {{summarizer}} 来隐藏历史消息，因此上下文实际通常不会超过 30k。人为施加硬性上下文限制只会破坏缓存命中率，导致成本更高。上下文上限是过去人们尚未学会如何做上下文摘要时的历史遗留产物。',
     },
     {
         id: 'outputLength',
-        title: 'Output length is set to 100,000',
-        body: 'The defaults are extremely low, which make the program completely unusable from the get-go. The model will suddenly stop outputting, and the user is confused. Or worse: an agent is outputting a JSON object and the model hits this pathetic cap, truncating the JSON and giving a schema/syntax error.\n\nThe result is that my extension throws an error and looks broken. However, this is just another bad default.',
+        title: '单次输出长度设为 100,000',
+        body: '默认设置过低，会导致程序开箱即无法正常运作。模型会突然中断输出，让用户困惑不解。更糟糕的是：当智能体输出 JSON 对象时如果撞上极低的截断上限，会导致 JSON 被截断并报出语法错误。\n\n这往往会导致扩展报错显得像是坏了一样，但这纯粹是因为过低的默认值。',
     },
 ];
 
@@ -230,7 +230,7 @@ function escapeHtml(value) {
         .replace(/"/g, '&quot;');
 }
 
-const SUMMARIZER_LINK = '<a href="https://github.com/Lodactio/Extension-Summaryception" target="_blank" rel="noopener noreferrer">summarizer</a>';
+const SUMMARIZER_LINK = '<a href="https://github.com/Lodactio/Extension-Summaryception" target="_blank" rel="noopener noreferrer">摘要扩展</a>';
 
 function renderBody(text) {
     return escapeHtml(text)
@@ -242,7 +242,7 @@ function renderChecklist(statuses) {
     return CHECKLIST_ITEMS.map(item => {
         const ok = !!statuses[item.id];
         const shot = item.shot
-            ? `<img class="rt-api-setup-shot" src="${API_SCREENSHOT}" alt="SillyTavern API dropdown with Chat Completion selected">`
+            ? `<img class="rt-api-setup-shot" src="${API_SCREENSHOT}" alt="选中聊天补全的 SillyTavern API 下拉菜单">`
             : '';
         return `
             <div class="rt-api-setup-item${ok ? ' is-ok' : ''}">
@@ -262,30 +262,30 @@ export function buildOverlayHtml(statuses = getApiSetupStatuses(), options = {})
     return `
         <div class="rt-api-setup-card" role="dialog" aria-labelledby="rt-api-setup-title">
             <div class="rt-api-setup-scroll">
-            <div class="rt-api-setup-kicker">Anti-Museum Tour</div>
-            <h2 id="rt-api-setup-title">SillyTavern API settings to check</h2>
-            <p>This menu is a result of months of taking &quot;bug reports&quot; from people and discovering 98% of the time the cause was the defaults of SillyTavern. People get JSON syntax errors and other stuff, and it turns out it&apos;s because ST makes its maximum output length far too low by default.</p>
+            <div class="rt-api-setup-kicker">告别陈旧设置指引 (Anti-Museum Tour)</div>
+            <h2 id="rt-api-setup-title">SillyTavern API 必查设置项</h2>
+            <p>此菜单总结了作者数月以来收集的“错误报告”，发现 98% 的问题根源在于 SillyTavern 的默认设置。用户频繁遇到 JSON 语法错误等问题，调查后发现均是因为酒馆默认的最大输出长度过低导致的。</p>
             <div class="rt-api-setup-list" id="rt-api-setup-list">
                 ${renderChecklist(statuses)}
             </div>
             <div class="rt-api-setup-gm-block">
                 <div class="rt-api-setup-gm-row">
-                    <label class="rt-api-setup-gm-label" for="rt-api-setup-gm-name">Narrator card name</label>
+                    <label class="rt-api-setup-gm-label" for="rt-api-setup-gm-name">叙事者卡片名称</label>
                     <input id="rt-api-setup-gm-name" class="rt-api-setup-gm-name text_pole" type="text" value="${escapeHtml(narratorCardName)}" placeholder="${escapeHtml(GAME_MASTER_CARD_NAME)}" maxlength="120">
-                    <button type="button" class="rt-api-setup-create-gm" id="rt-api-setup-create-gm">Create narrator card</button>
+                    <button type="button" class="rt-api-setup-create-gm" id="rt-api-setup-create-gm">创建叙事者卡片</button>
                 </div>
-                <p class="rt-api-setup-gm-note">Multihog doesn&apos;t use a one-on-one chat format but uses a format written like a book, that seamlessly allows for multiple characters. The messages are attributed to a narrator, not a single character.</p>
+                <p class="rt-api-setup-gm-note">Multihog 不采用传统的一对一聊天格式，而是采用书籍风格的叙事格式，可无缝容纳多名角色登场。消息归属于叙事者，而非单一角色。</p>
             </div>
             <div class="rt-api-setup-status ${doneCount === 4 ? 'rt-api-setup-status-ok' : 'rt-api-setup-status-bad'}">
-                ${doneCount} / 4 recommended settings are on. Current API: <b>${escapeHtml(describeMainApi())}</b>.
+                已启用 ${doneCount} / 4 项推荐设置。当前 API：<b>${escapeHtml(describeMainApi())}</b>。
             </div>
             </div>
             <div class="rt-api-setup-actions">
-                <button type="button" class="rt-api-setup-apply" id="rt-api-setup-apply">Apply recommended settings</button>
-                <button type="button" class="rt-api-setup-show" id="rt-api-setup-show">Highlight the API dropdown</button>
-                <button type="button" class="rt-api-setup-continue" id="rt-api-setup-continue">Continue</button>
+                <button type="button" class="rt-api-setup-apply" id="rt-api-setup-apply">应用推荐设置</button>
+                <button type="button" class="rt-api-setup-show" id="rt-api-setup-show">高亮指示 API 下拉菜单</button>
+                <button type="button" class="rt-api-setup-continue" id="rt-api-setup-continue">继续</button>
             </div>
-            <p class="rt-api-setup-foot">This screen will not appear automatically after you continue. Reopen it anytime from General &amp; Visuals → Core &amp; Branching → Anti-Museum Tour.</p>
+            <p class="rt-api-setup-foot">点击继续后此屏幕将不再自动出现。你可以随时从“常规与界面外观 → 核心与分支 → 告别陈旧设置指引”中重新打开。</p>
         </div>`;
 }
 

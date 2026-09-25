@@ -833,29 +833,29 @@ export async function showPortraitPromptPopup(prompt, entityName, localApply, re
     const isNative = s.portraitGeneratorSource === 'native';
     const isHorde = s.portraitGeneratorSource === 'horde';
     const subText = isNative
-        ? 'Edit the prompt below, then copy it or generate directly with the ST Image Generation extension'
+        ? '在下方编辑提示词，然后复制它或直接使用 ST 图像生成扩展生成'
         : isHorde
-            ? 'Edit the prompt below, then copy it or generate directly with the AI Horde'
-            : 'Edit the prompt below, then copy it or generate directly with Pollinations.ai';
+            ? '在下方编辑提示词，然后复制它或直接使用 AI Horde 生成'
+            : '在下方编辑提示词，然后复制它或直接使用 Pollinations.ai 生成';
 
     const textareaId = `rt-ai-prompt-${Date.now()}`;
     const skipCheckboxId = `rt-skip-prompt-${Date.now()}`;
     const popupContent = `<div style="padding:10px;min-width:320px;max-width:500px;">
-        <b style="display:block;margin-bottom:8px;">🤖 AI Portrait Prompt — ${escapeHtml(entityName)}</b>
+        <b style="display:block;margin-bottom:8px;">🤖 AI 头像提示词 — ${escapeHtml(entityName)}</b>
         <div style="font-size:0.8em;opacity:0.6;margin-bottom:8px;">${escapeHtml(subText)}</div>
         <textarea id="${textareaId}" style="width:100%;min-height:120px;resize:vertical;font-size:0.9em;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:inherit;box-sizing:border-box;">${escapeHtml(prompt)}</textarea>
         <label style="display:flex;align-items:center;gap:6px;font-size:0.8em;margin-top:8px;cursor:pointer;user-select:none;opacity:0.8;">
             <input id="${skipCheckboxId}" type="checkbox" style="margin:0;cursor:pointer;"/>
-            Don't show this dialog again (Auto-Generate & Auto-Apply)
+            不再显示此对话框 (自动生成并自动应用)
         </label>
     </div>`;
 
     const popupOpts = {
-        okButton: isNative ? '🎨 Generate with ST Image Gen' : isHorde ? '🎨 Generate with AI Horde' : '🎨 Generate with Pollinations',
-        cancelButton: 'Cancel',
+        okButton: isNative ? '🎨 使用 ST 图像生成' : isHorde ? '🎨 使用 AI Horde 生成' : '🎨 使用 Pollinations 生成',
+        cancelButton: '取消',
         wide: false,
         customButtons: [
-            { text: '📋 Copy Prompt', result: 3, classes: ['menu_button'] },
+            { text: '📋 复制提示词', result: 3, classes: ['menu_button'] },
         ],
     };
 
@@ -880,9 +880,9 @@ export async function showPortraitPromptPopup(prompt, entityName, localApply, re
         // Copy to clipboard
         try {
             await navigator.clipboard.writeText(finalPrompt);
-            toastr['success']('Portrait prompt copied to clipboard.', 'RPG Tracker');
+            toastr['success']('头像提示词已复制到剪贴板。', 'RPG 追踪器');
         } catch {
-            toastr['warning']('Could not copy to clipboard.', 'RPG Tracker');
+            toastr['warning']('无法复制到剪贴板。', 'RPG 追踪器');
         }
     } else if (result) {
         if (skipChecked) {
@@ -1125,26 +1125,26 @@ export async function generateWithPollinations(prompt, entityName, localApply, r
         });
 
         const popupContent = `<div style="padding:10px;min-width:320px;max-width:460px;">
-            <b style="display:block;margin-bottom:8px;">🖼️ Generated Portrait — ${escapeHtml(entityName)}</b>
+            <b style="display:block;margin-bottom:8px;">🖼️ 生成的头像 — ${escapeHtml(entityName)}</b>
             <div style="position:relative;text-align:center;margin-bottom:10px;min-height:200px;">
                 <div id="${spinnerId}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:0.9em;opacity:0.6;">
-                    <i class="fa-solid fa-spinner fa-spin" style="margin-right:6px;"></i>Generating image…
+                    <i class="fa-solid fa-spinner fa-spin" style="margin-right:6px;"></i>正在生成图像…
                 </div>
                 <img id="${imgId}" style="max-width:100%;max-height:400px;border-radius:8px;display:none;margin:0 auto;" />
                 <div id="${errorId}" style="display:none;color:#ff6b6b;font-size:0.9em;margin-top:10px;"></div>
             </div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                <label style="font-size:0.82em;opacity:0.8;white-space:nowrap;">Model:</label>
+                <label style="font-size:0.82em;opacity:0.8;white-space:nowrap;">模型:</label>
                 <select id="${selectId}" class="text_pole" style="flex:1;font-size:0.85em;">${modelOptions}</select>
             </div>
-            <div style="font-size:0.72em;opacity:0.45;margin-top:2px;">Prompt: ${escapeHtml(prompt.substring(0, 100))}${prompt.length > 100 ? '…' : ''}</div>
+            <div style="font-size:0.72em;opacity:0.45;margin-top:2px;">提示词: ${escapeHtml(prompt.substring(0, 100))}${prompt.length > 100 ? '…' : ''}</div>
         </div>`;
 
         const popupOpts = {
-            okButton: '✅ Apply Portrait', cancelButton: 'Cancel', wide: false,
+            okButton: '✅ 应用头像', cancelButton: '取消', wide: false,
             customButtons: [
-                { text: '🔄 Regenerate', result: 3, classes: ['menu_button'] },
-                { text: '✂️ Crop', result: 4, classes: ['menu_button'] }
+                { text: '🔄 重新生成', result: 3, classes: ['menu_button'] },
+                { text: '✂️ 裁剪', result: 4, classes: ['menu_button'] }
             ],
         };
 
@@ -1162,7 +1162,7 @@ export async function generateWithPollinations(prompt, entityName, localApply, r
             try {
                 const dataUrl = await genPromise;
                 const cropped = await ctx.callGenericPopup(
-                    'Set the crop position of the portrait',
+                    '设置头像的裁剪位置',
                     ctx.POPUP_TYPE?.CROP ?? 4,
                     '',
                     { cropImage: dataUrl, cropAspect: 1 }
@@ -1173,7 +1173,7 @@ export async function generateWithPollinations(prompt, entityName, localApply, r
                     await showPreview(dataUrl);
                 }
             } catch (err) {
-                toastr['error']('Cannot crop — generation failed: ' + err.message, 'RPG Tracker');
+                toastr['error']('无法裁剪 — 生成失败: ' + err.message, 'RPG 追踪器');
                 await showPreview();
             }
         } else if (result) {
@@ -1183,9 +1183,9 @@ export async function generateWithPollinations(prompt, entityName, localApply, r
                 const finalUrl = dataUrl.startsWith('data:') ? await scaleImageTo512Square(dataUrl) : dataUrl;
                 await localApply(finalUrl);
                 if (typeof refresh === 'function') refresh();
-                imageGenToast('success', `Portrait applied for ${entityName}!`, 'RPG Tracker');
+                imageGenToast('success', `已为 ${entityName} 应用头像！`, 'RPG 追踪器');
             } catch (err) {
-                toastr['error']('Cannot apply — generation failed: ' + err.message, 'RPG Tracker');
+                toastr['error']('无法应用 — 生成失败: ' + err.message, 'RPG 追踪器');
             }
         }
     };
@@ -1224,22 +1224,22 @@ export async function generateWithNativeExtension(prompt, entityName, localApply
         });
 
         const popupContent = `<div style="padding:10px;min-width:320px;max-width:460px;">
-            <b style="display:block;margin-bottom:8px;">🖼️ Generated Portrait — ${escapeHtml(entityName)}</b>
+            <b style="display:block;margin-bottom:8px;">🖼️ 生成的头像 — ${escapeHtml(entityName)}</b>
             <div style="position:relative;text-align:center;margin-bottom:10px;min-height:200px;">
                 <div id="${spinnerId}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:0.9em;opacity:0.6;">
-                    <i class="fa-solid fa-spinner fa-spin" style="margin-right:6px;"></i>Generating image with native extension…
+                    <i class="fa-solid fa-spinner fa-spin" style="margin-right:6px;"></i>正在使用原生扩展生成图像…
                 </div>
                 <img id="${imgId}" style="max-width:100%;max-height:400px;border-radius:8px;display:none;margin:0 auto;" />
                 <div id="${errorId}" style="display:none;color:#ff6b6b;font-size:0.9em;margin-top:10px;"></div>
             </div>
-            <div style="font-size:0.72em;opacity:0.45;margin-top:2px;">Prompt: ${escapeHtml(prompt.substring(0, 100))}${prompt.length > 100 ? '…' : ''}</div>
+            <div style="font-size:0.72em;opacity:0.45;margin-top:2px;">提示词: ${escapeHtml(prompt.substring(0, 100))}${prompt.length > 100 ? '…' : ''}</div>
         </div>`;
 
         const popupOpts = {
-            okButton: '✅ Apply Portrait', cancelButton: 'Cancel', wide: false,
+            okButton: '✅ 应用头像', cancelButton: '取消', wide: false,
             customButtons: [
-                { text: '🔄 Regenerate', result: 3, classes: ['menu_button'] },
-                { text: '✂️ Crop', result: 4, classes: ['menu_button'] }
+                { text: '🔄 重新生成', result: 3, classes: ['menu_button'] },
+                { text: '✂️ 裁剪', result: 4, classes: ['menu_button'] }
             ],
         };
 
@@ -1252,7 +1252,7 @@ export async function generateWithNativeExtension(prompt, entityName, localApply
             try {
                 const imageUrl = await genPromise;
                 const cropped = await ctx.callGenericPopup(
-                    'Set the crop position of the portrait',
+                    '设置头像的裁剪位置',
                     ctx.POPUP_TYPE?.CROP ?? 4,
                     '',
                     { cropImage: imageUrl, cropAspect: 1 }
@@ -1263,7 +1263,7 @@ export async function generateWithNativeExtension(prompt, entityName, localApply
                     await showPreview(imageUrl);
                 }
             } catch (err) {
-                toastr['error']('Cannot crop — generation failed: ' + err.message, 'RPG Tracker');
+                toastr['error']('无法裁剪 — 生成失败: ' + err.message, 'RPG 追踪器');
                 await showPreview();
             }
         } else if (result) {
@@ -1273,9 +1273,9 @@ export async function generateWithNativeExtension(prompt, entityName, localApply
                 const finalUrl = imageUrl.startsWith('data:') ? await scaleImageTo512Square(imageUrl) : imageUrl;
                 await localApply(finalUrl);
                 if (typeof refresh === 'function') refresh();
-                imageGenToast('success', `Portrait applied for ${entityName}!`, 'RPG Tracker');
+                imageGenToast('success', `已为 ${entityName} 应用头像！`, 'RPG 追踪器');
             } catch (err) {
-                toastr['error']('Cannot apply — generation failed: ' + err.message, 'RPG Tracker');
+                toastr['error']('无法应用 — 生成失败: ' + err.message, 'RPG 追踪器');
             }
         }
     };
@@ -1319,22 +1319,22 @@ export async function generateWithHorde(prompt, entityName, localApply, refresh)
         });
 
         const popupContent = `<div style="padding:10px;min-width:320px;max-width:460px;">
-            <b style="display:block;margin-bottom:8px;">🖼️ Generated Portrait — ${escapeHtml(entityName)}</b>
+            <b style="display:block;margin-bottom:8px;">🖼️ 生成的头像 — ${escapeHtml(entityName)}</b>
             <div style="position:relative;text-align:center;margin-bottom:10px;min-height:200px;">
                 <div id="${spinnerId}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:0.9em;opacity:0.6;">
-                    <i class="fa-solid fa-spinner fa-spin" style="margin-right:6px;"></i>Generating image with AI Horde (this can take a minute)…
+                    <i class="fa-solid fa-spinner fa-spin" style="margin-right:6px;"></i>正在使用 AI Horde 生成图像（可能需要一两分钟）…
                 </div>
                 <img id="${imgId}" style="max-width:100%;max-height:400px;border-radius:8px;display:none;margin:0 auto;" />
                 <div id="${errorId}" style="display:none;color:#ff6b6b;font-size:0.9em;margin-top:10px;"></div>
             </div>
-            <div style="font-size:0.72em;opacity:0.45;margin-top:2px;">Prompt: ${escapeHtml(prompt.substring(0, 100))}${prompt.length > 100 ? '…' : ''}</div>
+            <div style="font-size:0.72em;opacity:0.45;margin-top:2px;">提示词: ${escapeHtml(prompt.substring(0, 100))}${prompt.length > 100 ? '…' : ''}</div>
         </div>`;
 
         const popupOpts = {
-            okButton: '✅ Apply Portrait', cancelButton: 'Cancel', wide: false,
+            okButton: '✅ 应用头像', cancelButton: '取消', wide: false,
             customButtons: [
-                { text: '🔄 Regenerate', result: 3, classes: ['menu_button'] },
-                { text: '✂️ Crop', result: 4, classes: ['menu_button'] }
+                { text: '🔄 重新生成', result: 3, classes: ['menu_button'] },
+                { text: '✂️ 裁剪', result: 4, classes: ['menu_button'] }
             ],
         };
 
@@ -1347,7 +1347,7 @@ export async function generateWithHorde(prompt, entityName, localApply, refresh)
             try {
                 const dataUrl = await genPromise;
                 const cropped = await ctx.callGenericPopup(
-                    'Set the crop position of the portrait',
+                    '设置头像的裁剪位置',
                     ctx.POPUP_TYPE?.CROP ?? 4,
                     '',
                     { cropImage: dataUrl, cropAspect: 1 }
@@ -1358,7 +1358,7 @@ export async function generateWithHorde(prompt, entityName, localApply, refresh)
                     await showPreview(dataUrl);
                 }
             } catch (err) {
-                toastr['error']('Cannot crop — generation failed: ' + err.message, 'RPG Tracker');
+                toastr['error']('无法裁剪 — 生成失败: ' + err.message, 'RPG 追踪器');
                 await showPreview();
             }
         } else if (result) {
@@ -1368,9 +1368,9 @@ export async function generateWithHorde(prompt, entityName, localApply, refresh)
                 const finalUrl = dataUrl.startsWith('data:') ? await scaleImageTo512Square(dataUrl) : dataUrl;
                 await localApply(finalUrl);
                 if (typeof refresh === 'function') refresh();
-                imageGenToast('success', `Portrait applied for ${entityName}!`, 'RPG Tracker');
+                imageGenToast('success', `已为 ${entityName} 应用头像！`, 'RPG 追踪器');
             } catch (err) {
-                toastr['error']('Cannot apply — generation failed: ' + err.message, 'RPG Tracker');
+                toastr['error']('无法应用 — 生成失败: ' + err.message, 'RPG 追踪器');
             }
         }
     };
@@ -1502,7 +1502,7 @@ export async function autoGeneratePartyPortraits(refresh) {
     const ownsOperation = createChatCommitGuard(getActiveChatId(), getActiveChatId);
     const s = getSettings();
     if (!s.currentMemo) {
-        toastr['warning']('No live state memo found.', 'RPG Tracker');
+        toastr['warning']('未找到实时状态备忘录。', 'RPG 追踪器');
         return;
     }
 
@@ -1527,25 +1527,25 @@ export async function autoGeneratePartyPortraits(refresh) {
 
     const partyMembers = Array.from(namesSet);
     if (partyMembers.length === 0) {
-        toastr['warning']('No party members or characters found in the current state memo.', 'RPG Tracker');
+        toastr['warning']('当前状态备忘录中未找到队伍成员或角色。', 'RPG 追踪器');
         return;
     }
 
     // Filter out those who already have a portrait
     const toGenerate = partyMembers.filter(name => !hasPortrait(name));
     if (toGenerate.length === 0) {
-        imageGenToast('info', 'All party members and characters already have portraits.', 'RPG Tracker');
+        imageGenToast('info', '所有队伍成员和角色均已拥有头像。', 'RPG 追踪器');
         return;
     }
 
-    imageGenToast('info', `Starting auto-generation for ${toGenerate.length} party members...`, 'RPG Tracker');
+    imageGenToast('info', `开始为 ${toGenerate.length} 位队伍成员自动生成头像...`, 'RPG 追踪器');
     let successCount = 0;
     // AI Horde can take minutes; pin so a mid-flight chat switch cannot land
     // these portraits in the arriving chat's map.
     const passChatId = getActiveChatId();
 
     for (const name of toGenerate) {
-        imageGenToast('info', `Generating for ${name}...`, 'RPG Tracker');
+        imageGenToast('info', `正在为 ${name} 生成...`, 'RPG 追踪器');
         try {
             const prompt = chatCommitResult(ownsOperation, await generatePortraitPrompt(name));
             const dataUrl = chatCommitResult(ownsOperation, await generatePortraitDirect(prompt, name));
@@ -1556,12 +1556,12 @@ export async function autoGeneratePartyPortraits(refresh) {
         } catch (err) {
             if (!ownsOperation()) return;
 
-            toastr['error'](`Failed for ${name}: ${err.message}`, 'RPG Tracker');
+            toastr['error'](`为 ${name} 生成失败: ${err.message}`, 'RPG 追踪器');
         }
     }
 
     if (successCount > 0) {
-        imageGenToast('success', `Finished! Applied ${successCount} party portraits.`, 'RPG Tracker');
+        imageGenToast('success', `完成！已应用 ${successCount} 个队伍头像。`, 'RPG 追踪器');
     }
 }
 
@@ -1574,23 +1574,23 @@ export async function autoGenerateEnemyPortraits(refresh) {
     const ownsOperation = createChatCommitGuard(getActiveChatId(), getActiveChatId);
     const enemies = getEnemyEntities();
     if (enemies.length === 0) {
-        toastr['warning']('No enemies found in the current COMBAT block.', 'RPG Tracker');
+        toastr['warning']('当前战斗数据块中未找到敌人。', 'RPG 追踪器');
         return;
     }
 
     // Filter out those who already have a portrait
     const toGenerate = enemies.filter(name => !hasPortrait(name));
     if (toGenerate.length === 0) {
-        imageGenToast('info', 'All enemies already have portraits.', 'RPG Tracker');
+        imageGenToast('info', '所有敌人均已拥有头像。', 'RPG 追踪器');
         return;
     }
 
-    imageGenToast('info', `Starting auto-generation for ${toGenerate.length} enemies...`, 'RPG Tracker');
+    imageGenToast('info', `开始为 ${toGenerate.length} 个敌人自动生成头像...`, 'RPG 追踪器');
     let successCount = 0;
     const passChatId = getActiveChatId();
 
     for (const name of toGenerate) {
-        imageGenToast('info', `Generating for enemy ${name}...`, 'RPG Tracker');
+        imageGenToast('info', `正在为敌人 ${name} 生成...`, 'RPG 追踪器');
         try {
             const prompt = chatCommitResult(ownsOperation, await generatePortraitPrompt(name));
             const dataUrl = chatCommitResult(ownsOperation, await generatePortraitDirect(prompt, name));
@@ -1601,12 +1601,12 @@ export async function autoGenerateEnemyPortraits(refresh) {
         } catch (err) {
             if (!ownsOperation()) return;
 
-            toastr['error'](`Failed for enemy ${name}: ${err.message}`, 'RPG Tracker');
+            toastr['error'](`为敌人 ${name} 生成失败: ${err.message}`, 'RPG 追踪器');
         }
     }
 
     if (successCount > 0) {
-        imageGenToast('success', `Finished! Applied ${successCount} enemy portraits.`, 'RPG Tracker');
+        imageGenToast('success', `完成！已应用 ${successCount} 个敌人头像。`, 'RPG 追踪器');
     }
 }
 
@@ -1618,7 +1618,7 @@ export async function removeAllPortraits(refresh) {
     const s = getSettings();
     await purgeAllPortraitData(s);
     await saveSettings(true);
-    toastr['success']('All custom portraits removed (including saved chat copies).', 'RPG Tracker');
+    toastr['success']('所有自定义头像已移除（包括已保存的聊天副本）。', 'RPG 追踪器');
     if (typeof refresh === 'function') refresh();
 }
 
@@ -1771,12 +1771,12 @@ export function triggerBackgroundPortraitGeneration(name, refresh, npcContent = 
             const is524 = errMsg.includes('524') || errMsg.includes('timeout') || errMsg.includes('Upstream');
             if (is524) {
                 toastr['warning'](
-                    `Portrait generation for "${name}" failed: LLM connection timed out (524). The portrait prompt is written by your main LLM model — check your State Tracker connection settings and ensure it is online.`,
-                    'RPG Tracker',
+                    `"${name}" 的头像生成失败: LLM 连接超时 (524)。头像提示词由您的主 LLM 模型生成——请检查状态追踪器连接设置并确保其在线。`,
+                    'RPG 追踪器',
                     { timeOut: 8000 }
                 );
             } else {
-                toastr['error'](`Portrait generation failed for "${name}": ${errMsg.substring(0, 120)}`, 'RPG Tracker');
+                toastr['error'](`"${name}" 的头像生成失败: ${errMsg.substring(0, 120)}`, 'RPG 追踪器');
             }
         } finally {
             activeGenerations.delete(name);
@@ -2519,7 +2519,7 @@ export function triggerBackgroundLocationGeneration(locationPath, refresh, locCo
                     stopRealtimeLocationGeneration();
                 }
             } else {
-                toastr['error'](`Location image generation failed for "${leaf}": ${errMsg.substring(0, 120)}`, 'RPG Tracker');
+                toastr['error'](`"${leaf}" 的地点图像生成失败: ${errMsg.substring(0, 120)}`, 'RPG 追踪器');
             }
         } finally {
             if (activeRealtimeLocationAbortController === realtimeAbortController) {

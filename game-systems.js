@@ -115,16 +115,16 @@ function persistWizardSystemPrompt(settings, text) {
 function buildWizardPromptEditorHtml(textareaId, promptText) {
     return `
         <details style="border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:8px 10px; background:rgba(0,0,0,0.12);">
-            <summary style="cursor:pointer; font-size:11px; font-weight:bold; opacity:0.9;">Wizard system prompt <span style="font-weight:normal; opacity:0.65;">(view / edit / copy for Gemini &amp; other bots)</span></summary>
+            <summary style="cursor:pointer; font-size:11px; font-weight:bold; opacity:0.9;">向导系统提示词 <span style="font-weight:normal; opacity:0.65;">(查看 / 编辑 / 复制以用于 Gemini 或其它 Bot)</span></summary>
             <div style="font-size:10px; opacity:0.6; line-height:1.35; margin:8px 0 6px;">
-                Base architect instructions (no example block). During Generate / Regenerate / Iterate, a Sustenance example matching the current <b>Effect owner</b> choice is appended automatically. Copy this text for external bots — add the example half that matches your effect-owner mode if you want a full reference.
+                基础构架提示词指令（不含示例代码块）。在生成 / 重新生成 / 迭代期间，将自动附加与当前<b>效果归属</b>选择相匹配的维生示例。可复制此文本用于外部 Bot。
             </div>
             <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
                 <button type="button" class="menu_button interactable rt-gs-copy-wizard-prompt" data-target="${textareaId}" style="font-size:11px; padding:3px 10px;">
-                    <i class="fa-solid fa-copy"></i> Copy prompt
+                    <i class="fa-solid fa-copy"></i> 复制提示词
                 </button>
                 <button type="button" class="menu_button interactable rt-gs-reset-wizard-prompt" data-target="${textareaId}" style="font-size:11px; padding:3px 10px;">
-                    <i class="fa-solid fa-rotate-left"></i> Reset to default
+                    <i class="fa-solid fa-rotate-left"></i> 恢复默认
                 </button>
             </div>
             <textarea id="${textareaId}" class="text_pole" rows="12" style="${GS_WIZARD_PROMPT_TEXTAREA_STYLE}">${escapeHtml(promptText)}</textarea>
@@ -138,12 +138,12 @@ function bindWizardPromptEditor(settings, textareaId) {
         if (!ta) return;
         try {
             await navigator.clipboard.writeText(ta.value);
-            toastr['success']('Wizard system prompt copied.', 'Game System Wizard');
+            toastr['success']('向导系统提示词已复制。', '游戏系统向导');
         } catch {
             ta.focus();
             ta.select();
             document.execCommand('copy');
-            toastr['success']('Wizard system prompt copied.', 'Game System Wizard');
+            toastr['success']('向导系统提示词已复制。', '游戏系统向导');
         }
     });
     document.querySelector(`.rt-gs-reset-wizard-prompt[data-target="${textareaId}"]`)?.addEventListener('click', () => {
@@ -151,7 +151,7 @@ function bindWizardPromptEditor(settings, textareaId) {
         if (!ta) return;
         ta.value = buildWizardSystemPrompt();
         persistWizardSystemPrompt(settings, '');
-        toastr['info']('Wizard system prompt reset to default.', 'Game System Wizard');
+        toastr['info']('向导系统提示词已恢复为默认。', '游戏系统向导');
     });
     const ta = document.getElementById(textareaId);
     ta?.addEventListener('change', () => persistWizardSystemPrompt(settings, ta.value));
@@ -703,9 +703,9 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
         : content;
 
     const titleMap = {
-        ai: '✨ Review Generated Section',
-        manual: '📝 Add Section Manually',
-        edit: '✏️ Edit Section',
+        ai: '✨ 审查生成的章节',
+        manual: '📝 手动添加章节',
+        edit: '✏️ 编辑章节',
     };
 
     const showSaveOptions = mode !== 'edit';
@@ -715,36 +715,36 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
         <div id="rt-section-editor" style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box;">
             <div style="display:flex; gap:8px;">
                 <div style="flex:1;">
-                    <div style="font-size:11px; opacity:0.7; margin-bottom:4px;">Tag Name (snake_case)</div>
+                    <div style="font-size:11px; opacity:0.7; margin-bottom:4px;">标签名称 (snake_case)</div>
                     <input id="rt-se-tag" type="text" class="text_pole" value="${escapeHtml(tag)}"
-                        placeholder="e.g. reputation_system"
+                        placeholder="例如 reputation_system"
                         style="width:100%; font-size:12px; font-family:monospace;">
                 </div>
                 <div style="flex:2;">
-                    <div style="font-size:11px; opacity:0.7; margin-bottom:4px;">Label / Description</div>
+                    <div style="font-size:11px; opacity:0.7; margin-bottom:4px;">标签 / 描述</div>
                     <input id="rt-se-desc" type="text" class="text_pole" value="${escapeHtml(description)}"
-                        placeholder="Brief description of this section"
+                        placeholder="对此章节的简短描述"
                         style="width:100%; font-size:12px;">
                 </div>
             </div>
             <div>
-                <div style="font-size:11px; opacity:0.7; margin-bottom:4px;">XML Content — paste or edit freely (outer XML tag is managed automatically)</div>
+                <div style="font-size:11px; opacity:0.7; margin-bottom:4px;">XML 内容 — 可自由粘贴或编辑 (外层 XML 标签由程序自动管理)</div>
                 <textarea id="rt-se-content" class="text_pole" rows="18"
                     style="width:100%; max-width:100%; box-sizing:border-box; font-size:11px; font-family:monospace; resize:vertical; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; min-height:280px;"
-                    placeholder="  Rules go here...\n  - Rule 1\n  - Rule 2"
+                    placeholder="  规则填写在此处...\n  - 规则 1\n  - 规则 2"
                     >${escapeHtml(editorContent)}</textarea>
             </div>
-            ${showRegenerate ? `<button id="rt-se-regen" class="menu_button interactable" style="background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4); width:100%;"><i class="fa-solid fa-rotate"></i> Regenerate with AI</button>` : ''}
+            ${showRegenerate ? `<button id="rt-se-regen" class="menu_button interactable" style="background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4); width:100%;"><i class="fa-solid fa-rotate"></i> 使用 AI 重新生成</button>` : ''}
             ${showSaveOptions ? `
             <div style="padding:10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2);">
-                <div style="font-size:11px; font-weight:bold; margin-bottom:6px;">Save Options:</div>
+                <div style="font-size:11px; font-weight:bold; margin-bottom:6px;">保存选项：</div>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; margin-bottom:4px;">
                     <input type="radio" name="rt_se_save_mode" id="rt-se-mode-apply" value="apply" checked style="margin:0;">
-                    <span style="font-size:12px;">Save to Library &amp; Apply to Sysprompt</span>
+                    <span style="font-size:12px;">保存到库并应用到系统提示词</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
                     <input type="radio" name="rt_se_save_mode" id="rt-se-mode-library" value="library" style="margin:0;">
-                    <span style="font-size:12px;">Save to Library Only</span>
+                    <span style="font-size:12px;">仅保存到库</span>
                 </label>
             </div>` : ''}
         </div>
@@ -787,7 +787,7 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
                 regenBtn.addEventListener('click', async () => {
                     const currentDescVal = descEl ? descEl.value.trim() : description;
                     regenBtn.disabled = true;
-                    regenBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Regenerating...';
+                    regenBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在重新生成...';
                     try {
                         const newContent = await onRegenerate(currentDescVal);
                         const extractedTag = newContent.match(/^<(\w+[\w_-]*)/)?.[1];
@@ -805,12 +805,12 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
                                 currentTag = extractedTag;
                             }
                         }
-                        toastr['success']('Section regenerated!', 'AI Section Builder');
+                        toastr['success']('章节已重新生成！', 'AI 章节构建器');
                     } catch (err) {
-                        toastr['error'](`Regeneration failed: ${err.message}`, 'AI Section Builder');
+                        toastr['error'](`重新生成失败: ${err.message}`, 'AI 章节构建器');
                     } finally {
                         regenBtn.disabled = false;
-                        regenBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerate with AI';
+                        regenBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> 使用 AI 重新生成';
                     }
                 });
             }
@@ -818,15 +818,15 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
     }, 100);
 
     const confirmed = await Popup.show.confirm(
-        titleMap[mode] || '📝 Section Editor',
+        titleMap[mode] || '📝 章节编辑器',
         editorHtml,
-        { okButton: mode === 'edit' ? 'Save Changes' : 'Save Section', cancelButton: 'Cancel', ...GS_POPUP_LARGE }
+        { okButton: mode === 'edit' ? '保存更改' : '保存章节', cancelButton: '取消', ...GS_POPUP_LARGE }
     );
     if (!confirmed) return null;
 
     let finalContent = currentContent.trim();
     if (!finalContent) {
-        toastr['warning']('Section content cannot be empty.', 'Section Builder');
+        toastr['warning']('章节内容不能为空。', '章节构建器');
         return null;
     }
     let finalTag = currentTag.trim().replace(/[^\w_-]/g, '');
@@ -861,7 +861,7 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
  */
 export async function resetSyspromptLibrary(options = {}) {
     const { deferPersistence = false } = options;
-    if (!confirm('This will remove all AI-generated / manually-added custom sections (Game Systems and Unlocked Sections are left untouched) and restore the default section order. Proceed?')) return;
+    if (!confirm('这将移除所有由 AI 生成 / 手动添加的自定义章节（游戏系统和已解锁的基础章节将保留），并恢复默认的章节顺序。是否继续？')) return;
     const settings = getSettings();
     const removedIds = (settings.customSyspromptLibrary || [])
         .filter(p => p.origin !== 'unlocked_base' && p.origin !== 'wizard')
@@ -871,7 +871,7 @@ export async function resetSyspromptLibrary(options = {}) {
     settings.syspromptSectionOrder = [];
     await persistSyspromptChanges(deferPersistence);
     if (!deferPersistence) {
-        toastr['success']('Custom sections cleared & section order reset to defaults! 🔄', 'System Prompt Control Room');
+        toastr['success']('自定义章节已清除，章节顺序已恢复为默认！🔄', '系统提示词中控台');
     }
 }
 
@@ -896,13 +896,13 @@ export async function runAiSectionBuilder(options = {}) {
     const { Popup } = SillyTavern.getContext();
     const inputContent = `
         <div style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box;">
-            <div style="font-size:13px; opacity:0.9; font-weight:bold;">✨ AI Section Builder</div>
+            <div style="font-size:13px; opacity:0.9; font-weight:bold;">✨ AI 章节构建器</div>
             <div style="font-size:11px; opacity:0.7; line-height:1.4;">
-                Describe a new system, mechanic, or rule you want added to your D&amp;D system prompt. The AI will generate a properly formatted XML section ready to be appended.
+                描述您想要添加到 D&amp;D 系统提示词中的新系统、机制或规则。AI 将生成格式正确的 XML 章节，并可直接附加。
             </div>
             <textarea id="rt_ai_section_desc" rows="4" class="text_pole"
                 style="font-size:12px; resize:vertical; width:100%;"
-                placeholder="Example: A reputation system where NPCs in different factions track the player's standing."></textarea>
+                placeholder="例如：一个声望系统，不同阵营的 NPC 会追踪玩家的声望地位。"></textarea>
         </div>
     `;
 
@@ -912,16 +912,16 @@ export async function runAiSectionBuilder(options = {}) {
         if (ta) ta.addEventListener('input', () => { description = ta.value.trim(); });
     }, 100);
 
-    const inputResult = await Popup.show.confirm('✨ AI Section Builder', inputContent, { okButton: 'Generate', cancelButton: 'Cancel', wide: true, large: true });
+    const inputResult = await Popup.show.confirm('✨ AI 章节构建器', inputContent, { okButton: '生成', cancelButton: '取消', wide: true, large: true });
     if (!inputResult) return;
 
     if (!description) {
-        toastr['warning']('Please describe the mechanic/system you want.', 'AI Section Builder');
+        toastr['warning']('请描述您需要的机制或系统。', 'AI 章节构建器');
         return;
     }
 
     // Step 2: generate
-    toastr['info']('Generating section with AI...', 'AI Section Builder', { timeOut: 3000 });
+    toastr['info']('正在使用 AI 生成章节...', 'AI 章节构建器', { timeOut: 3000 });
     try {
         const section = await generateSection(description);
         const extractedTag = section.match(/^<(\w+[\w_-]*)/)?.[1] || '';
@@ -935,7 +935,7 @@ export async function runAiSectionBuilder(options = {}) {
             onRegenerate: generateSection,
         });
         if (!result) {
-            toastr['info']('Section builder cancelled.', 'AI Section Builder');
+            toastr['info']('章节构建已取消。', 'AI 章节构建器');
             return;
         }
 
@@ -955,14 +955,14 @@ export async function runAiSectionBuilder(options = {}) {
 
         if (!deferPersistence) {
             if (result.saveMode === 'apply') {
-                toastr['success']('Saved to Library & Applied to Sysprompt! \u2705', 'AI Section Builder');
+                toastr['success']('已保存到库并应用到系统提示词！✅', 'AI 章节构建器');
             } else {
-                toastr['success']('Saved to Library! \u2705', 'AI Section Builder');
+                toastr['success']('已保存到库！✅', 'AI 章节构建器');
             }
         }
     } catch (err) {
         console.error('[RPG Tracker] AI Section Builder error:', err);
-        toastr['error'](`Failed to generate section: ${err.message}`, 'AI Section Builder');
+        toastr['error'](`生成章节失败: ${err.message}`, 'AI 章节构建器');
     }
 }
 
@@ -979,7 +979,7 @@ export async function runManualSectionBuilder(options = {}) {
         enabled: result.saveMode === 'apply',
         scope: 'chat',
         icon: 'fa-pen-to-square',
-        description: result.description || 'Custom Section',
+        description: result.description || '自定义章节',
     };
 
     settings.customSyspromptLibrary = settings.customSyspromptLibrary || [];
@@ -988,9 +988,9 @@ export async function runManualSectionBuilder(options = {}) {
 
     if (!deferPersistence) {
         if (result.saveMode === 'apply') {
-            toastr['success']('Saved to Library & Applied to Sysprompt! \u2705', 'Section Builder');
+            toastr['success']('已保存到库并应用到系统提示词！✅', '章节构建器');
         } else {
-            toastr['success']('Saved to Library! \u2705', 'Section Builder');
+            toastr['success']('已保存到库！✅', '章节构建器');
         }
     }
 }
@@ -1460,11 +1460,11 @@ async function promptGameSystemIterationFeedback() {
     const inputHtml = `
         <div style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box; text-align:left;">
             <div style="font-size:11px; opacity:0.75; line-height:1.4;">
-                Describe what to change, add, or fix. The AI will revise the current draft in place — tags, drivers, and effect owner stay as configured on the review screen.
+                描述您想要修改、添加或修复的内容。AI 将就地修订当前草稿——标签、驱动方式和效果归属将保留在审查屏幕上的配置。
             </div>
             <textarea id="rt_gs_iterate_feedback" rows="5" class="text_pole"
                 style="font-size:12px; resize:vertical; width:100%;"
-                placeholder="Example: Remove the GM delta annotations — thirst should only tick from [TIME], not from narrative judgment. Make the GM section a short blurb plus item restore values only."></textarea>
+                placeholder="例如：移除 DM 增减量标注——口渴值只应随 [TIME] 增加，而非来自叙事判定。使 DM 章节保持为简短说明并仅附带物品恢复数值。"></textarea>
         </div>
     `;
 
@@ -1479,14 +1479,14 @@ async function promptGameSystemIterationFeedback() {
         }
     }, 100);
 
-    const inputResult = await Popup.show.confirm('✨ Iterate with AI', inputHtml, { okButton: 'Apply Changes', cancelButton: 'Cancel' });
+    const inputResult = await Popup.show.confirm('✨ 使用 AI 迭代', inputHtml, { okButton: '应用更改', cancelButton: '取消' });
     if (!inputResult) return null;
     if (!feedback) {
         const ta = document.getElementById('rt_gs_iterate_feedback');
         feedback = ta?.value?.trim() || '';
     }
     if (!feedback) {
-        toastr['warning']('Please describe what you want changed.', 'Game System Wizard');
+        toastr['warning']('请描述您希望做出的更改。', '游戏系统向导');
         return null;
     }
     return feedback;
@@ -1524,75 +1524,75 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
     const html = `
         <div id="rt-gs-preview" style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box; text-align:left;">
             <div style="display:flex; gap:8px;">
-                <input id="rt-gs-icon" type="text" class="text_pole" value="${escapeHtml(state.icon)}" style="width:44px; text-align:center;" title="Icon (emoji)">
-                <input id="rt-gs-name" type="text" class="text_pole" value="${escapeHtml(state.name)}" style="flex:1;" placeholder="System name">
+                <input id="rt-gs-icon" type="text" class="text_pole" value="${escapeHtml(state.icon)}" style="width:44px; text-align:center;" title="图标 (Emoji)">
+                <input id="rt-gs-name" type="text" class="text_pole" value="${escapeHtml(state.name)}" style="flex:1;" placeholder="系统名称">
             </div>
 
             <label class="checkbox_label" style="font-size:12px;">
                 <input type="checkbox" id="rt-gs-include-tracker" ${state.includeTracker ? 'checked' : ''}>
-                <span>Needs a tracker module (persistent state tracked every turn)</span>
+                <span>需要追踪器模块（每回合追踪持久状态）</span>
             </label>
 
             <div id="rt-gs-driver-row" style="display:${state.includeTracker ? 'flex' : 'none'}; flex-direction:column; gap:8px; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:6px; border:1px solid rgba(255,255,255,0.08);">
-                <div style="font-size:11px; font-weight:bold; opacity:0.8;">How does the value change? (pick one or more)</div>
+                <div style="font-size:11px; font-weight:bold; opacity:0.8;">数值如何变化？（选择一项或多项）</div>
                 <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; cursor:pointer;">
                     <input type="checkbox" id="rt-gs-driver-time" ${state.driverTime ? 'checked' : ''} style="margin-top:2px;">
-                    <span><b>Auto-ticks over time</b> — drifts automatically each turn based on elapsed [TIME] minutes. Use for hunger, thirst, fatigue, torch fuel.</span>
+                    <span><b>随时间自动变化</b> — 每回合根据流逝的 [TIME] 分钟数自动递增/减。适用于饥饿、口渴、疲劳、火把燃料。</span>
                 </label>
                 <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; cursor:pointer;">
                     <input type="checkbox" id="rt-gs-driver-gm" ${state.driverGmAnnotation ? 'checked' : ''} style="margin-top:2px;">
-                    <span><b>GM declares deltas</b> — needs narrative judgment only the full-context Narrator can make. Use for faction reputation, trust, sanity.</span>
+                    <span><b>DM 判定增减量</b> — 需要仅全上下文叙述者才能做出的叙事判定。适用于阵营声望、信任度、理智值。</span>
                 </label>
                 <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; cursor:pointer;">
                     <input type="checkbox" id="rt-gs-driver-fact" ${state.driverStatedFact ? 'checked' : ''} style="margin-top:2px;">
-                    <span><b>Tracker reads a stated fact</b> — the exact number is already plain in the narration each turn (e.g. a stated damage amount).</span>
+                    <span><b>追踪器读取明确事实</b> — 每回合叙述中已直接出现确切数值（例如声明受到的伤害数值）。</span>
                 </label>
-                <div style="font-size:10px; opacity:0.55; line-height:1.3;">Most mechanics need exactly one. Combine only when genuinely mixed (e.g. radiation ticking from exposure time, plus an occasional GM-judged narrative jolt).</div>
+                <div style="font-size:10px; opacity:0.55; line-height:1.3;">大多数机制仅需单选。仅在确实混合时组合（例如辐射随暴露时间递增，外加偶发的 DM 叙事剧变）。</div>
             </div>
 
             <div id="rt-gs-effect-owner-row" style="display:${state.includeTracker ? 'flex' : 'none'}; flex-direction:column; gap:8px; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:6px; border:1px solid rgba(255,255,255,0.08);">
                 <div style="display:flex; align-items:center; gap:14px;">
-                    <span style="font-size:11px; font-weight:bold; opacity:0.8; width:110px;">Effect owner:</span>
+                    <span style="font-size:11px; font-weight:bold; opacity:0.8; width:110px;">效果归属：</span>
                     <label style="display:flex; align-items:center; gap:5px; font-size:12px; cursor:pointer;">
-                        <input type="radio" name="rt_gs_effect_owner" value="tracker" ${state.effectOwner === 'tracker' ? 'checked' : ''}> Tracker (effects in state memo)
+                        <input type="radio" name="rt_gs_effect_owner" value="tracker" ${state.effectOwner === 'tracker' ? 'checked' : ''}> 追踪器（效果置于状态备忘录）
                     </label>
                     <label style="display:flex; align-items:center; gap:5px; font-size:12px; cursor:pointer;">
-                        <input type="radio" name="rt_gs_effect_owner" value="gm" ${state.effectOwner === 'gm' ? 'checked' : ''}> GM section (effects in main sysprompt)
+                        <input type="radio" name="rt_gs_effect_owner" value="gm" ${state.effectOwner === 'gm' ? 'checked' : ''}> DM 章节（效果置于主系统提示词）
                     </label>
                 </div>
-                <div style="font-size:10px; opacity:0.55; line-height:1.3;">Changing effect owner rewrites which half owns threshold consequences. Use <b>Regenerate Both</b> after switching — the appended Sustenance example updates to match.</div>
+                <div style="font-size:10px; opacity:0.55; line-height:1.3;">更改效果归属将重写哪一部分负责阈值惩罚/效果。切换后请点击<b>全部重新生成</b>——附加的维生示例将随之更新匹配。</div>
             </div>
 
             <div id="rt-gs-regen-both-row" style="display:${state.includeTracker ? 'flex' : 'none'}; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; background:rgba(255,180,60,0.08); border:1px solid rgba(255,180,60,0.3); border-radius:6px;">
-                <span style="font-size:11px; opacity:0.8; line-height:1.3;">Changed a driver or the effect owner above? Regenerate both halves together so they don't fall out of sync.</span>
-                <button id="rt-gs-regen-both" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(255,180,60,0.18); border-color:rgba(255,180,60,0.5);" title="Regenerate both the GM section and tracker module together, using the current drivers/effect owner">
-                    <i class="fa-solid fa-arrows-rotate"></i> Regenerate Both
+                <span style="font-size:11px; opacity:0.8; line-height:1.3;">在上方更改了驱动方式或效果归属？请将两部分一同重新生成以避免脱节。</span>
+                <button id="rt-gs-regen-both" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(255,180,60,0.18); border-color:rgba(255,180,60,0.5);" title="根据当前的驱动方式/效果归属，同时重新生成 DM 章节和追踪器模块">
+                    <i class="fa-solid fa-arrows-rotate"></i> 全部重新生成
                 </button>
             </div>
 
             <div id="rt-gs-iterate-row" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; background:rgba(180,100,255,0.08); border:1px solid rgba(180,100,255,0.3); border-radius:6px;">
-                <span style="font-size:11px; opacity:0.8; line-height:1.3;">Want specific changes? Tell the AI what to fix — it revises the current draft in place.</span>
-                <button id="rt-gs-iterate" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(180,100,255,0.18); border-color:rgba(180,100,255,0.5);" title="Describe changes and let AI revise the current GM section and tracker module">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Iterate with AI
+                <span style="font-size:11px; opacity:0.8; line-height:1.3;">需要特定调整？告诉 AI 要修改什么——它将就地修订当前草稿。</span>
+                <button id="rt-gs-iterate" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(180,100,255,0.18); border-color:rgba(180,100,255,0.5);" title="描述修改要求并让 AI 修订当前的 DM 章节和追踪器模块">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 使用 AI 迭代
                 </button>
             </div>
 
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.12);">
-                <span style="font-size:11px; font-weight:bold; opacity:0.85;">AI context for Regenerate / Iterate</span>
-                <span style="font-size:10px; opacity:0.6;">Last</span>
+                <span style="font-size:11px; font-weight:bold; opacity:0.85;">重新生成 / 迭代的 AI 上下文</span>
+                <span style="font-size:10px; opacity:0.6;">最近</span>
                 <input id="rt_gs_preview_lookback" type="number" min="0" max="200" step="1" value="${previewContextPrefs.lookback}" class="text_pole" style="width:72px; font-size:11px;">
-                <span style="font-size:10px; opacity:0.6;">chat messages</span>
+                <span style="font-size:10px; opacity:0.6;">条聊天消息</span>
                 <label style="display:flex; align-items:center; gap:5px; font-size:11px; cursor:pointer;">
                     <input id="rt_gs_preview_lookback_all" type="checkbox" ${previewContextPrefs.lookbackAll ? 'checked' : ''}>
-                    <span>Entire chat</span>
+                    <span>全部聊天</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:5px; font-size:11px; cursor:pointer;">
                     <input id="rt_gs_preview_inject_lore" type="checkbox" ${previewContextPrefs.injectLore ? 'checked' : ''}>
-                    <span>Lorebook Agent lore</span>
+                    <span>世界书代理设定</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:5px; font-size:11px; cursor:pointer;">
                     <input id="rt_gs_preview_inject_memo" type="checkbox" ${previewContextPrefs.injectMemo ? 'checked' : ''}>
-                    <span>State Tracker memo</span>
+                    <span>状态追踪器备忘录</span>
                 </label>
             </div>
 
@@ -1606,8 +1606,8 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
 
             <div style="border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; background:rgba(0,0,0,0.15);">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
-                    <b style="font-size:12px;">GM Sysprompt Section &lt;<span id="rt-gs-gmtag-label">${escapeHtml(state.gmTag)}</span>&gt;</b>
-                    <button id="rt-gs-regen-gm" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Regenerate this half with AI"><i class="fa-solid fa-rotate"></i> Regenerate</button>
+                    <b style="font-size:12px;">DM 系统提示词章节 &lt;<span id="rt-gs-gmtag-label">${escapeHtml(state.gmTag)}</span>&gt;</b>
+                    <button id="rt-gs-regen-gm" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="使用 AI 重新生成此部分"><i class="fa-solid fa-rotate"></i> 重新生成</button>
                 </div>
                 <input id="rt-gs-gmtag" type="text" class="text_pole" value="${escapeHtml(state.gmTag)}" style="width:100%; font-size:11px; font-family:monospace; margin-bottom:6px;" placeholder="snake_case_tag">
                 <textarea id="rt-gs-gmcontent" class="text_pole" rows="18" style="${GS_TEXTAREA_TALL_STYLE}">${escapeHtml(state.gmContent)}</textarea>
@@ -1615,29 +1615,29 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
 
             <div id="rt-gs-tracker-block" style="display:${state.includeTracker ? 'block' : 'none'}; border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; background:rgba(0,0,0,0.15);">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
-                    <b style="font-size:12px;">Tracker Module [<span id="rt-gs-trktag-label">${escapeHtml(state.trackerTag)}</span>]</b>
-                    <button id="rt-gs-regen-tracker" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Regenerate this half with AI"><i class="fa-solid fa-rotate"></i> Regenerate</button>
+                    <b style="font-size:12px;">追踪器模块 [<span id="rt-gs-trktag-label">${escapeHtml(state.trackerTag)}</span>]</b>
+                    <button id="rt-gs-regen-tracker" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="使用 AI 重新生成此部分"><i class="fa-solid fa-rotate"></i> 重新生成</button>
                 </div>
                 <div style="display:flex; gap:6px; margin-bottom:6px;">
-                    <input id="rt-gs-trkicon" type="text" class="text_pole" value="${escapeHtml(state.trackerIcon)}" style="width:44px; text-align:center;" title="Icon (emoji)">
+                    <input id="rt-gs-trkicon" type="text" class="text_pole" value="${escapeHtml(state.trackerIcon)}" style="width:44px; text-align:center;" title="图标 (Emoji)">
                     <input id="rt-gs-trktag" type="text" class="text_pole" value="${escapeHtml(state.trackerTag)}" style="width:140px; font-family:monospace;" placeholder="TAG">
-                    <input id="rt-gs-trklabel" type="text" class="text_pole" value="${escapeHtml(state.trackerLabel)}" style="flex:1;" placeholder="Display label">
+                    <input id="rt-gs-trklabel" type="text" class="text_pole" value="${escapeHtml(state.trackerLabel)}" style="flex:1;" placeholder="显示标签">
                 </div>
                 <textarea id="rt-gs-trkcontent" class="text_pole" rows="18" style="${GS_TEXTAREA_TALL_STYLE}">${escapeHtml(state.trackerContent)}</textarea>
-                <div style="margin-top:10px; font-size:11px; font-weight:bold;">UI Live Preview</div>
-                <div style="font-size:10px; opacity:0.58; line-height:1.35; margin:3px 0 6px;">Automatically renders the last complete [${escapeHtml(state.trackerTag)}] sample block found above. Edit that source block to update this read-only preview.</div>
+                <div style="margin-top:10px; font-size:11px; font-weight:bold;">UI 实时预览</div>
+                <div style="font-size:10px; opacity:0.58; line-height:1.35; margin:3px 0 6px;">自动渲染上方找到的最后一个完整的 [${escapeHtml(state.trackerTag)}] 示例数据块。编辑该源码块即可更新此只读预览。</div>
                 <div id="rt-gs-ui-live-preview" class="rpg-tracker-render-view" style="min-height:58px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2); padding:4px; overflow:hidden;"></div>
             </div>
 
             <div style="padding:10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2);">
-                <div style="font-size:11px; font-weight:bold; margin-bottom:6px;">Save Options:</div>
+                <div style="font-size:11px; font-weight:bold; margin-bottom:6px;">保存选项：</div>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; margin-bottom:4px;">
                     <input type="radio" name="rt_gs_save_mode" id="rt-gs-mode-apply" value="apply" checked style="margin:0;">
-                    <span style="font-size:12px;">Enable &amp; Apply Now</span>
+                    <span style="font-size:12px;">立即启用并应用</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
                     <input type="radio" name="rt_gs_save_mode" id="rt-gs-mode-disabled" value="disabled" style="margin:0;">
-                    <span style="font-size:12px;">Save Disabled (enable later)</span>
+                    <span style="font-size:12px;">保存为禁用（稍后启用）</span>
                 </label>
             </div>
         </div>
@@ -1826,12 +1826,12 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
                     state.gmContent = content;
                     const ta = $id('rt-gs-gmcontent');
                     if (ta) ta.value = content;
-                    toastr['success']('GM section regenerated!', 'Game System Wizard');
+                    toastr['success']('DM 章节已重新生成！', '游戏系统向导');
                 } catch (err) {
-                    toastr['error'](`Regeneration failed: ${err.message}`, 'Game System Wizard');
+                    toastr['error'](`重新生成失败: ${err.message}`, '游戏系统向导');
                 } finally {
                     regenGmBtn.disabled = false;
-                    regenGmBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerate';
+                    regenGmBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> 重新生成';
                 }
             });
         }
@@ -1852,29 +1852,29 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
                     const iconEl = $id('rt-gs-trkicon');
                     if (iconEl && block.attrs.icon) iconEl.value = block.attrs.icon;
                     renderUiLivePreview();
-                    toastr['success']('Tracker module regenerated!', 'Game System Wizard');
+                    toastr['success']('追踪器模块已重新生成！', '游戏系统向导');
                 } catch (err) {
-                    toastr['error'](`Regeneration failed: ${err.message}`, 'Game System Wizard');
+                    toastr['error'](`重新生成失败: ${err.message}`, '游戏系统向导');
                 } finally {
                     regenTrkBtn.disabled = false;
-                    regenTrkBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerate';
+                    regenTrkBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> 重新生成';
                 }
             });
         }
         if (regenBothBtn) {
             regenBothBtn.addEventListener('click', async () => {
                 setPreviewBusy(true);
-                regenBothBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Regenerating…';
+                regenBothBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在重新生成…';
                 try {
                     const drivers = { time: state.driverTime, gmAnnotation: state.driverGmAnnotation, statedFact: state.driverStatedFact };
                     const both = await regenerateBothHalves(settings, description || state.name, sanitizeSnakeTag(state.gmTag), sanitizeUpperTag(state.trackerTag), drivers, state.effectOwner, getWizardSystemPrompt());
                     applyDraftToPreview(both);
-                    toastr['success']('Both halves regenerated together!', 'Game System Wizard');
+                    toastr['success']('两部分已同步重新生成！', '游戏系统向导');
                 } catch (err) {
-                    toastr['error'](`Regeneration failed: ${err.message}`, 'Game System Wizard');
+                    toastr['error'](`重新生成失败: ${err.message}`, '游戏系统向导');
                 } finally {
                     setPreviewBusy(false);
-                    regenBothBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Regenerate Both';
+                    regenBothBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> 全部重新生成';
                 }
             });
         }
@@ -1885,7 +1885,7 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
 
                 setPreviewBusy(true);
                 const prevLabel = iterateBtn.innerHTML;
-                iterateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Iterating…';
+                iterateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在迭代…';
                 try {
                     // Sync any unsaved manual textarea edits before sending to AI.
                     state.gmContent = $id('rt-gs-gmcontent')?.value ?? state.gmContent;
@@ -1906,9 +1906,9 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
                         systemPrompt: getWizardSystemPrompt(),
                     });
                     applyDraftToPreview(draft);
-                    toastr['success']('Draft updated from your feedback!', 'Game System Wizard');
+                    toastr['success']('已根据您的反馈更新草稿！', '游戏系统向导');
                 } catch (err) {
-                    toastr['error'](`Iteration failed: ${err.message}`, 'Game System Wizard');
+                    toastr['error'](`迭代失败: ${err.message}`, '游戏系统向导');
                 } finally {
                     setPreviewBusy(false);
                     iterateBtn.innerHTML = prevLabel;
@@ -1921,16 +1921,16 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
     const GS_PREVIEW_BACK = 2;
 
     const previewPopupOptions = {
-        okButton: isEdit ? 'Save Changes' : 'Create Game System',
-        cancelButton: 'Cancel',
+        okButton: isEdit ? '保存更改' : '创建游戏系统',
+        cancelButton: '取消',
         ...GS_POPUP_LARGE,
     };
     if (allowBack) {
-        previewPopupOptions.customButtons = [{ text: 'Back', result: GS_PREVIEW_BACK, icon: 'fa-arrow-left' }];
+        previewPopupOptions.customButtons = [{ text: '返回', result: GS_PREVIEW_BACK, icon: 'fa-arrow-left' }];
     }
 
     const popupResult = await Popup.show.confirm(
-        isEdit ? '✏️ Edit Game System' : '🧙 Review Generated Game System',
+        isEdit ? '✏️ 编辑游戏系统' : '🧙 审查生成的游戏系统',
         html,
         previewPopupOptions
     );
@@ -1939,15 +1939,15 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
     if (popupResult !== 1) return null;
 
     if (!state.name.trim()) {
-        toastr['warning']('Please give this game system a name.', 'Game System Wizard');
+        toastr['warning']('请为此游戏系统命名。', '游戏系统向导');
         return null;
     }
     if (!state.gmContent.trim() && !(state.includeTracker && state.trackerContent.trim())) {
-        toastr['warning']('At least a GM section or a tracker module must have content.', 'Game System Wizard');
+        toastr['warning']('DM 章节或追踪器模块至少有一方必须包含内容。', '游戏系统向导');
         return null;
     }
     if (state.includeTracker && !state.driverTime && !state.driverGmAnnotation && !state.driverStatedFact) {
-        toastr['warning']('Select at least one way the tracked value changes (time, GM deltas, or stated facts).', 'Game System Wizard');
+        toastr['warning']('请选择至少一种数值变化驱动方式（时间、DM 增减量判定或明确事实）。', '游戏系统向导');
         return null;
     }
 
@@ -2096,36 +2096,36 @@ function saveGameSystemFromPreview(result, existingSystemId = null) {
 /** Example mechanic descriptions shown as clickable chips in the wizard prompt UI. */
 const WIZARD_EXAMPLE_SYSTEMS = [
     {
-        label: '🌾 Farming',
-        text: 'A farming sim: crop plots with growth stages over in-world time, soil quality, watering/fertilizer needs, harvest yields, and seasonal planting windows.',
+        label: '🌾 农耕',
+        text: '农场模拟：作物田块随游戏内时间推进生长阶段，具备土壤质量、浇水/施肥需求、收获产出以及季节性播种窗口。',
     },
     {
-        label: '🔨 Construction',
-        text: 'A construction skill: track proficiency and project progress for building/repairing structures — XP from practice, material costs, build stages, and quality of finished work.',
+        label: '🔨 建筑建造',
+        text: '建造技能：追踪建造/修缮建筑的熟练度与工程进度——通过实践获得经验值、材料消耗、建造阶段及成品质量。',
     },
     {
-        label: '☢ Radiation',
-        text: 'Irradiated zones where the player accumulates RADS the longer they stay, with escalating debuffs at higher exposure.',
+        label: '☢ 辐射',
+        text: '辐射区域：玩家停留时间越长，积累的辐射量（RADS）越高，并在较高辐射暴露时承受逐级递增的负面效果（Debuff）。',
     },
     {
-        label: '🏛 Reputation',
-        text: 'A faction reputation system where standing with each major faction shifts based on visible deeds, quests completed for them, and public betrayals.',
+        label: '🏛 声望',
+        text: '阵营声望系统：与各大阵营的关系根据目击善举/恶行、为阵营完成的任务以及公开叛逆行为动态增减。',
     },
     {
-        label: '🍖 Hunger & Thirst',
-        text: 'Hunger and thirst as separate meters that drain over time; eating and drinking restore them with rough portion-based recovery.',
+        label: '🍖 饥渴度',
+        text: '饥饿与口渴作为随时间流逝而消耗的独立计量槽；进食与饮水可根据份量粗略恢复对应数值。',
     },
     {
-        label: '🛠 Crafting',
-        text: 'A crafting skill tree: recipe unlocks, material quality tiers, success chance by skill level, and durable crafted gear with rarity.',
+        label: '🛠 锻造工匠',
+        text: '制造工匠技能树：配方解锁、材料品质分级、基于技能等级的成功率，以及带有稀有度与耐久度的制成品装备。',
     },
     {
-        label: '⛽ Vehicle Fuel',
-        text: 'Vehicle fuel that drains with travel time/distance, refuels at stations or jerry cans, and strands the vehicle when empty.',
+        label: '⛽ 载具燃料',
+        text: '载具燃料随旅行时间/距离消耗，可在加油站或使用油桶加注，耗尽时载具将熄火抛锚。',
     },
     {
-        label: '🧠 Sanity',
-        text: 'A sanity/stress meter that drops from horror, isolation, or trauma; recovers with rest, safety, or companionship — with escalating mental-break tiers.',
+        label: '🧠 理智值',
+        text: '理智/压力槽：因恐惧、孤立或精神创伤而下降；通过休整、安全环境或同伴陪伴恢复——包含逐级恶化的精神崩溃阶段。',
     },
 ];
 
@@ -2137,7 +2137,7 @@ function buildWizardExampleChipsHtml() {
         `title="${escapeHtml(ex.text)}">${escapeHtml(ex.label)}</button>`
     ).join('');
     return `
-            <div style="font-size:10px; opacity:0.55; margin-top:2px;">Try an example:</div>
+            <div style="font-size:10px; opacity:0.55; margin-top:2px;">尝试示例：</div>
             <div id="rt_gs_wizard_examples" style="display:flex; flex-wrap:wrap; gap:5px;">${chips}</div>`;
 }
 
@@ -2165,32 +2165,32 @@ async function promptGameSystemWizardDescription(initialDescription = '') {
 
     const inputHtml = `
         <div style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box; text-align:left;">
-            <div style="font-size:13px; opacity:0.9; font-weight:bold;">🧙 Game System Wizard</div>
+            <div style="font-size:13px; opacity:0.9; font-weight:bold;">🧙 游戏系统向导</div>
             <div style="font-size:11px; opacity:0.7; line-height:1.4;">
-                Describe ONE mechanic or system in plain language. The wizard will draft a matching GM sysprompt section and, if the mechanic needs persistent state, a linked tracker module — both editable before saving.
+                用通俗语言描述一个规则机制或系统。向导将起草相匹配的 DM 系统提示词章节；若该机制需要持久状态，还将包含关联的追踪器模块——两者在保存前均可自由编辑。
             </div>
             <textarea id="rt_gs_wizard_desc" rows="4" class="text_pole"
                 style="font-size:12px; resize:vertical; width:100%;"
-                placeholder="Example: Irradiated zones where the player accumulates RADS the longer they stay, with escalating debuffs at higher exposure.">${escapeHtml(initialDescription)}</textarea>
+                placeholder="例如：辐射区域，玩家停留时间越长积累的辐射值越高，并在高辐射时承受逐级恶化的负面效果。">${escapeHtml(initialDescription)}</textarea>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.12);">
-                <span style="font-size:11px; font-weight:bold; opacity:0.85;">Context</span>
-                <span style="font-size:10px; opacity:0.6;">Last</span>
+                <span style="font-size:11px; font-weight:bold; opacity:0.85;">上下文</span>
+                <span style="font-size:10px; opacity:0.6;">最近</span>
                 <input id="rt_gs_wizard_lookback" type="number" min="0" max="200" step="1" value="${contextPrefs.lookback}" class="text_pole"
                     style="width:72px; font-size:11px;" aria-label="Game System Wizard story lookback message count">
-                <span style="font-size:10px; opacity:0.6;">chat messages</span>
+                <span style="font-size:10px; opacity:0.6;">条聊天消息</span>
                 <label style="display:flex; align-items:center; gap:5px; font-size:11px; cursor:pointer;">
                     <input id="rt_gs_wizard_lookback_all" type="checkbox" ${contextPrefs.lookbackAll ? 'checked' : ''}>
-                    <span>Entire chat</span>
+                    <span>全部聊天</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:5px; font-size:11px; cursor:pointer;">
                     <input id="rt_gs_wizard_inject_lore" type="checkbox" ${contextPrefs.injectLore ? 'checked' : ''}>
-                    <span>Lorebook Agent lore</span>
+                    <span>世界书代理设定</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:5px; font-size:11px; cursor:pointer;">
                     <input id="rt_gs_wizard_inject_memo" type="checkbox" ${contextPrefs.injectMemo ? 'checked' : ''}>
-                    <span>State Tracker memo</span>
+                    <span>状态追踪器备忘录</span>
                 </label>
-                <span style="font-size:10px; opacity:0.5; flex-basis:100%;">Use these when asking the Wizard to invent a system from the current campaign. Set lookback to 0 for no chat history.</span>
+                <span style="font-size:10px; opacity:0.5; flex-basis:100%;">当要求向导根据当前战役背景构思系统时请勾选这些选项。将回看条数设为 0 则不引用聊天历史。</span>
             </div>
             ${renderGameSystemWizardModuleExamplePickerHtml(settings, {
                 idPrefix: 'rt_gs_wizard',
@@ -2250,7 +2250,7 @@ async function promptGameSystemWizardDescription(initialDescription = '') {
         syncContextPrefs();
     }, 100);
 
-    const inputResult = await Popup.show.confirm('🧙 Game System Wizard', inputHtml, { okButton: 'Generate', cancelButton: 'Cancel', ...GS_POPUP_LARGE });
+    const inputResult = await Popup.show.confirm('🧙 游戏系统向导', inputHtml, { okButton: '生成', cancelButton: '取消', ...GS_POPUP_LARGE });
     if (!inputResult) return null;
     settings.gameSystemWizardLookback = contextPrefs.lookback;
     settings.gameSystemWizardLookbackAll = contextPrefs.lookbackAll;
@@ -2269,7 +2269,7 @@ async function promptGameSystemWizardDescription(initialDescription = '') {
         description = ta?.value?.trim() || '';
     }
     if (!description) {
-        toastr['warning']('Please describe the mechanic/system you want.', 'Game System Wizard');
+        toastr['warning']('请描述您需要的机制或系统。', '游戏系统向导');
         return null;
     }
     return { description, systemPrompt };
@@ -2312,7 +2312,7 @@ export async function openGameSystemWizard(existingSystem = null) {
 
         saveGameSystemFromPreview(result, existingSystem.id);
         if (result.saveMode === 'apply') await autoApplySysprompt(true);
-        toastr['success'](`Game System "${result.name}" saved! ✅`, 'Game System Wizard');
+        toastr['success'](`游戏系统 "${result.name}" 已保存！✅`, '游戏系统向导');
         return;
     }
 
@@ -2324,17 +2324,17 @@ export async function openGameSystemWizard(existingSystem = null) {
         description = wizardInput.description;
         const wizardSystemPrompt = wizardInput.systemPrompt;
 
-        toastr['info']('Designing your game system with AI...', 'Game System Wizard', { timeOut: 3000 });
+        toastr['info']('正在使用 AI 设计您的游戏系统...', '游戏系统向导', { timeOut: 3000 });
         const $btn = $('#rpg_tracker_btn_game_system_wizard');
         const oldHtml = $btn.html();
-        $btn.prop('disabled', true).addClass('loading').html('<i class="fa-solid fa-spinner fa-spin"></i> Generating...');
+        $btn.prop('disabled', true).addClass('loading').html('<i class="fa-solid fa-spinner fa-spin"></i> 正在生成...');
 
         let parsed;
         try {
             parsed = await generateGameSystemDraft(settings, description, wizardSystemPrompt);
         } catch (err) {
             console.error('[RPG Tracker] Game System Wizard error:', err);
-            toastr['error'](`Failed to generate game system: ${err.message}`, 'Game System Wizard');
+            toastr['error'](`生成游戏系统失败: ${err.message}`, '游戏系统向导');
             continue;
         } finally {
             $btn.prop('disabled', false).removeClass('loading').html(oldHtml);
@@ -2347,7 +2347,7 @@ export async function openGameSystemWizard(existingSystem = null) {
 
             saveGameSystemFromPreview(result, null);
             if (result.saveMode === 'apply') await autoApplySysprompt(true);
-            toastr['success'](`Game System "${result.name}" saved! ✅`, 'Game System Wizard');
+            toastr['success'](`游戏系统 "${result.name}" 已保存！✅`, '游戏系统向导');
             return;
         }
     }
@@ -2358,13 +2358,13 @@ export async function openGameSystemWizard(existingSystem = null) {
 // ─────────────────────────────────────────────────────────────────────────
 
 function badgeForSystem(gs) {
-    const shape = (gs.syspromptLibraryId && gs.customFieldTag) ? 'GM + Tracker' : (gs.customFieldTag ? 'Tracker' : 'GM');
+    const shape = (gs.syspromptLibraryId && gs.customFieldTag) ? 'DM + 追踪器' : (gs.customFieldTag ? '追踪器' : 'DM');
     if (!gs.customFieldTag) return shape;
     const d = normalizeDrivers(gs);
     const labels = [];
-    if (d.time) labels.push('auto-tick');
-    if (d.gmAnnotation) labels.push('GM deltas');
-    if (d.statedFact) labels.push('stated facts');
+    if (d.time) labels.push('随时间变化');
+    if (d.gmAnnotation) labels.push('DM 判定');
+    if (d.statedFact) labels.push('明确事实');
     return `${shape} · ${labels.join(' + ')}`;
 }
 
@@ -2389,11 +2389,11 @@ async function showExportPopup(text) {
     const { Popup } = SillyTavern.getContext();
     const html = `
         <div style="display:flex; flex-direction:column; gap:8px; text-align:left;">
-            <div style="font-size:11px; opacity:0.7;">Copy this text to share the Game System, or paste it back in via Import.</div>
+            <div style="font-size:11px; opacity:0.7;">复制此文本以分享游戏系统，或在其他处通过导入粘贴恢复。</div>
             <textarea id="rt-gs-export-text" readonly class="text_pole" rows="20" style="${GS_TEXTAREA_EXPORT_STYLE}">${escapeHtml(text)}</textarea>
         </div>
     `;
-    await Popup.show.confirm('📤 Export Game System', html, { okButton: 'Close', cancelButton: false, ...GS_POPUP_LARGE });
+    await Popup.show.confirm('📤 导出游戏系统', html, { okButton: '关闭', cancelButton: false, ...GS_POPUP_LARGE });
 }
 
 async function showImportPopup() {
@@ -2401,7 +2401,7 @@ async function showImportPopup() {
     let pasted = '';
     const html = `
         <div style="display:flex; flex-direction:column; gap:8px; text-align:left;">
-            <div style="font-size:11px; opacity:0.7;">Paste an exported Game System text blob below.</div>
+            <div style="font-size:11px; opacity:0.7;">在下方粘贴导出的游戏系统文本数据块。</div>
             <textarea id="rt-gs-import-text" class="text_pole" rows="20" style="${GS_TEXTAREA_EXPORT_STYLE}" placeholder="<meta .../>&#10;<gm_section ...>...&#10;<tracker_module ...>..."></textarea>
         </div>
     `;
@@ -2409,7 +2409,7 @@ async function showImportPopup() {
         const ta = document.getElementById('rt-gs-import-text');
         if (ta) ta.addEventListener('input', e => { pasted = e.target.value; });
     }, 100);
-    const ok = await Popup.show.confirm('📥 Import Game System', html, { okButton: 'Preview', cancelButton: 'Cancel', ...GS_POPUP_LARGE });
+    const ok = await Popup.show.confirm('📥 导入游戏系统', html, { okButton: '预览', cancelButton: '取消', ...GS_POPUP_LARGE });
     return ok ? pasted.trim() : null;
 }
 
@@ -2421,14 +2421,14 @@ export async function importGameSystem() {
         const names = await getPlayerMacroReplacementNames();
         parsed = parseWizardResponse(text, names);
     } catch (err) {
-        toastr['error'](`Could not parse import text: ${err.message}`, 'Game Systems');
+        toastr['error'](`无法解析导入文本: ${err.message}`, '游戏系统');
         return;
     }
     const result = await showGameSystemPreview(parsed, { description: '', isEdit: false });
     if (!result) return;
     saveGameSystemFromPreview(result, null);
     if (result.saveMode === 'apply') await autoApplySysprompt(true);
-    toastr['success'](`Game System "${result.name}" imported! ✅`, 'Game Systems');
+    toastr['success'](`游戏系统 "${result.name}" 已导入！✅`, '游戏系统');
 }
 
 /**
@@ -2454,7 +2454,7 @@ export async function setGameSystemEnabled(gs, enabled, options = {}) {
  */
 export async function deleteGameSystemWithConfirm(gs, options = {}) {
     const { deferPersistence = false } = options;
-    if (!confirm(`Delete the Game System "${gs.name}"? This removes both its GM section and tracker module. This cannot be undone.`)) return false;
+    if (!confirm(`确定要删除游戏系统 "${gs.name}" 吗？这将同时移除其 DM 章节和追踪器模块。此操作无法撤销。`)) return false;
     const settings = getSettings();
     removeChatSetupCatalogEntries(settings, {
         customFieldTags: gs.customFieldTag ? [gs.customFieldTag] : [],
@@ -2478,7 +2478,7 @@ export async function deleteGameSystemWithConfirm(gs, options = {}) {
     refreshOrderList();
     refreshRenderedView();
     await autoApplySysprompt(true);
-    toastr['info'](`Game System "${gs.name}" deleted.`, 'Game Systems');
+    toastr['info'](`游戏系统 "${gs.name}" 已删除。`, '游戏系统');
     return true;
 }
 
@@ -2489,7 +2489,7 @@ export async function openManageGameSystems() {
 
     const generateListHtml = () => {
         if (settings.gameSystems.length === 0) {
-            return `<div style="text-align:center; padding:30px; opacity:0.5; font-style:italic;">No Game Systems yet. Use the Wizard to create one.</div>`;
+            return `<div style="text-align:center; padding:30px; opacity:0.5; font-style:italic;">暂无游戏系统。请使用向导创建新系统。</div>`;
         }
         return '<div style="display:flex; flex-direction:column; gap:8px;">' + settings.gameSystems.map((gs, index) => `
             <div class="rt-gs-item" data-index="${index}" style="display:flex; align-items:center; flex-wrap:wrap; gap:10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2); padding:10px;">
@@ -2498,17 +2498,17 @@ export async function openManageGameSystems() {
                     <div style="font-weight:bold; font-size:13px;">${escapeHtml(gs.name)}</div>
                     <div style="font-size:10px; opacity:0.6; text-transform:uppercase; letter-spacing:0.5px;">${badgeForSystem(gs)}</div>
                 </div>
-                <select class="rt-gs-scope text_pole" data-index="${index}" title="Global shares this bundle's enabled state across every chat. Chat-bound remembers activation separately for each chat." style="width:auto; max-width:105px; height:26px; font-size:9px; padding:1px 4px;">
-                    <option value="chat" ${getChatSetupItemScope(settings, 'gameSystem', gs) === 'chat' ? 'selected' : ''}>CHAT-BOUND</option>
-                    <option value="global" ${getChatSetupItemScope(settings, 'gameSystem', gs) === 'global' ? 'selected' : ''}>GLOBAL</option>
+                <select class="rt-gs-scope text_pole" data-index="${index}" title="全局：在所有聊天中共享此组合的启用状态。绑定聊天：为每个聊天独立记忆激活状态。" style="width:auto; max-width:105px; height:26px; font-size:9px; padding:1px 4px;">
+                    <option value="chat" ${getChatSetupItemScope(settings, 'gameSystem', gs) === 'chat' ? 'selected' : ''}>绑定聊天</option>
+                    <option value="global" ${getChatSetupItemScope(settings, 'gameSystem', gs) === 'global' ? 'selected' : ''}>全局</option>
                 </select>
                 <label class="checkbox_label" style="margin:0; font-size:11px;">
                     <input type="checkbox" class="rt-gs-toggle" data-index="${index}" ${gs.enabled ? 'checked' : ''}>
-                    <span>Enable</span>
+                    <span>启用</span>
                 </label>
-                <button class="rt-gs-edit" data-index="${index}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button class="rt-gs-export" data-index="${index}" style="background:none; border:none; color:#aaddff; cursor:pointer; padding:4px;" title="Export"><i class="fa-solid fa-file-export"></i></button>
-                <button class="rt-gs-delete" data-index="${index}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="Delete"><i class="fa-solid fa-trash-can"></i></button>
+                <button class="rt-gs-edit" data-index="${index}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="编辑"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="rt-gs-export" data-index="${index}" style="background:none; border:none; color:#aaddff; cursor:pointer; padding:4px;" title="导出"><i class="fa-solid fa-file-export"></i></button>
+                <button class="rt-gs-delete" data-index="${index}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="删除"><i class="fa-solid fa-trash-can"></i></button>
             </div>
         `).join('') + '</div>';
     };
@@ -2516,9 +2516,9 @@ export async function openManageGameSystems() {
     const html = `
         <div id="rt-gs-manage-container" style="display:flex; flex-direction:column; gap:12px; width:100%; box-sizing:border-box; max-height:85vh;">
             <div style="display:flex; align-items:center; justify-content:space-between;">
-                <div style="font-size:11px; opacity:0.8; line-height:1.4;">Manage Game System bundles. Enabled state and scope apply to the linked GM section and tracker module together. Global bundles share one enabled state across every chat; Chat-bound bundles remember activation per chat.</div>
+                <div style="font-size:11px; opacity:0.8; line-height:1.4;">管理游戏系统套件。启用状态和作用域同时应用于关联的 DM 章节和追踪器模块。全局套件在所有聊天中共享启用状态；绑定聊天套件则独立记忆每个聊天的启用状态。</div>
                 <button id="rt_gs_btn_import" class="menu_button interactable" style="white-space:nowrap; margin-left:10px; font-size:11px; padding:4px 8px;">
-                    <i class="fa-solid fa-file-import"></i> Import
+                    <i class="fa-solid fa-file-import"></i> 导入
                 </button>
             </div>
             <div id="rt-gs-manage-list-wrap" style="overflow-y:auto; padding-right:10px; flex:1;">
@@ -2596,7 +2596,7 @@ export async function openManageGameSystems() {
         }
     }, 100);
 
-    await Popup.show.confirm('🧩 Manage Game Systems', html, { okButton: 'Close', cancelButton: false, ...GS_POPUP_LARGE });
+    await Popup.show.confirm('🧩 管理游戏系统', html, { okButton: '关闭', cancelButton: false, ...GS_POPUP_LARGE });
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -2607,7 +2607,7 @@ export async function unlockBaseSection(tag, options = {}) {
     const { deferPersistence = false } = options;
     const settings = getSettings();
     if (isSectionUnlocked(settings, tag)) {
-        toastr['info'](`<${tag}> is already unlocked.`, 'Game Systems');
+        toastr['info'](`<${tag}> 已解锁。`, '游戏系统');
         return;
     }
 
@@ -2615,7 +2615,7 @@ export async function unlockBaseSection(tag, options = {}) {
     try {
         raw = await fetchBaseSyspromptRaw(settings);
     } catch (err) {
-        toastr['error']('Could not fetch sysprompt.txt.', 'Game Systems');
+        toastr['error']('无法获取 sysprompt.txt。', '游戏系统');
         return;
     }
     const sections = extractTopLevelSections(raw);
@@ -2630,7 +2630,7 @@ export async function unlockBaseSection(tag, options = {}) {
         enabled: true,
         scope: 'chat',
         icon: 'fa-lock-open',
-        description: `Unlocked override of <${tag}>`,
+        description: `已解锁的 <${tag}> 覆盖项`,
         origin: 'unlocked_base',
         baseTag: tag,
     });
@@ -2641,7 +2641,7 @@ export async function unlockBaseSection(tag, options = {}) {
     await persistSyspromptChanges(deferPersistence);
     if (!deferPersistence) {
         syncNarratorToggleUi(tag, settings);
-        toastr['success'](`<${tag}> unlocked for customization.`, 'Game Systems');
+        toastr['success'](`<${tag}> 已解锁以供自定义。`, '游戏系统');
     }
 }
 
@@ -2664,7 +2664,7 @@ export async function relockBaseSection(tag, options = {}) {
     await persistSyspromptChanges(deferPersistence);
     if (!deferPersistence) {
         syncNarratorToggleUi(tag, settings);
-        toastr['success'](`<${tag}> re-locked and restored to default.`, 'Game Systems');
+        toastr['success'](`<${tag}> 已重新锁定并恢复为默认。`, '游戏系统');
     }
 }
 
@@ -2698,7 +2698,7 @@ export async function editUnlockedSection(tag, options = {}) {
     item.description = result.description || item.description;
     await persistSyspromptChanges(deferPersistence);
     if (!deferPersistence) {
-        toastr['success'](`<${tag}> updated.`, 'Game Systems');
+        toastr['success'](`<${tag}> 已更新。`, '游戏系统');
     }
 }
 
@@ -2716,12 +2716,12 @@ function buildWizardControlRoomSubtext(gs, settings) {
         ? (settings.customFields || []).find(f => f.tag.toUpperCase() === gs.customFieldTag.toUpperCase())
         : null;
     if (!field) {
-        return gs.name ? `Game System: ${gs.name}` : '';
+        return gs.name ? `游戏系统: ${gs.name}` : '';
     }
     const trackerName = (field.label || field.tag || gs.name || '').trim();
-    let text = `Game System: ${gs.name || trackerName}`;
+    let text = `游戏系统: ${gs.name || trackerName}`;
     if (trackerName && trackerName !== gs.name) {
-        text += ` · Tracker: ${trackerName}`;
+        text += ` · 追踪器: ${trackerName}`;
     }
     return text;
 }
@@ -2735,43 +2735,43 @@ function controlRoomRowIcon(row) {
 
 function controlRoomRowBadge(row) {
     if (row.kind === 'unlocked') {
-        return `<span style="font-size:9px; padding:1px 5px; border-radius:3px; margin-left:6px; background:rgba(255,180,60,0.2); color:#ffb43c;" title="Unlocked override of a built-in section">UNLOCKED</span>`;
+        return `<span style="font-size:9px; padding:1px 5px; border-radius:3px; margin-left:6px; background:rgba(255,180,60,0.2); color:#ffb43c;" title="内置章节的已解锁覆盖项">已解锁</span>`;
     }
     if (row.kind === 'wizard') {
-        return `<span style="font-size:9px; padding:1px 5px; border-radius:3px; margin-left:6px; background:rgba(180,100,255,0.2); color:#c9a0ff;" title="Created via Game System Wizard — Edit/Delete redirect there to stay in sync with the linked tracker module">WIZARD</span>`;
+        return `<span style="font-size:9px; padding:1px 5px; border-radius:3px; margin-left:6px; background:rgba(180,100,255,0.2); color:#c9a0ff;" title="通过游戏系统向导创建 — 编辑/删除将重定向到向导以保持与关联追踪器模块同步">向导</span>`;
     }
     return '';
 }
 
 function controlRoomRowActions(row) {
     if (row.kind === 'base') {
-        return `<button class="rt-cr-unlock menu_button interactable" data-tag="${escapeHtml(row.tag)}" style="font-size:11px; padding:2px 8px; white-space:nowrap; background:rgba(255,180,60,0.15); border-color:rgba(255,180,60,0.4);">Unlock</button>`;
+        return `<button class="rt-cr-unlock menu_button interactable" data-tag="${escapeHtml(row.tag)}" style="font-size:11px; padding:2px 8px; white-space:nowrap; background:rgba(255,180,60,0.15); border-color:rgba(255,180,60,0.4);">解锁</button>`;
     }
     if (row.kind === 'unlocked') {
         return `
-            <button class="rt-cr-edit-unlocked" data-tag="${escapeHtml(row.tag)}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="Edit override"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button class="rt-cr-relock menu_button interactable" data-tag="${escapeHtml(row.tag)}" style="font-size:11px; padding:2px 8px; white-space:nowrap;">Re-lock</button>`;
+            <button class="rt-cr-edit-unlocked" data-tag="${escapeHtml(row.tag)}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="编辑覆盖项"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="rt-cr-relock menu_button interactable" data-tag="${escapeHtml(row.tag)}" style="font-size:11px; padding:2px 8px; white-space:nowrap;">重新锁定</button>`;
     }
     if (row.kind === 'wizard') {
         return `
-            <button class="rt-cr-edit-wizard" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="Edit in Game System Wizard"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button class="rt-cr-delete-wizard" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="Delete Game System (removes tracker module too)"><i class="fa-solid fa-trash-can"></i></button>`;
+            <button class="rt-cr-edit-wizard" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="在游戏系统向导中编辑"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="rt-cr-delete-wizard" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="删除游戏系统 (亦将移除追踪器模块)"><i class="fa-solid fa-trash-can"></i></button>`;
     }
     return `
-        <button class="rt-cr-edit-custom" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="Edit Section"><i class="fa-solid fa-pen-to-square"></i></button>
-        <button class="rt-cr-delete-custom" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="Delete Section"><i class="fa-solid fa-trash-can"></i></button>`;
+        <button class="rt-cr-edit-custom" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#88bbff; cursor:pointer; padding:4px;" title="编辑章节"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="rt-cr-delete-custom" data-libid="${escapeHtml(row.libId)}" style="background:none; border:none; color:#ff5555; cursor:pointer; padding:4px;" title="删除章节"><i class="fa-solid fa-trash-can"></i></button>`;
 }
 
 function controlRoomRowScope(row) {
     if (!row.scope) return '';
-    const label = row.scope === 'global' ? 'GLOBAL' : 'CHAT-BOUND';
+    const label = row.scope === 'global' ? '全局' : '绑定聊天';
     if (row.scopeInherited) {
-        return `<span title="${escapeHtml(`${label} scope inherited from Game System "${row.scopeOwnerName || 'Game System'}". Change it in Manage Game Systems.`)}" style="font-size:9px;padding:2px 5px;border-radius:3px;white-space:nowrap;background:rgba(180,100,255,0.13);color:#c9a0ff;border:1px solid rgba(180,100,255,0.25);">${label}</span>`;
+        return `<span title="${escapeHtml(`${label} 作用域继承自游戏系统 "${row.scopeOwnerName || '游戏系统'}"。可在管理游戏系统中更改。`)}" style="font-size:9px;padding:2px 5px;border-radius:3px;white-space:nowrap;background:rgba(180,100,255,0.13);color:#c9a0ff;border:1px solid rgba(180,100,255,0.25);">${label}</span>`;
     }
     return `
-        <select class="rt-cr-scope text_pole" data-key="${escapeHtml(row.key)}" title="Global shares this snippet's enabled state across every chat. Chat-bound remembers activation separately for each chat." style="width:auto;max-width:105px;height:24px;font-size:9px;padding:1px 4px;">
-            <option value="chat" ${row.scope === 'chat' ? 'selected' : ''}>CHAT-BOUND</option>
-            <option value="global" ${row.scope === 'global' ? 'selected' : ''}>GLOBAL</option>
+        <select class="rt-cr-scope text_pole" data-key="${escapeHtml(row.key)}" title="全局：在所有聊天中共享此片段的启用状态。绑定聊天：为每个聊天独立记忆激活状态。" style="width:auto;max-width:105px;height:24px;font-size:9px;padding:1px 4px;">
+            <option value="chat" ${row.scope === 'chat' ? 'selected' : ''}>绑定聊天</option>
+            <option value="global" ${row.scope === 'global' ? 'selected' : ''}>全局</option>
         </select>`;
 }
 
@@ -2790,7 +2790,7 @@ function renderControlRoomRow(row) {
                 ${controlRoomRowScope(row)}
                 <label class="checkbox_label rt-cr-row-enable">
                     <input type="checkbox" class="rt-cr-enable" data-key="${escapeHtml(row.key)}" ${row.enabled ? 'checked' : ''}>
-                    <span>Enabled</span>
+                    <span>已启用</span>
                 </label>
                 <div class="rt-cr-row-actions">${controlRoomRowActions(row)}</div>
             </div>
@@ -2809,7 +2809,7 @@ export async function openSystemPromptControlRoom() {
     try {
         raw = await fetchBaseSyspromptRaw(settings);
     } catch (err) {
-        toastr['error']('Could not fetch sysprompt.txt.', 'System Prompt Control Room');
+        toastr['error']('无法获取 sysprompt.txt。', '系统提示词中控台');
         return;
     }
     const baseSections = extractTopLevelSections(raw);
@@ -2823,7 +2823,7 @@ export async function openSystemPromptControlRoom() {
     const generateListHtml = () => {
         const rows = getRows();
         if (rows.length === 0) {
-            return `<div style="text-align:center; padding:30px; opacity:0.5; font-style:italic;">No sections found.</div>`;
+            return `<div style="text-align:center; padding:30px; opacity:0.5; font-style:italic;">未找到章节。</div>`;
         }
         const activeRows = rows.filter(row => row.enabled);
         const inactiveRows = rows.filter(row => !row.enabled);
@@ -2832,40 +2832,40 @@ export async function openSystemPromptControlRoom() {
             ${groupedRows.map(renderControlRoomRow).join('')}
         ` : '';
         return '<div id="rt-cr-list" style="display:flex; flex-direction:column; gap:8px;">'
-            + renderGroup('Active snippets', activeRows, true)
-            + renderGroup('Inactive snippet pool', inactiveRows, false)
+            + renderGroup('激活的提示词片段', activeRows, true)
+            + renderGroup('未激活的提示词片段池', inactiveRows, false)
             + '</div>';
     };
 
     const html = `
         <div id="rt-cr-container" class="rt-cr-popup-container">
             <div style="font-size:11px; opacity:0.8; line-height:1.4;">
-                Drag any row to reorder sections, toggle <b>Enabled</b>, and choose whether standalone snippets are <b>Global</b> or <b>Chat-bound</b>. 🧙 rows inherit both activation and scope from their Game System so the linked tracker module stays in sync.
-                <div style="margin-top:4px; opacity:0.75;">Changes are kept in memory until you click <b>Save</b>.</div>
+                拖拽任意行可调整章节顺序，切换<b>已启用</b>状态，并选择独立提示词片段是<b>全局</b>还是<b>绑定聊天</b>。带有 🧙 标记的行继承对应游戏系统的激活与作用域状态，以保持与关联追踪器模块同步。
+                <div style="margin-top:4px; opacity:0.75;">更改将暂存在内存中，直到您点击<b>保存</b>。</div>
             </div>
             <details id="rt-cr-custom-sysprompt-details" style="border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px;">
-                <summary style="font-size: 0.78em; opacity: 0.6; cursor: pointer; outline: none; user-select: none;">Advanced: manage your own system prompt</summary>
+                <summary style="font-size: 0.78em; opacity: 0.6; cursor: pointer; outline: none; user-select: none;">高级：管理您自己的系统提示词</summary>
                 <div style="margin-top: 8px; padding: 8px 10px; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; background: rgba(0,0,0,0.1);">
                     <label class="checkbox_label" style="margin: 0;">
                         <input id="rpg_tracker_custom_sysprompt" type="checkbox" />
-                        <span>Custom Sysprompt Mode</span>
+                        <span>自定义系统提示词模式</span>
                     </label>
                     <small style="display: block; margin-top: 6px; opacity: 0.6; font-size: 10px; line-height: 1.35;">
-                        When enabled, the framework will not write to your system prompt. Section order and toggles are still saved, but nothing is applied to Quick Prompt Main until you turn this off.
+                        启用后，框架将不会覆写您的系统提示词。章节顺序和开关仍会保存，但在您关闭此选项前不会应用到 Quick Prompt Main。
                     </small>
                 </div>
             </details>
             <div class="rt-cr-toolbar">
                 <button id="rt_cr_btn_ai_add" class="menu_button interactable rt-cr-toolbar-btn" style="flex:1; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4); font-size:11px; padding:4px 8px;">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Builder
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI 构建器
                 </button>
                 <button id="rt_cr_btn_manual_add" class="menu_button interactable rt-cr-toolbar-btn" style="flex:1; background:rgba(80,180,120,0.15); border-color:rgba(80,180,120,0.4); font-size:11px; padding:4px 8px;">
-                    <i class="fa-solid fa-plus"></i> Add Manually
+                    <i class="fa-solid fa-plus"></i> 手动添加
                 </button>
-                <button id="rt_cr_btn_reset" class="menu_button interactable rt-cr-toolbar-icon-btn" style="width:auto; padding:4px 12px; background:rgba(255,100,100,0.15); border-color:rgba(255,100,100,0.4); font-size:11px;" title="Remove all AI/manually-added sections and reset the order to defaults">
+                <button id="rt_cr_btn_reset" class="menu_button interactable rt-cr-toolbar-icon-btn" style="width:auto; padding:4px 12px; background:rgba(255,100,100,0.15); border-color:rgba(255,100,100,0.4); font-size:11px;" title="移除所有 AI/手动添加的章节并将顺序恢复为默认">
                     <i class="fa-solid fa-rotate-left"></i>
                 </button>
-                <button id="rt_cr_btn_cartridges" class="menu_button interactable rt-cr-toolbar-icon-btn" style="width:auto; padding:4px 12px; background:rgba(100,220,150,0.15); border-color:rgba(100,220,150,0.4); font-size:11px;" title="Save, load, export, or import your entire configuration as a Game Cartridge">
+                <button id="rt_cr_btn_cartridges" class="menu_button interactable rt-cr-toolbar-icon-btn" style="width:auto; padding:4px 12px; background:rgba(100,220,150,0.15); border-color:rgba(100,220,150,0.4); font-size:11px;" title="将整套配置保存、加载、导出或导入为游戏卡带">
                     <i class="fa-solid fa-compact-disc"></i>
                 </button>
             </div>
@@ -2997,7 +2997,7 @@ export async function openSystemPromptControlRoom() {
             wrap.querySelectorAll('.rt-cr-relock').forEach(el => {
                 el.addEventListener('click', async (e) => {
                     const tag = e.currentTarget.dataset.tag;
-                    if (!confirm(`Re-lock <${tag}>? Your custom override will be deleted and the section restored to default.`)) return;
+                    if (!confirm(`确定重新锁定 <${tag}> 吗？您的自定义覆盖项将被删除，该章节将恢复为默认。`)) return;
                     await relockBaseSection(tag, deferOpts);
                     refresh();
                 });
@@ -3008,7 +3008,7 @@ export async function openSystemPromptControlRoom() {
                 el.addEventListener('click', async (e) => {
                     const libId = e.currentTarget.dataset.libid;
                     const gs = (settings.gameSystems || []).find(g => g.syspromptLibraryId === libId);
-                    if (!gs) { toastr['warning']('Could not find the linked Game System. Try Manage Game Systems instead.', 'System Prompt Control Room'); return; }
+                    if (!gs) { toastr['warning']('未找到关联的游戏系统。请尝试在“管理游戏系统”中操作。', '系统提示词中控台'); return; }
                     await openGameSystemWizard(gs);
                     refresh();
                 });
@@ -3017,7 +3017,7 @@ export async function openSystemPromptControlRoom() {
                 el.addEventListener('click', async (e) => {
                     const libId = e.currentTarget.dataset.libid;
                     const gs = (settings.gameSystems || []).find(g => g.syspromptLibraryId === libId);
-                    if (!gs) { toastr['warning']('Could not find the linked Game System. Try Manage Game Systems instead.', 'System Prompt Control Room'); return; }
+                    if (!gs) { toastr['warning']('未找到关联的游戏系统。请尝试在“管理游戏系统”中操作。', '系统提示词中控台'); return; }
                     const deleted = await deleteGameSystemWithConfirm(gs, deferOpts);
                     if (!deleted) return;
                     refresh();
@@ -3045,7 +3045,7 @@ export async function openSystemPromptControlRoom() {
             });
             wrap.querySelectorAll('.rt-cr-delete-custom').forEach(el => {
                 el.addEventListener('click', async (e) => {
-                    if (!confirm('Delete this custom section permanently?')) return;
+                    if (!confirm('确定永久删除此自定义章节吗？')) return;
                     const libId = e.currentTarget.dataset.libid;
                     settings.customSyspromptLibrary = (settings.customSyspromptLibrary || []).filter(p => p.id !== libId);
                     removeChatSetupCatalogEntries(settings, { syspromptIds: [libId] });
@@ -3071,7 +3071,7 @@ export async function openSystemPromptControlRoom() {
         if (cartridgesBtn) {
             cartridgesBtn.addEventListener('click', async () => {
                 if (isDirty()) {
-                    toastr['warning']('Save or Cancel your current changes before opening Game Cartridges.', 'System Prompt Control Room');
+                    toastr['warning']('打开游戏卡带前，请先保存或取消当前的修改。', '系统提示词中控台');
                     return;
                 }
                 await openManageGameCartridges();
@@ -3083,13 +3083,13 @@ export async function openSystemPromptControlRoom() {
         }
     }, 100);
 
-    const result = await Popup.show.confirm('🎛️ System Prompt Control Room', html, {
-        okButton: 'Save',
-        cancelButton: 'Cancel',
+    const result = await Popup.show.confirm('🎛️ 系统提示词中控台', html, {
+        okButton: '保存',
+        cancelButton: '取消',
         onClosing: async (popup) => {
             if (popup.result === POPUP_RESULT.AFFIRMATIVE) return true;
             if (!isDirty()) return true;
-            return confirm('Discard unsaved changes to the system prompt sections?');
+            return confirm('放弃对系统提示词章节未保存的更改吗？');
         },
         wide: true,
         large: true,
@@ -3105,9 +3105,9 @@ export async function openSystemPromptControlRoom() {
         if (narratorBlockEl) narratorBlockEl.style.display = settings.customSysprompt ? 'none' : '';
         await autoApplySysprompt(true);
         if (settings.customSysprompt) {
-            toastr['success']('System prompt sections saved. Quick Prompt Main was left unchanged (Custom Sysprompt Mode).', 'System Prompt Control Room');
+            toastr['success']('系统提示词章节已保存。Quick Prompt Main 保持未变（自定义系统提示词模式）。', '系统提示词中控台');
         } else {
-            toastr['success']('System prompt sections saved.', 'System Prompt Control Room');
+            toastr['success']('系统提示词章节已保存。', '系统提示词中控台');
         }
         return;
     }

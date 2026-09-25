@@ -1,11 +1,11 @@
 /** Shared helpers for the tabbed Agent Console in the Lorebook Agent panel. */
 
 export const AGENT_TERMINAL_TABS = [
-    { id: 'state_tracker', label: 'State Tracker' },
-    { id: 'lorebook_agent', label: 'Lorebook Agent' },
-    { id: 'map_updater', label: 'Map Updater' },
-    { id: 'map_evolution', label: 'Map Evolution' },
-    { id: 'map_architect', label: 'Map Architect' },
+    { id: 'state_tracker', label: '状态追踪器' },
+    { id: 'lorebook_agent', label: '世界书智能体' },
+    { id: 'map_updater', label: '地图更新器' },
+    { id: 'map_evolution', label: '地图演进' },
+    { id: 'map_architect', label: '地图构建器' },
 ];
 
 export const AGENT_TERMINAL_TAB_IDS = AGENT_TERMINAL_TABS.map(tab => tab.id);

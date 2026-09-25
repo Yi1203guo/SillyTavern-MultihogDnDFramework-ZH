@@ -99,7 +99,7 @@ export function renderDayNightBadge(str) {
     // Stars only during moon phases — a handful of fixed dots is enough to read as a starfield.
     const starsHtml = isMoon ? `<div class="rt-sky-stars"></div>` : '';
 
-    return `<div class="rt-daynight-badge rt-sky-${phase}" title="In-world time of day: ${escapeHtml(phase.replace(/([A-Z])/g, ' $1').toLowerCase())}">${starsHtml}${bodyHtml}</div>`;
+    return `<div class="rt-daynight-badge rt-sky-${phase}" title="游戏内时间：${escapeHtml(phase.replace(/([A-Z])/g, ' $1').toLowerCase())}">${starsHtml}${bodyHtml}</div>`;
 }
 
     export const STOCK_FIELD_RULES = {
@@ -183,10 +183,10 @@ export function renderDayNightBadge(str) {
                         const positiveBg = getBarBackground(positiveBarId, positiveDefault, pct);
                         const negativeBg = getBarBackground(negativeBarId, negativeDefault, pct);
                         const positiveRecolorData = positiveBarId
-                            ? ` data-recolor-id="${escapeHtml(positiveBarId)}" data-recolor-current="${escapeHtml(positiveBg)}" data-barrel-direction="positive" title="Click to recolor the positive side"`
+                            ? ` data-recolor-id="${escapeHtml(positiveBarId)}" data-recolor-current="${escapeHtml(positiveBg)}" data-barrel-direction="positive" title="点击重新着色正向侧"`
                             : '';
                         const negativeRecolorData = negativeBarId
-                            ? ` data-recolor-id="${escapeHtml(negativeBarId)}" data-recolor-current="${escapeHtml(negativeBg)}" data-barrel-direction="negative" title="Click to recolor the negative side"`
+                            ? ` data-recolor-id="${escapeHtml(negativeBarId)}" data-recolor-current="${escapeHtml(negativeBg)}" data-barrel-direction="negative" title="点击重新着色负向侧"`
                             : '';
                         const valueClass = clamped > 0 ? 'rt-barrel-value-positive' : clamped < 0 ? 'rt-barrel-value-negative' : 'rt-barrel-value-zero';
                         const valueDirection = clamped > 0 ? 'positive' : clamped < 0 ? 'negative' : 'zero';
@@ -225,7 +225,7 @@ export function renderDayNightBadge(str) {
                         : 'linear-gradient(90deg,#e74c3c,#c0392b)';
                     if (barId) barBg = getBarBackground(barId, barBg, pct);
 
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" data-recolor-explicit-color="${rule.color ? 'true' : 'false'}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" data-recolor-explicit-color="${rule.color ? 'true' : 'false'}" title="点击重新着色"` : '';
 
                     const showAsPct = getBarShowAsPercentage(barId);
                     const dispCur = showAsPct ? Math.round(pct) : cur;
@@ -255,7 +255,7 @@ export function renderDayNightBadge(str) {
                     let barBg = rule.color ? rule.color : DEFAULT_XP_COLOR;
                     if (barId) barBg = getBarBackground(barId, barBg, pct);
 
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
 
                     const showAsPct = getBarShowAsPercentage(barId);
                     const dispCur = showAsPct ? Math.round(pct) : xm[1];
@@ -301,7 +301,7 @@ export function renderDayNightBadge(str) {
                     let barBg = rule.color ? rule.color : 'linear-gradient(90deg, #00c88c, #00d4ff)';
                     if (barId) barBg = getBarBackground(barId, barBg, pct);
                     
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
 
                     return `<div class="rt-entity-sub-line rt-progress-row">${labelHtml}
                         <div class="rt-progress-bar-wrap"${recolorData}${makeBarAnimationData(barId, cur, max)}>
@@ -320,7 +320,7 @@ export function renderDayNightBadge(str) {
                     const extra = value.replace(pm[0], '').trim();
                     let barBg = rule.color ? rule.color : 'var(--rt-accent, #00ffaa)';
                     if (barId) barBg = getBarBackground(barId, barBg, pct);
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
                     
                     return `<div class="rt-entity-sub-line rt-clock-row">${labelHtml}
                         <div class="rt-clock-icon"${recolorData} style="background: conic-gradient(${barBg} ${pct}%, transparent 0);"></div>
@@ -339,7 +339,7 @@ export function renderDayNightBadge(str) {
                     const empty = Math.max(0, max - filled);
                     let barBg = rule.color ? rule.color : '#ffd700';
                     if (barId) barBg = getBarBackground(barId, barBg, max > 0 ? (filled / max) * 100 : 0);
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
 
                     const starsHtml = `<span class="rt-stars-icon" style="color:${barBg};"${recolorData}>${'★'.repeat(filled)}${'☆'.repeat(empty)}</span>`;
                     return `<div class="rt-entity-sub-line rt-stars-row">${labelHtml} ${starsHtml} <span class="rt-stars-label">${extra ? escapeHtml(extra) : ''}</span></div>`;
@@ -354,7 +354,7 @@ export function renderDayNightBadge(str) {
                     const extra = value.replace(pm[0], '').trim();
                     let barBg = rule.color ? rule.color : (pct >= 100 ? '#e74c3c' : pct >= 75 ? '#f1c40f' : '#2ecc71');
                     if (barId) barBg = getBarBackground(barId, barBg, pct);
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
 
                     return `<div class="rt-entity-sub-line rt-weight-row">${labelHtml}
                         <span class="rt-weight-icon">⚖️</span>
@@ -386,7 +386,7 @@ export function renderDayNightBadge(str) {
                     const extra = value.replace(pm[0], '').trim();
                     let barBg = rule.color ? rule.color : '#3498db';
                     if (barId) barBg = getBarBackground(barId, barBg, max > 0 ? (cur/max)*100 : 0);
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
                     
                     let orbsHtml = '';
                     for (let i = 0; i < max; i++) {
@@ -438,7 +438,7 @@ export function renderDayNightBadge(str) {
                     const extra = value.replace(pm[0], '').trim();
                     let barBg = rule.color ? rule.color : 'var(--rt-accent, #00ffaa)';
                     if (barId) barBg = getBarBackground(barId, barBg, max > 0 ? (cur/max)*100 : 0);
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
                     
                     let phaseHtml = '';
                     for (let i = 0; i < max; i++) {
@@ -467,7 +467,7 @@ export function renderDayNightBadge(str) {
                     const extra = value.replace(pm[0], '').trim();
                     let barBg = rule.color ? rule.color : 'linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c)';
                     if (barId) barBg = getBarBackground(barId, barBg, pct);
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
                     
                     const degrees = -90 + (180 * (pct / 100));
                     
@@ -491,7 +491,7 @@ export function renderDayNightBadge(str) {
                     const isLow = cur <= 1 && max > 1;
                     let barBg = rule.color ? rule.color : (isLow ? '#e74c3c' : '#2ecc71');
                     if (barId) barBg = getBarBackground(barId, barBg, pct);
-                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="Click to recolor"` : '';
+                    const recolorData = barId ? ` data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" title="点击重新着色"` : '';
                     
                     const chargeHtml = `<div class="rt-battery-wrap ${isLow && cur === 0 ? 'empty-flash' : ''}"${recolorData}${makeBarAnimationData(barId, cur, max)} style="border-color:${barBg};">
                         <div class="rt-battery-fill" style="width:${pct}%;background:${barBg};"></div>
@@ -577,7 +577,7 @@ export function renderDayNightBadge(str) {
                 spellsHtml = spellList.split(',').map(s => {
                     const name = s.trim();
                     const slug = name.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-');
-                    return `<a href="https://dnd5e.wikidot.com/spell:${slug}" target="_blank" class="rt-spell-name" title="View spell on Wikidot">${escapeHtmlWithColor(name)}</a>`;
+                    return `<a href="https://dnd5e.wikidot.com/spell:${slug}" target="_blank" class="rt-spell-name" title="在 Wikidot 上查看法术">${escapeHtmlWithColor(name)}</a>`;
                 }).join('');
             }
             html += `<div class="rt-spell-row"><span class="rt-spell-level">${escapeHtmlWithColor(lbl.trim())}</span><div class="rt-spell-inline-group"><div class="rt-spell-list">${pipsHtml}${spellsHtml}</div></div></div>`;
@@ -1276,8 +1276,8 @@ export function renderDayNightBadge(str) {
 
     function renderPartyCompactButton(isOn) {
         const active = isOn ? ' active' : '';
-        const title = isOn ? 'Show full party details' : 'Compact mode: portrait, name, and HP only';
-        return `<button type="button" class="rt-party-compact-btn${active}" data-tag="PARTY" aria-pressed="${isOn ? 'true' : 'false'}" title="${title}">Compact Mode</button>`;
+        const title = isOn ? '显示完整队伍详情' : '紧凑模式：仅头像、名称和 HP';
+        return `<button type="button" class="rt-party-compact-btn${active}" data-tag="PARTY" aria-pressed="${isOn ? 'true' : 'false'}" title="${title}">紧凑模式</button>`;
     }
 
     const ACTIVE_TAB_KEY = 'rpg_tracker_active_tab';
@@ -1321,7 +1321,7 @@ function renderPortraitHtml(entityName) {
 function wrapEntityHtml(entityName, contentHtml) {
     if (!getSettings().enablePortraits) return contentHtml;
     return `<div class="rt-entity-container" data-entity-name="${escapeHtml(entityName)}">
-        <div class="rt-entity-portrait-container" title="Drop image here or click to set portrait">
+        <div class="rt-entity-portrait-container" title="拖放图片至此处或点击设置头像">
             ${renderPortraitHtml(entityName)}
         </div>
         <div class="rt-entity-content">${contentHtml}</div>
@@ -1550,13 +1550,13 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                         if (inlineEntityName) {
                             results.push(`<div class="rt-entity-row" style="display:block; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:6px;">
                                 <div class="rt-entity-name" style="font-size:1.1em; margin-bottom:6px;">${escapeHtmlWithColor(currentEntity)}</div>
-                                <div class="rt-hp-bar-wrap${unknownHp ? ' rt-hp-unknown' : ''}" title="Click to recolor HP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" data-recolor-explicit-color="${inlineBarRule?.color ? 'true' : 'false'}"${hasKnownRange ? makeBarAnimationData(barId, cur, max) : ''} style="position:relative; height:14px; border-radius:4px; overflow:hidden; background:rgba(255,255,255,0.1); margin-bottom:4px; width:100%;">
+                                <div class="rt-hp-bar-wrap${unknownHp ? ' rt-hp-unknown' : ''}" title="点击重新着色 HP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" data-recolor-explicit-color="${inlineBarRule?.color ? 'true' : 'false'}"${hasKnownRange ? makeBarAnimationData(barId, cur, max) : ''} style="position:relative; height:14px; border-radius:4px; overflow:hidden; background:rgba(255,255,255,0.1); margin-bottom:4px; width:100%;">
                                     <div class="rt-hp-bar" style="width:${pct.toFixed(1)}%; height:100%; border-radius:4px; background:${barBg}; transition:width 0.3s;"></div>
                                 </div>
                                 <span class="rt-hp-label" style="display:block; font-size:0.82em; opacity:0.85; text-align:left; line-height:1.2;">${label}</span>
                             </div>`);
                         } else {
-                            results.push(`<div class="rt-entity-row"><div class="rt-entity-name">${escapeHtmlWithColor(currentEntity)}</div><div class="rt-hp-bar-wrap${unknownHp ? ' rt-hp-unknown' : ''}" title="Click to recolor HP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" data-recolor-explicit-color="${inlineBarRule?.color ? 'true' : 'false'}"${hasKnownRange ? makeBarAnimationData(barId, cur, max) : ''}><div class="rt-hp-bar" style="width:${pct.toFixed(1)}%;background:${barBg};"></div></div><span class="rt-hp-label">${label}</span></div>`);
+                            results.push(`<div class="rt-entity-row"><div class="rt-entity-name">${escapeHtmlWithColor(currentEntity)}</div><div class="rt-hp-bar-wrap${unknownHp ? ' rt-hp-unknown' : ''}" title="点击重新着色 HP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}" data-recolor-explicit-color="${inlineBarRule?.color ? 'true' : 'false'}"${hasKnownRange ? makeBarAnimationData(barId, cur, max) : ''}><div class="rt-hp-bar" style="width:${pct.toFixed(1)}%;background:${barBg};"></div></div><span class="rt-hp-label">${label}</span></div>`);
                         }
 
                         if (status) {
@@ -1674,7 +1674,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                                 }
                             }
                         }
-                        return `<div class="rt-card-line"><b>Last Rest:</b>&nbsp;${escapeHtmlWithColor(restVal)}${append}</div>`;
+                        return `<div class="rt-card-line"><b>上次休息:</b>&nbsp;${escapeHtmlWithColor(restVal)}${append}</div>`;
                     }
                     const asMarker = tryRenderMarker(line, tag, '', idx);
                     if (asMarker !== null) return asMarker;
@@ -1706,8 +1706,8 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                         const dispMax = showAsPct ? 100 : maxRaw;
 
                         return `<div class="rt-xp-row" data-xp-current="${cur}" data-xp-max="${max}" data-xp-level="${level}" data-xp-show-percentage="${showAsPct}">
-                            <div class="rt-xp-label"><span>Level ${level}</span><span>XP: <span class="rt-xp-current">${dispCur}</span> / <span class="rt-xp-max">${dispMax}</span></span></div>
-                            <div class="rt-xp-bar-wrap" title="Click to recolor XP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}">
+                            <div class="rt-xp-label"><span>等级 ${level}</span><span>XP: <span class="rt-xp-current">${dispCur}</span> / <span class="rt-xp-max">${dispMax}</span></span></div>
+                            <div class="rt-xp-bar-wrap" title="点击重新着色 XP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}">
                                 <div class="rt-xp-bar" style="width:${pct.toFixed(1)}%; background:${barBg};"></div>
                             </div>
                         </div>`;
@@ -1720,7 +1720,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                         const cur = Number(curRaw.replace(/,/g, ''));
                         const max = Number(maxRaw.replace(/,/g, ''));
                         const pct = Math.max(0, Math.min(100, (cur / max) * 100));
-                        const levelHtml = level ? `<span>Level ${level}</span>` : '';
+                        const levelHtml = level ? `<span>等级 ${level}</span>` : '';
                         const barId = 'XP::XP';
                         const barBg = getBarBackground(barId, 'linear-gradient(90deg, #f39c12, #e67e22)', pct);
 
@@ -1730,7 +1730,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
 
                         return `<div class="rt-xp-row" data-xp-current="${cur}" data-xp-max="${max}" data-xp-level="${level || ''}" data-xp-show-percentage="${showAsPct}">
                             <div class="rt-xp-label">${levelHtml}<span>XP: <span class="rt-xp-current">${dispCur}</span> / <span class="rt-xp-max">${dispMax}</span></span></div>
-                            <div class="rt-xp-bar-wrap" title="Click to recolor XP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}">
+                            <div class="rt-xp-bar-wrap" title="点击重新着色 XP" data-recolor-id="${escapeHtml(barId)}" data-recolor-current="${escapeHtml(barBg)}">
                                 <div class="rt-xp-bar" style="width:${pct.toFixed(1)}%; background:${barBg};"></div>
                             </div>
                         </div>`;
@@ -1762,7 +1762,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                             .replace(/'/g, '')
                             .replace(/[^a-z0-9]+/g, '-');
                         const url = `https://dnd5e.wikidot.com/spell:${slug}`;
-                        return `<a href="${url}" target="_blank" class="rt-spell-name" title="View spell on Wikidot">${escapeHtmlWithColor(name)}</a>`;
+                        return `<a href="${url}" target="_blank" class="rt-spell-name" title="在 Wikidot 上查看法术">${escapeHtmlWithColor(name)}</a>`;
                     }).join('');
                     return `<div class="rt-spell-row">
                         <span class="rt-spell-level">${escapeHtmlWithColor(label.trim())}</span>
@@ -1833,8 +1833,8 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
 
                             // Build tooltip combining effect (if any) and worth
                             const tooltipParts = [];
-                            if (effectVal) tooltipParts.push(`Effect: ${effectVal}`);
-                            tooltipParts.push(`Worth: ${worthVal}`);
+                            if (effectVal) tooltipParts.push(`效果: ${effectVal}`);
+                            tooltipParts.push(`价值: ${worthVal}`);
                             titleAttr = ` title="${escapeHtml(tooltipParts.join('\n'))}"`;
 
                             if (worthMode === 'display') {
@@ -1998,77 +1998,77 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
             const startTimeInputVal = obSettings.initialTime || '08:00 AM';
 
             return `<div class="rt-empty" style="text-align: left; align-items: flex-start; padding: 12px; gap: 10px; overflow-y: auto;">
-                <a class="rt-bmc-btn" href="https://buymeacoffee.com/multihog" target="_blank" rel="noopener noreferrer" title="Buy Me a Coffee">
+                <a class="rt-bmc-btn" href="https://buymeacoffee.com/multihog" target="_blank" rel="noopener noreferrer" title="请作者喝咖啡">
                     <img src="${escapeHtml(BUY_ME_A_COFFEE_ICON)}" alt="" width="14" height="20">
-                    <span>Buy Me a Coffee</span>
+                    <span>请作者喝咖啡</span>
                 </a>
                 <div style="text-align: center; width: 100%; margin-bottom: 2px; flex-shrink: 0;">
-                    <div class="rt-empty-icon rt-onboarding-crest" aria-label="Fencers guarding a shield">
+                    <div class="rt-empty-icon rt-onboarding-crest" aria-label="守护盾牌的击剑手">
                         <span class="rt-onboarding-crest-fencer" aria-hidden="true">🤺</span>
                         <span class="rt-onboarding-crest-shield" aria-hidden="true">🛡️</span>
                         <span class="rt-onboarding-crest-fencer rt-onboarding-crest-fencer-mirrored" aria-hidden="true">🤺</span>
                     </div>
-                    <div style="font-size: 16px; font-weight: bold; color: var(--rt-text);">Multihog D&D Framework</div>
-                    <div style="margin: 8px auto 0; max-width: 520px; color: var(--rt-text-muted); font-size: 0.9em; line-height: 1.4;">Welcome to Multihog D&D Framework! To see the latest significant additions, check out the <a href="https://github.com/MultihogAurelius/SillyTavern-MultihogDnDFramework/releases" target="_blank" rel="noopener noreferrer" style="color: var(--rt-accent);">Releases section of the GitHub page</a>, which I treat as a kind of dev blog.</div>
+                    <div style="font-size: 16px; font-weight: bold; color: var(--rt-text);">Multihog D&D 规则框架</div>
+                    <div style="margin: 8px auto 0; max-width: 520px; color: var(--rt-text-muted); font-size: 0.9em; line-height: 1.4;">欢迎使用 Multihog D&D 规则框架！要查看最新的重要更新，请访问 <a href="https://github.com/MultihogAurelius/SillyTavern-MultihogDnDFramework/releases" target="_blank" rel="noopener noreferrer" style="color: var(--rt-accent);">GitHub 页面的 Releases 发布页</a>（作者将其作为开发日志维护）。</div>
                 </div>
 
                 <div class="rt-onboarding-hero">
-                    <button type="button" class="rt-onboarding-hero-btn rt-random-char-btn" data-archetype="char_roll">🎲 Character Creator</button>
-                    <div class="rt-onboarding-hero-sub">Build your character step by step — presets, Lorebook Player Card, and full stat generation.</div>
+                    <button type="button" class="rt-onboarding-hero-btn rt-random-char-btn" data-archetype="char_roll">🎲 角色创建器</button>
+                    <div class="rt-onboarding-hero-sub">逐步创建你的角色——包含预设、世界书玩家卡及完整属性生成。</div>
                 </div>
 
                 <div class="rt-quickstart" id="rt-quickstart">
-                    <div class="rt-quickstart-title">⚡ Instant Action</div>
-                    <div class="rt-quickstart-sub">Choose a genre, optionally enter a name or Initial Setup, then begin. Leave the name blank to let the AI choose it. The extension uses your Narrator Configuration, starts at Level 1 with 0 XP unless Random Level is on, rolls a class and other unspecified details, and builds a Lorebook Agent Player Card plus a name-only ST persona. Uncheck Send Starter Message if you want to type your own first action instead of letting the AI open the campaign.</div>
-                    <div class="rt-quickstart-genres" role="group" aria-label="Quick Start genre">
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="fantasy" aria-pressed="false">⚔️ Fantasy</button>
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="realistic" aria-pressed="false">🏙️ Modern</button>
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="scifi" aria-pressed="false">🚀 Sci-Fi</button>
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="horror" aria-pressed="false">👻 Horror</button>
+                    <div class="rt-quickstart-title">⚡ 快速开局</div>
+                    <div class="rt-quickstart-sub">选择流派题材，可选择输入姓名或初始设定，然后开始。留空姓名将由 AI 自动生成。本扩展将使用你的叙事者配置，除非开启了“随机等级”，否则默认从 1 级 0 XP 开始，随机抽取职业及其它未指定细节，并创建一张世界书代理玩家卡以及一个仅包含姓名的酒馆角色形象（Persona）。如果不希望 AI 自动为跑团开场、想自行输入第一条行动消息，请取消勾选“发送开场白”。</div>
+                    <div class="rt-quickstart-genres" role="group" aria-label="快速开局流派">
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="fantasy" aria-pressed="false">⚔️ 奇幻</button>
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="realistic" aria-pressed="false">🏙️ 现代</button>
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="scifi" aria-pressed="false">🚀 科幻</button>
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="horror" aria-pressed="false">👻 恐怖</button>
                     </div>
                     <div class="rt-quickstart-name-picker">
-                        <input type="text" class="rt-quickstart-name" id="rt-quickstart-name" placeholder="Optional — enter, roll, or let AI choose" aria-label="Optional Instant Action character name" autocomplete="off" />
-                        <button type="button" class="rt-quickstart-roll-btn" id="rt-quickstart-roll-name" disabled>🎲 Roll Name</button>
+                        <input type="text" class="rt-quickstart-name" id="rt-quickstart-name" placeholder="可选——输入、掷骰生成或由 AI 决定" aria-label="可选快速开局角色姓名" autocomplete="off" />
+                        <button type="button" class="rt-quickstart-roll-btn" id="rt-quickstart-roll-name" disabled>🎲 掷骰姓名</button>
                     </div>
                     <label class="rt-quickstart-instructions-label" for="rt-quickstart-instructions">
-                        <span>Initial Setup (optional)</span>
-                        <small>Guide the character, setting, premise, or tone. Anything left unspecified is still randomized.</small>
+                        <span>初始设定（可选）</span>
+                        <small>引导角色、背景设定、开局前提或基调。未指定的任何内容都将随机生成。</small>
                     </label>
-                    <textarea class="rt-quickstart-instructions" id="rt-quickstart-instructions" rows="2" maxlength="1000" placeholder="e.g. A 28-year-old female ranger with a crossbow, starting in a storm-battered frontier town" aria-label="Optional Instant Action Initial Setup"></textarea>
+                    <textarea class="rt-quickstart-instructions" id="rt-quickstart-instructions" rows="2" maxlength="1000" placeholder="例如：一名 28 岁的女性游侠，携带轻弩，开局身处被风暴肆虐的边境小镇" aria-label="可选快速开局初始设定"></textarea>
                     <div class="rt-quickstart-options">
                         <div class="rt-quickstart-player-card-length">
-                            <label for="rt-quickstart-persona-words">Player Card length</label>
-                            <select id="rt-quickstart-persona-words" class="text_pole" aria-label="Instant Action Player Card word count">
+                            <label for="rt-quickstart-persona-words">玩家卡字数长度</label>
+                            <select id="rt-quickstart-persona-words" class="text_pole" aria-label="快速开局玩家卡字数">
                                 ${[100, 150, 200, 300, 400, 500, 750, 1000].map(n => {
                                     const selected = String(obSettings.onboardingPersonaWords || '150') === String(n) ? ' selected' : '';
-                                    return `<option value="${n}"${selected}>${n} words</option>`;
+                                    return `<option value="${n}"${selected}>${n} 字</option>`;
                                 }).join('')}
-                                <option value="other"${obSettings.onboardingPersonaWords === 'other' ? ' selected' : ''}>Custom…</option>
+                                <option value="other"${obSettings.onboardingPersonaWords === 'other' ? ' selected' : ''}>自定义…</option>
                             </select>
-                            <input id="rt-quickstart-persona-words-custom" type="number" class="text_pole" value="${escapeHtml(String(obSettings.onboardingPersonaWordsCustom || ''))}" style="display:${obSettings.onboardingPersonaWords === 'other' ? 'block' : 'none'}" placeholder="50–5000" min="50" max="5000" aria-label="Custom Instant Action Player Card word count" />
+                            <input id="rt-quickstart-persona-words-custom" type="number" class="text_pole" value="${escapeHtml(String(obSettings.onboardingPersonaWordsCustom || ''))}" style="display:${obSettings.onboardingPersonaWords === 'other' ? 'block' : 'none'}" placeholder="50–5000" min="50" max="5000" aria-label="自定义快速开局玩家卡字数" />
                         </div>
                         <div class="rt-quickstart-flag">
-                            <label for="rt-quickstart-random-level" title="When this is off, Instant Action starts at Level 1 with 0 XP. When it is on, a level from 1–10 is rolled. Initial Setup still wins if it names a level.">
-                                <span>Random Level?</span>
-                                <input type="checkbox" id="rt-quickstart-random-level" ${obSettings.onboardingInstantActionRandomLevel === true ? 'checked' : ''} aria-label="Random Level" />
+                            <label for="rt-quickstart-random-level" title="关闭时，快速开局将以 1 级 0 XP 开始。开启时，将随机掷出 1–10 级。如果初始设定中明确指定了等级，则以设定为准。">
+                                <span>随机等级？</span>
+                                <input type="checkbox" id="rt-quickstart-random-level" ${obSettings.onboardingInstantActionRandomLevel === true ? 'checked' : ''} aria-label="随机等级" />
                             </label>
-                            <span class="rt-cr-help-icon" title="When this is off, Instant Action starts at Level 1 with 0 XP. When it is on, a level from 1–10 is rolled. Initial Setup still wins if it names a level.">?</span>
+                            <span class="rt-cr-help-icon" title="关闭时，快速开局将以 1 级 0 XP 开始。开启时，将随机掷出 1–10 级。如果初始设定中明确指定了等级，则以设定为准。">?</span>
                         </div>
                         <div class="rt-quickstart-flag">
-                            <label for="rt-quickstart-send-starter" title="If this is checked, the AI automatically starts the campaign as soon as the rolled character is ready.">
-                                <span>Send Starter Message?</span>
-                                <input type="checkbox" id="rt-quickstart-send-starter" ${obSettings.onboardingSendStarterMessage !== false ? 'checked' : ''} aria-label="Send Starter Message" />
+                            <label for="rt-quickstart-send-starter" title="勾选后，一旦随机角色就绪，AI 将立即自动开始跑团。">
+                                <span>发送开场白？</span>
+                                <input type="checkbox" id="rt-quickstart-send-starter" ${obSettings.onboardingSendStarterMessage !== false ? 'checked' : ''} aria-label="发送开场白" />
                             </label>
-                            <span class="rt-cr-help-icon" title="If this is checked, the AI automatically starts the campaign as soon as the rolled character is ready.">?</span>
+                            <span class="rt-cr-help-icon" title="勾选后，一旦随机角色就绪，AI 将立即自动开始跑团。">?</span>
                         </div>
                     </div>
-                    <button type="button" class="rt-quickstart-begin-btn" id="rt-quickstart-begin" disabled>⚡ Begin Instant Action</button>
-                    <div class="rt-quickstart-status" id="rt-quickstart-status">Select a genre to begin</div>
+                    <button type="button" class="rt-quickstart-begin-btn" id="rt-quickstart-begin" disabled>⚡ 开始快速开局</button>
+                    <div class="rt-quickstart-status" id="rt-quickstart-status">请选择一个题材流派以开始</div>
                 </div>
 
                 <div class="rt-onboarding-secondary rt-onboarding-drawer rt-onboarding-other-drawer">
                 <button type="button" class="rt-onboarding-drawer-toggle" id="rt-onboarding-drawer-toggle" aria-expanded="false" aria-controls="rt-onboarding-drawer-body">
-                    <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>Other Ways to Begin<small>Fine-tune your start, create a Player Card, or import a character</small></span></span>
+                    <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>其它开局方式<small>微调开局设定、创建玩家卡或导入角色</small></span></span>
                     <span class="rt-onboarding-drawer-chevron" aria-hidden="true">&#9656;</span>
                 </button>
                 <div class="rt-onboarding-drawer-body" id="rt-onboarding-drawer-body">
@@ -2077,105 +2077,105 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin: 4px 0; flex-shrink: 0;">
                     <div class="rt-onboarding-config-row">
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Level <span class="rt-cr-help-icon" title="Pick 'N/A' if your system doesn't use numeric character levels — Custom and Persona generation will not invent a level, XP, or D&D-style level indicator.">?</span></span>
+                            <span class="rt-onboarding-field-label">等级 <span class="rt-cr-help-icon" title="如果你的规则系统不使用数字角色等级，请选择“N/A”——自定义与角色形象生成将不会虚构等级、XP 或 D&D 风格的等级指示器。">?</span></span>
                             <select id="rt-starting-level" class="text_pole" style="width: auto; min-width: 60px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
-                                <option value="none"${onboardingLevelIsNone ? ' selected' : ''}>N/A — No Levels</option>
+                                <option value="none"${onboardingLevelIsNone ? ' selected' : ''}>N/A — 无等级</option>
                                 ${[...Array(20).keys()].map(i => {
                                     const lvl = i + 1;
                                     const isSel = !onboardingLevelIsNone && lvl === onboardingLevelNum ? 'selected' : '';
-                                    return `<option value="${lvl}" ${isSel}>Level ${lvl}</option>`;
+                                    return `<option value="${lvl}" ${isSel}>${lvl} 级</option>`;
                                 }).join('')}
                             </select>
                         </div>
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Genre</span>
+                            <span class="rt-onboarding-field-label">题材流派</span>
                             <select id="rt-onboarding-genre" class="text_pole" style="width: auto; min-width: 90px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
-                                <option value="fantasy" ${onboardingGenre === 'fantasy' ? 'selected' : ''}>⚔️ Fantasy RPG</option>
-                                <option value="realistic" ${onboardingGenre === 'realistic' ? 'selected' : ''}>🏙️ Modern / Realistic</option>
-                                <option value="scifi" ${onboardingGenre === 'scifi' ? 'selected' : ''}>🚀 Sci-Fi</option>
-                                <option value="horror" ${onboardingGenre === 'horror' ? 'selected' : ''}>👻 Horror</option>
+                                <option value="fantasy" ${onboardingGenre === 'fantasy' ? 'selected' : ''}>⚔️ 奇幻 RPG</option>
+                                <option value="realistic" ${onboardingGenre === 'realistic' ? 'selected' : ''}>🏙️ 现代 / 写实</option>
+                                <option value="scifi" ${onboardingGenre === 'scifi' ? 'selected' : ''}>🚀 科幻</option>
+                                <option value="horror" ${onboardingGenre === 'horror' ? 'selected' : ''}>👻 恐怖</option>
                             </select>
                         </div>
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Gear Tier</span>
-                            <select id="rt-onboarding-gear-tier" class="text_pole" title="How well-equipped the generated character should be." style="width: auto; min-width: 110px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
+                            <span class="rt-onboarding-field-label">装备阶层</span>
+                            <select id="rt-onboarding-gear-tier" class="text_pole" title="生成的角色装备精良程度。" style="width: auto; min-width: 110px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
                                 ${gearTierOptions}
                             </select>
                         </div>
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Time &amp; Date</span>
+                            <span class="rt-onboarding-field-label">时间与日期</span>
                             <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                                <div class="rt-seg-toggle" id="rt-onboarding-date-seg" role="group" title="Choose the calendar format used for [TIME] tracking.">
-                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">Day 1</button>
-                                    <button type="button" data-value="date" class="${useDdMmYy ? 'active' : ''}">DD/MM/YYYY</button>
+                                <div class="rt-seg-toggle" id="rt-onboarding-date-seg" role="group" title="选择用于 [TIME] 追踪的日历格式。">
+                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">第 1 天</button>
+                                    <button type="button" data-value="date" class="${useDdMmYy ? 'active' : ''}">日/月/年</button>
                                 </div>
                                 <input type="text" id="rt-onboarding-start-date" class="text_pole" value="${startDateInputVal}" placeholder="01/01/2026" style="width: 80px; text-align: center; height: 22px; font-size: 11px; border-radius: 4px; background: var(--black70a); display: ${useDdMmYy ? 'inline-block' : 'none'};" />
-                                <div class="rt-seg-toggle" id="rt-onboarding-clock-seg" role="group" title="Choose the clock format used for [TIME] tracking.">
-                                    <button type="button" data-value="12" class="${!use24h ? 'active' : ''}">12h</button>
-                                    <button type="button" data-value="24" class="${use24h ? 'active' : ''}">24h</button>
+                                <div class="rt-seg-toggle" id="rt-onboarding-clock-seg" role="group" title="选择用于 [TIME] 追踪的时钟格式。">
+                                    <button type="button" data-value="12" class="${!use24h ? 'active' : ''}">12小时制</button>
+                                    <button type="button" data-value="24" class="${use24h ? 'active' : ''}">24小时制</button>
                                 </div>
-                                <input type="text" id="rt-onboarding-start-time" class="text_pole" value="${startTimeInputVal}" placeholder="${use24h ? '08:00' : '08:00 AM'}" title="Initial time of day for the very first [TIME] block." style="width: 74px; text-align: center; height: 22px; font-size: 11px; border-radius: 4px; background: var(--black70a);" />
+                                <input type="text" id="rt-onboarding-start-time" class="text_pole" value="${startTimeInputVal}" placeholder="${use24h ? '08:00' : '08:00 AM'}" title="首个 [TIME] 区块的初始时间。" style="width: 74px; text-align: center; height: 22px; font-size: 11px; border-radius: 4px; background: var(--black70a);" />
                             </div>
                         </div>
                     </div>
                     <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.85em; margin: 2px 0;">
                         <input type="checkbox" id="rt-onboarding-combat-guide-cb" ${obSettings.onboardingUseCombatScalingGuide !== false ? 'checked' : ''} />
-                        <span>Use Combat &amp; Skill Scaling Guide</span>
-                        <span class="rt-cr-help-icon" title="When enabled, the AI is guided by a classic d20/BAB-style combat and skill progression reference. Turn this off if you're using your own homebrew system and don't want D&D-flavored scaling language influencing Instant Action, Custom, Persona, or PC Import generation.">?</span>
+                        <span>使用战斗与技能等级成长指南</span>
+                        <span class="rt-cr-help-icon" title="启用后，AI 将参考经典的 d20/BAB 风格战斗与技能成长标准进行引导。如果你使用的是自创房规系统，且不希望 D&D 风格的成长用语影响快速开局、自定义、Persona 或 PC 导入的生成，请关闭此项。">?</span>
                     </label>
-                    <textarea id="rt-onboarding-custom-instructions" class="text_pole" placeholder="Custom setting/character instructions (e.g. Victorian London, space marine, gritty realism, cyberpunk decker...)" style="width: 100%; min-height: 40px; max-height: 120px; font-size: 11px; padding: 4px 6px; border-radius: 4px; background: var(--black70a); resize: vertical; margin-top: 2px;">${escapeHtml(obSettings.onboardingCustomInstructions || '')}</textarea>
+                    <textarea id="rt-onboarding-custom-instructions" class="text_pole" placeholder="自定义世界/角色指示（例如：维多利亚时代的伦敦、星际战士、冷酷写实、赛博朋克黑客……）" style="width: 100%; min-height: 40px; max-height: 120px; font-size: 11px; padding: 4px 6px; border-radius: 4px; background: var(--black70a); resize: vertical; margin-top: 2px;">${escapeHtml(obSettings.onboardingCustomInstructions || '')}</textarea>
                     <div class="rt-quickstart-name-picker rt-onboarding-name-picker">
-                        <input type="text" class="rt-quickstart-name" id="rt-onboarding-rolled-name" placeholder="Roll or enter a name" aria-label="Other Ways character name" autocomplete="off" />
-                        <button type="button" class="rt-quickstart-roll-btn" id="rt-onboarding-roll-name">🎲 Roll Name</button>
+                        <input type="text" class="rt-quickstart-name" id="rt-onboarding-rolled-name" placeholder="掷骰或输入姓名" aria-label="其它开局方式角色姓名" autocomplete="off" />
+                        <button type="button" class="rt-quickstart-roll-btn" id="rt-onboarding-roll-name">🎲 掷骰姓名</button>
                     </div>
-                    <div class="rt-onboarding-name-hint" id="rt-onboarding-name-hint">Roll a genre-matched name before using Custom.</div>
+                    <div class="rt-onboarding-name-hint" id="rt-onboarding-name-hint">在使用“自定义”之前，请先掷骰生成一个符合流派风格的姓名。</div>
                     <div style="display:flex; flex-direction:column; gap:5px; flex-shrink:0; padding:4px 0 2px;">
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-onboarding-player-card-cb"${obSettings.onboardingCreatePersona ? ' checked' : ''} />
-                                <span>Create Player Card in Lorebook Agent (Recommended)</span>
+                                <span>在世界书代理中创建玩家卡（推荐）</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="When checked, the AI writes a rich appearance, personality, habits, and backstory for a Lorebook Agent Player Card. A preview appears so you can edit, regenerate, copy, or add it to this chat.">?</span>
-                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">Word count:</span>
+                            <span class="rt-cr-help-icon" title="勾选后，AI 将为世界书代理玩家卡撰写丰富的外貌、性格、习惯和背景故事。随后会显示预览，以便你编辑、重新生成、复制或添加到当前聊天。">?</span>
+                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">字数：</span>
                             <select id="rt-onboarding-persona-words" class="text_pole" style="width:65px; font-size:11px; height:22px; padding:2px 4px;">
                                 ${[100, 150, 200, 300, 400, 500, 750, 1000].map(n => {
                                     const sel = String(obSettings.onboardingPersonaWords || '150') === String(n) ? ' selected' : '';
                                     return `<option value="${n}"${sel}>${n}</option>`;
                                 }).join('')}
-                                <option value="other"${obSettings.onboardingPersonaWords === 'other' ? ' selected' : ''}>Other...</option>
+                                <option value="other"${obSettings.onboardingPersonaWords === 'other' ? ' selected' : ''}>其它...</option>
                             </select>
-                            <input id="rt-onboarding-persona-words-custom" type="number" class="text_pole" value="${escapeHtml(String(obSettings.onboardingPersonaWordsCustom || ''))}" style="display:${obSettings.onboardingPersonaWords === 'other' ? 'inline-block' : 'none'}; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="e.g. 800" min="50" max="5000" />
+                            <input id="rt-onboarding-persona-words-custom" type="number" class="text_pole" value="${escapeHtml(String(obSettings.onboardingPersonaWordsCustom || ''))}" style="display:${obSettings.onboardingPersonaWords === 'other' ? 'inline-block' : 'none'}; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="例如 800" min="50" max="5000" />
                         </div>
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-onboarding-st-persona-cb"${obSettings.onboardingCreateSillyTavernPersona !== false ? ' checked' : ''} />
-                                <span>Create ST Persona (Recommended)</span>
+                                <span>创建酒馆角色形象（Persona，推荐）</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="Creates and selects a SillyTavern persona with the character's name and an empty description. This only makes sent chat messages use the same player name; character details stay in Lorebook Agent so they are not duplicated in prompt context.">?</span>
+                            <span class="rt-cr-help-icon" title="创建并选中一个带有该角色姓名且描述为空的 SillyTavern 角色形象（Persona）。这仅使发送的聊天消息使用相同的玩家姓名；角色详细信息仍保存在世界书代理中，避免在提示词上下文中重复。">?</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Archetype Buttons -->
                 <div class="rt-onboarding-buttons rt-fantasy-buttons" style="width: 100%; display: ${onboardingGenre === 'fantasy' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
-                    <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="persona">🎭 角色形象 (Persona)</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ 自定义</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 导入卡片</button>
                 </div>
                 <div class="rt-onboarding-buttons rt-realistic-buttons" style="width: 100%; display: ${onboardingGenre === 'realistic' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
-                    <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="persona">🎭 角色形象 (Persona)</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ 自定义</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 导入卡片</button>
                 </div>
                 <div class="rt-onboarding-buttons rt-scifi-buttons" style="width: 100%; display: ${onboardingGenre === 'scifi' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
-                    <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="persona">🎭 角色形象 (Persona)</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ 自定义</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 导入卡片</button>
                 </div>
                 <div class="rt-onboarding-buttons rt-horror-buttons" style="width: 100%; display: ${onboardingGenre === 'horror' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
-                    <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="persona">🎭 角色形象 (Persona)</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ 自定义</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 导入卡片</button>
                 </div>
                 </div>
                 </div>
@@ -2184,103 +2184,103 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 <!-- PC Import Inline Panel (hidden until 📥 is clicked) -->
                 <div id="rt-pc-import-panel" style="display:none; flex-direction:column; gap:7px; width:100%; flex-shrink:0;">
                     <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-                        <button id="rt-pc-import-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← Back</button>
+                        <button id="rt-pc-import-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← 返回</button>
                         <span style="flex:1; display:flex; align-items:center; gap:6px;">
-                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">📥 Import Character Card as PC</span>
-                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="Edit PC Formatting Sections">⚙️</button>
+                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">📥 导入角色卡为 PC</span>
+                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="编辑 PC 格式化分段">⚙️</button>
                         </span>
                     </div>
-                    <div style="font-size:10px; color:rgba(255,255,255,0.45); line-height:1.4;"><b>Add as is</b> = AI preserves original writing, fixes only era/world impossibilities · <b>Fit into Story</b> = full adaptation to campaign setting.</div>
+                    <div style="font-size:10px; color:rgba(255,255,255,0.45); line-height:1.4;"><b>原样添加</b> = AI 保留原文笔触，仅修正时代/世界观冲突 · <b>融入故事</b> = 完全适配模组战役背景设定。</div>
                     <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-                        <label style="font-size:11px; color:rgba(255,255,255,0.6); white-space:nowrap;">Player Card Length</label>
+                        <label style="font-size:11px; color:rgba(255,255,255,0.6); white-space:nowrap;">玩家卡字数长度</label>
                         <select id="rt-pc-import-wordselect" style="background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:2px 4px; font-size:11px; box-sizing:border-box;">
-                            <option value="same">Same as Card</option>
-                            <option value="150">Short (~150 words)</option>
-                            <option value="300">Medium (~300 words)</option>
-                            <option value="500">Long (~500 words)</option>
-                            <option value="custom">Custom...</option>
+                            <option value="same">与原卡相同</option>
+                            <option value="150">短篇（约 150 字）</option>
+                            <option value="300">中篇（约 300 字）</option>
+                            <option value="500">长篇（约 500 字）</option>
+                            <option value="custom">自定义...</option>
                         </select>
                         <input id="rt-pc-import-wordcount" type="number" value="150" min="50" max="5000" step="25"
                             style="display:none; width:60px; background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:3px 6px; font-size:12px; box-sizing:border-box;">
-                        <span style="font-size:10px; color:rgba(255,255,255,0.35);">(Fit into Story only)</span>
+                        <span style="font-size:10px; color:rgba(255,255,255,0.35);">（仅限融入故事）</span>
                     </div>
-                    <input id="rt-pc-import-search" type="text" placeholder="Search characters..." style="width:100%; background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:5px; padding:5px 8px; font-size:12px; box-sizing:border-box;">
+                    <input id="rt-pc-import-search" type="text" placeholder="搜索角色..." style="width:100%; background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:5px; padding:5px 8px; font-size:12px; box-sizing:border-box;">
                     <div id="rt-pc-import-list" style="display:flex; flex-direction:column; gap:4px; max-height:200px; overflow-y:auto; padding-right:2px;"></div>
                 </div>
 
                 <!-- Character Roll Inline Panel (hidden until 🎲 is clicked) -->
                 <div id="rt-char-roll-panel" style="display:none; flex-direction:column; gap:7px; width:100%; flex-shrink:0;">
                     <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-                        <button id="rt-char-roll-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← Back</button>
+                        <button id="rt-char-roll-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← 返回</button>
                         <span style="flex:1; display:flex; align-items:center; gap:6px;">
-                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">🎲 Character Creator</span>
-                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="Edit PC Formatting Sections">⚙️</button>
+                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">🎲 角色创建器</span>
+                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="编辑 PC 格式化分段">⚙️</button>
                         </span>
-                        <button id="rt-cr-reset-btn" class="rt-cr-reset-btn" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;" title="Clear all fields">🗑 Reset</button>
+                        <button id="rt-cr-reset-btn" class="rt-cr-reset-btn" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;" title="清空所有字段">🗑 重置</button>
                     </div>
                     <!-- Presets Bar -->
                     <div id="rt-cr-presets-bar" style="display:flex; align-items:center; gap:5px; padding:4px 0 3px; border-bottom:1px solid rgba(255,255,255,0.08);">
-                        <span style="font-size:0.78em; opacity:0.55; white-space:nowrap;">📋 Presets:</span>
+                        <span style="font-size:0.78em; opacity:0.55; white-space:nowrap;">📋 预设：</span>
                         <select id="rt-cr-preset-select" class="text_pole" style="flex:1; font-size:11px; height:22px; padding:2px 4px;">
-                            <option value="">— Select preset —</option>
+                            <option value="">— 选择预设 —</option>
                         </select>
-                        <button id="rt-cr-preset-load-btn" style="background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:inherit; font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Load</button>
-                        <button id="rt-cr-preset-delete-btn" style="background:rgba(220,50,50,0.12); border:1px solid rgba(220,50,50,0.4); border-radius:4px; color:rgba(255,100,100,0.9); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Delete</button>
-                        <button id="rt-cr-preset-save-btn" title="Save current fields as a preset" style="background:none; border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:var(--rt-accent); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">＋ Save</button>
+                        <button id="rt-cr-preset-load-btn" style="background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:inherit; font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">加载</button>
+                        <button id="rt-cr-preset-delete-btn" style="background:rgba(220,50,50,0.12); border:1px solid rgba(220,50,50,0.4); border-radius:4px; color:rgba(255,100,100,0.9); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">删除</button>
+                        <button id="rt-cr-preset-save-btn" title="将当前字段保存为预设" style="background:none; border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:var(--rt-accent); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">＋ 保存</button>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
                             <label class="rt-cr-label" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                                <span>Name</span>
-                                <button id="rt-cr-random-name" class="interactable" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; padding:0; margin:0; font-size:1.1em; line-height:1;" title="Roll a random name">🎲</button>
+                                <span>姓名</span>
+                                <button id="rt-cr-random-name" class="interactable" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; padding:0; margin:0; font-size:1.1em; line-height:1;" title="掷骰随机姓名">🎲</button>
                             </label>
                             <input id="rt-cr-name" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Gender</label>
+                            <label class="rt-cr-label">性别</label>
                             <input id="rt-cr-gender" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Age</label>
+                            <label class="rt-cr-label">年龄</label>
                             <input id="rt-cr-age" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field" style="flex:1.35 1 0%;">
-                            <label class="rt-cr-label" style="display:inline-flex; align-items:center; gap:3px; white-space:nowrap;">Sexual Orientation <span class="rt-cr-help-icon" style="width:14px;height:14px;font-size:0.65em;" title="Needed for the relationship system and CYOA romantic options — without this, NPC affection/romance targeting is guesswork.">?</span></label>
+                            <label class="rt-cr-label" style="display:inline-flex; align-items:center; gap:3px; white-space:nowrap;">性取向 <span class="rt-cr-help-icon" style="width:14px;height:14px;font-size:0.65em;" title="好感度系统和 CYOA 浪漫恋爱选项所需——缺少此项，NPC 的好感与浪漫倾向判断只能凭猜测。">?</span></label>
                             <input id="rt-cr-orientation" class="text_pole rt-cr-input" type="text" />
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Species</label>
+                            <label class="rt-cr-label">种族</label>
                             <input id="rt-cr-species" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Ethnicity</label>
+                            <label class="rt-cr-label">族裔 / 血统</label>
                             <input id="rt-cr-ethnicity" class="text_pole rt-cr-input" type="text" />
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Genre <span class="rt-cr-help-icon" title="You must select a specific genre to see its related classes in the Class dropdown. Otherwise, only generic classes are shown.">?</span></label>
+                            <label class="rt-cr-label">题材流派 <span class="rt-cr-help-icon" title="必须选择特定流派才能在职业下拉菜单中看到相关职业。否则仅显示通用职业。">?</span></label>
                             <select id="rt-cr-genre" class="text_pole rt-cr-input">
-                                <option value="">✨ None — AI decides from context</option>
-                                <option value="fantasy">⚔️ Fantasy RPG</option>
-                                <option value="realistic">🏙️ Modern</option>
-                                <option value="scifi">🚀 Sci-Fi</option>
-                                <option value="horror">👻 Horror</option>
+                                <option value="">✨ 无 — 由 AI 根据上下文决定</option>
+                                <option value="fantasy">⚔️ 奇幻 RPG</option>
+                                <option value="realistic">🏙️ 现代</option>
+                                <option value="scifi">🚀 科幻</option>
+                                <option value="horror">👻 恐怖</option>
                             </select>
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Level <span class="rt-cr-help-icon" title="Pick 'N/A' if your system doesn't use numeric character levels — the AI will not invent a level, XP, or D&D-style level indicator.">?</span></label>
+                            <label class="rt-cr-label">等级 <span class="rt-cr-help-icon" title="如果你的规则系统不使用数字角色等级，请选择“N/A”——AI 将不会虚构等级、XP 或 D&D 风格的等级指示器。">?</span></label>
                             <select id="rt-cr-level" class="text_pole rt-cr-input">
-                                <option value="none"${onboardingLevelIsNone ? ' selected' : ''}>N/A — No Levels (Custom System)</option>
-                                ${[...Array(20).keys()].map(i => { const l = i + 1; return `<option value="${l}"${!onboardingLevelIsNone && l === onboardingLevelNum ? ' selected' : ''}>Level ${l}</option>`; }).join('')}
+                                <option value="none"${onboardingLevelIsNone ? ' selected' : ''}>N/A — 无等级（自定义系统）</option>
+                                ${[...Array(20).keys()].map(i => { const l = i + 1; return `<option value="${l}"${!onboardingLevelIsNone && l === onboardingLevelNum ? ' selected' : ''}>${l} 级</option>`; }).join('')}
                             </select>
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Gear Tier <span class="rt-cr-help-icon" title="How well-equipped the character should be — from mundane starter kit to heroic named gear. Auto scales with level. Pick 'None' to skip all gear guidance.">?</span></label>
+                            <label class="rt-cr-label">装备阶层 <span class="rt-cr-help-icon" title="角色的装备精良程度——从凡品新手包到史诗级专属装备。自动随等级提升而成长。选择“无”以跳过所有装备引导。">?</span></label>
                             <select id="rt-cr-gear-tier" class="text_pole rt-cr-input">
                                 ${gearTierOptions}
                             </select>
@@ -2290,65 +2290,65 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                         <div class="rt-cr-field" style="width:100%;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em; font-weight:normal;">
                                 <input type="checkbox" id="rt-cr-combat-guide-cb" ${obSettings.onboardingUseCombatScalingGuide !== false ? 'checked' : ''} />
-                                <span>Use Combat &amp; Skill Scaling Guide</span>
-                                <span class="rt-cr-help-icon" title="When enabled, the AI is guided by a classic d20/BAB-style combat and skill progression reference. Turn this off if you're using your own homebrew system and don't want D&D-flavored scaling language influencing the result.">?</span>
+                                <span>使用战斗与技能等级成长指南</span>
+                                <span class="rt-cr-help-icon" title="启用后，AI 将参考经典的 d20/BAB 风格战斗与技能成长标准进行引导。如果你使用的是自创房规系统，且不希望 D&D 风格的成长用语影响结果，请关闭此项。">?</span>
                             </label>
                         </div>
                     </div>
                     <div class="rt-cr-row rt-cr-time-row">
                         <div class="rt-cr-field" style="width:100%;">
-                            <label class="rt-cr-label">Time &amp; Date <span class="rt-cr-help-icon" title="Calendar and clock format for [TIME] tracking in generated memos. Day 1 = narrative day count; DD/MM/YYYY = real calendar dates. The last field sets the initial time of day for the very first [TIME] block.">?</span></label>
+                            <label class="rt-cr-label">时间与日期 <span class="rt-cr-help-icon" title="生成的备忘录中用于 [TIME] 追踪的日历与时钟格式。第 1 天 = 叙事天数计数；日/月/年 = 真实日历日期。最后一个字段设置首个 [TIME] 区块的初始时刻。">?</span></label>
                             <div class="rt-cr-time-controls">
-                                <div class="rt-seg-toggle" id="rt-cr-date-seg" role="group" title="Choose the calendar format used for [TIME] tracking.">
-                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">Day 1</button>
-                                    <button type="button" data-value="date" class="${useDdMmYy ? 'active' : ''}">DD/MM/YYYY</button>
+                                <div class="rt-seg-toggle" id="rt-cr-date-seg" role="group" title="选择用于 [TIME] 追踪的日历格式。">
+                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">第 1 天</button>
+                                    <button type="button" data-value="date" class="${useDdMmYy ? 'active' : ''}">日/月/年</button>
                                 </div>
                                 <input type="text" id="rt-cr-start-date" class="text_pole rt-cr-input" value="${startDateInputVal}" placeholder="01/01/2026" style="width: 92px; text-align: center; display: ${useDdMmYy ? 'inline-block' : 'none'};" />
-                                <div class="rt-seg-toggle" id="rt-cr-clock-seg" role="group" title="Choose the clock format used for [TIME] tracking.">
-                                    <button type="button" data-value="12" class="${!use24h ? 'active' : ''}">12h</button>
-                                    <button type="button" data-value="24" class="${use24h ? 'active' : ''}">24h</button>
+                                <div class="rt-seg-toggle" id="rt-cr-clock-seg" role="group" title="选择用于 [TIME] 追踪的时钟格式。">
+                                    <button type="button" data-value="12" class="${!use24h ? 'active' : ''}">12小时制</button>
+                                    <button type="button" data-value="24" class="${use24h ? 'active' : ''}">24小时制</button>
                                 </div>
-                                <input type="text" id="rt-cr-start-time" class="text_pole rt-cr-input" value="${startTimeInputVal}" placeholder="${use24h ? '08:00' : '08:00 AM'}" title="Initial time of day for the very first [TIME] block." style="width: 84px; text-align: center;" />
+                                <input type="text" id="rt-cr-start-time" class="text_pole rt-cr-input" value="${startTimeInputVal}" placeholder="${use24h ? '08:00' : '08:00 AM'}" title="首个 [TIME] 区块的初始时刻。" style="width: 84px; text-align: center;" />
                             </div>
                         </div>
                     </div>
                     <div class="rt-cr-field" style="width:100%;">
-                        <label class="rt-cr-label">Class</label>
+                        <label class="rt-cr-label">职业</label>
                         <select id="rt-cr-class" class="text_pole rt-cr-input" style="width:100%;"></select>
-                        <input id="rt-cr-class-other" class="text_pole rt-cr-input" type="text" placeholder="Describe your custom class…" style="display:none; margin-top:3px; width:100%;" />
+                        <input id="rt-cr-class-other" class="text_pole rt-cr-input" type="text" placeholder="描述你的自定义职业…" style="display:none; margin-top:3px; width:100%;" />
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Traits</label>
-                            <textarea id="rt-cr-traits" class="text_pole rt-cr-input" placeholder="Leave blank — AI invents traits" rows="2" style="resize:vertical;"></textarea>
+                            <label class="rt-cr-label">特质</label>
+                            <textarea id="rt-cr-traits" class="text_pole rt-cr-input" placeholder="留空 — 由 AI 构思特质" rows="2" style="resize:vertical;"></textarea>
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Abilities</label>
-                            <textarea id="rt-cr-abilities" class="text_pole rt-cr-input" placeholder="Leave blank — AI generates abilities" rows="2" style="resize:vertical;"></textarea>
+                            <label class="rt-cr-label">能力 / 属性</label>
+                            <textarea id="rt-cr-abilities" class="text_pole rt-cr-input" placeholder="留空 — 由 AI 生成能力" rows="2" style="resize:vertical;"></textarea>
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Background <span class="rt-cr-help-icon" title="You don't need to write a full backstory. A brief hint guides the AI (e.g. 'grew up on the streets', 'ex-soldier', 'noble exile'). Leave blank and the AI will invent a fitting background.">?</span></label>
+                            <label class="rt-cr-label">背景 <span class="rt-cr-help-icon" title="无需撰写完整的背景故事。只需简要提示引导 AI 即可（例如：'在街头流浪长大'、'退役老兵'、'流亡贵族'）。留空则由 AI 构想合适的背景。">?</span></label>
                             <input id="rt-cr-background" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Appearance <span class="rt-cr-help-icon" title="Just a hint is enough (e.g. 'tall, red hair, scar on cheek'). Leave blank and the AI will create a full appearance description.">?</span></label>
+                            <label class="rt-cr-label">外貌 <span class="rt-cr-help-icon" title="只需一点线索即可（例如：'高大、红发、面颊有疤'）。留空则由 AI 生成完整的外貌描述。">?</span></label>
                             <input id="rt-cr-appearance" class="text_pole rt-cr-input" type="text" />
                         </div>
                     </div>
                     <div class="rt-cr-field" style="width:100%;">
-                        <label class="rt-cr-label">Additional Info</label>
-                        <textarea id="rt-cr-additional" class="text_pole rt-cr-input" placeholder="Extra constraints, setting notes…" rows="2" style="resize:vertical; width:100%;"></textarea>
+                        <label class="rt-cr-label">附加信息</label>
+                        <textarea id="rt-cr-additional" class="text_pole rt-cr-input" placeholder="额外限制条件、背景备注…" rows="2" style="resize:vertical; width:100%;"></textarea>
                     </div>
                     <div style="display:flex; flex-direction:column; gap:5px; flex-shrink:0; padding:4px 0;">
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-cr-player-card-cb" />
-                                <span>Create Player Card in Lorebook Agent (Recommended)</span>
+                                <span>在世界书代理中创建玩家卡（推荐）</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="When checked, the AI writes a rich appearance, personality, habits, and backstory for a Lorebook Agent Player Card. A preview appears so you can edit, regenerate, copy, or add it to this chat.">?</span>
-                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">Word count:</span>
+                            <span class="rt-cr-help-icon" title="勾选后，AI 将为世界书代理玩家卡撰写丰富的外貌、性格、习惯和背景故事。随后会显示预览，以便你编辑、重新生成、复制或添加到当前聊天。">?</span>
+                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">字数：</span>
                             <select id="rt-cr-persona-words" class="text_pole" style="width:65px; font-size:11px; height:22px; padding:2px 4px;">
                                 <option value="100">100</option>
                                 <option value="150" selected>150</option>
@@ -2358,200 +2358,200 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                                 <option value="500">500</option>
                                 <option value="750">750</option>
                                 <option value="1000">1000</option>
-                                <option value="other">Other...</option>
+                                <option value="other">其它...</option>
                             </select>
-                            <input id="rt-cr-persona-words-custom" type="number" class="text_pole" style="display:none; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="e.g. 800" min="50" max="5000" />
+                            <input id="rt-cr-persona-words-custom" type="number" class="text_pole" style="display:none; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="例如 800" min="50" max="5000" />
                         </div>
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-cr-st-persona-cb" checked />
-                                <span>Create ST Persona (Recommended)</span>
+                                <span>创建酒馆角色形象（Persona，推荐）</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="Creates and selects a SillyTavern persona with the character's name and an empty description. This only makes sent chat messages use the same player name; character details stay in Lorebook Agent so they are not duplicated in prompt context.">?</span>
+                            <span class="rt-cr-help-icon" title="创建并选中一个带有该角色姓名且描述为空的 SillyTavern 角色形象（Persona）。这仅使发送的聊天消息使用相同的玩家姓名；角色详细信息仍保存在世界书代理中，避免在提示词上下文中重复。">?</span>
                         </div>
                     </div>
-                    <button id="rt-cr-generate-btn" style="width:100%; padding:8px 12px; background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.6); border-radius:5px; color:var(--rt-text,#eee); font-size:0.92em; font-weight:bold; cursor:pointer; letter-spacing:0.03em;">🎲 Generate Character</button>
+                    <button id="rt-cr-generate-btn" style="width:100%; padding:8px 12px; background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.6); border-radius:5px; color:var(--rt-text,#eee); font-size:0.92em; font-weight:bold; cursor:pointer; letter-spacing:0.03em;">🎲 生成角色</button>
                 </div>
 
-                <div class="rt-onboarding-divider"><span>How It Works</span></div>
+                <div class="rt-onboarding-divider"><span>运行机制</span></div>
 
                 <div class="rt-onboarding-prompt-backup-note" role="note" style="font-size:12px;line-height:1.4;padding:8px 10px;border-left:3px solid var(--rt-accent);background:rgba(120,80,220,0.1);border-radius:4px;">
-                    <b>NOTE:</b> Multihog D&amp;D Framework auto-applies its own system prompt. If you want to restore your old prompt, go to the extension settings: General &amp; Visuals -> Core -> Restore backup to Main.
-                    <div style="margin-top:8px;">A summarizer is <b>mandatory</b> for this extension to compress the context. I recommend <a href="https://github.com/Lodactio/Extension-Summaryception" target="_blank" rel="noopener noreferrer">Summaryception</a>, which creates a summary and auto-ghosts/hides messages. You only need to have the narrator see the last 10 messages or so verbatim; the rest can be hidden away as memory is handled by Lorebook Agent (part of Multihog) and Summaryception.</div>
+                    <b>提示：</b> Multihog D&amp;D 规则框架会自动应用其专属系统提示词。如果你想恢复原有的提示词，请前往扩展设置：常规与界面外观 -> 核心 -> 恢复备份到主提示词。
+                    <div style="margin-top:8px;">上下文压缩工具对于本扩展是<b>必不可少</b>的。推荐使用 <a href="https://github.com/Lodactio/Extension-Summaryception" target="_blank" rel="noopener noreferrer">Summaryception</a>，它可以生成摘要并自动幽灵化/隐藏历史消息。你只需要让叙事者逐字查看最近 10 条左右的消息即可；其余消息均可隐藏，因为长效记忆由世界书代理（Multihog 的一部分）和 Summaryception 共同处理。</div>
                 </div>
 
                 <div class="rt-onboarding-how-it-works">
-                    <div><b style="color: var(--rt-accent);">Auto-Tracking:</b> As you roleplay, the extension intelligently parses assistant responses using natural language. It detects losses of HP, new loot, or combat triggers, running background passes to update the state.</div>
+                    <div><b style="color: var(--rt-accent);">自动追踪：</b> 在你跑团角色扮演时，扩展会使用自然语言智能解析 AI 助手的回复。它会自动检测 HP 扣减、获得新战利品或战斗触发，并在后台运行处理以更新状态。</div>
 
-                    <div><b style="color: var(--rt-accent);">Prompt Injection:</b> The State Memo and RNG Queue are injected seamlessly into your outgoing prompt. It acts as the "source of truth," assuring the narrator/GM model accurately sees HP, inventory, and mechanical outcomes. Buffs/debuffs tick down automatically based on in-story real-time passed. It JUST WORKS™!</div>
+                    <div><b style="color: var(--rt-accent);">提示词注入：</b> 状态备忘录和 RNG 队列会无缝注入到你发送的提示词中。它充当跑团的“唯一事实来源”，确保叙事者/DM 模型能够准确掌握 HP、物品栏以及规则机制判定的结果。增益/减益状态还会根据故事中流逝的实际时间自动倒计时。开箱即用，省心自然！</div>
 
-                    <div><b style="color: var(--rt-accent);">Lorebook Agent 🤖:</b> Open it from the <b>Lorebook Agent</b> tab at the top of the State Tracker panel and preferably detach it from the State Tracker UI. It autonomously manages your lorebook — creating, updating, activating, deactivating, and deleting entries as your story evolves. Click <b>?</b> inside the agent panel for full documentation.</div>
+                    <div><b style="color: var(--rt-accent);">世界书代理 🤖：</b> 可从状态追踪器面板顶部的 <b>世界书代理</b> 标签页打开，建议将其从状态追踪器界面中分离为独立窗口。它能自主管理你的世界书——随着故事发展自动创建、更新、激活、停用和删除条目。点击代理面板内的 <b>?</b> 可查看完整说明文档。</div>
 
-                    <div><b style="color: var(--rt-accent);">World Progression 🌍:</b> Simulates location-scale conditions and wider currents at regular in-world intervals. It reads complete location lore dossiers without hidden maps, rotates through the least recently covered places, and writes directional prose for the narrator and later Map Evolution passes. A World Skeleton can seed undiscovered locations and regional context. Backlog Consolidation compresses older reports. Configure these options inside World Progression in Extension Settings.</div>
+                    <div><b style="color: var(--rt-accent);">世界推演 🌍：</b> 按游戏内时间间隔定期模拟地点规模的态势与更宏观的局势流动。它会读取完整的地点设定档案（不含隐藏地图），轮换覆盖最久未推演的地点，并为叙事者以及后续的地图演进生成具备方向性的描述文本。世界骨架可用于预埋尚未探索的地点与区域背景。历史记录整合则用于压缩旧报告。可在扩展设置的“世界推演”中配置这些选项。</div>
 
-                    <div><b style="color: var(--rt-accent);">Map Evolution 🗺️:</b> Makes maps/locations dynamic. Dungeons and towns evolve and generate story threads autonomously in the background (or even as you're in the location). Cleared half a dungeon, left, and then came back? The opposition may have gotten reinforcements or set up ambushes. Can be configured to run more or less often in the Persistent Maps section of the settings.</div>
+                    <div><b style="color: var(--rt-accent);">地图演进 🗺️：</b> 让地图与地点具备动态活力。地下城和城镇会在后台自主演进并生成故事线索（甚至在你身处该地点时）。清理了一半的地下城、离开后再返回？敌对势力可能已经得到了增援或布置了埋伏。可以在扩展设置的“持久化地图”分段中配置其运行频率。</div>
                 </div>
 
-                <div class="rt-onboarding-divider"><span>Need Help</span></div>
+                <div class="rt-onboarding-divider"><span>获取帮助</span></div>
 
                 <div class="rt-onboarding-chat-tip" role="note">
-                    <div class="rt-onboarding-chat-tip-title">Need help? Try these:</div>
+                    <div class="rt-onboarding-chat-tip-title">需要帮助？请尝试以下方式：</div>
                     <ol class="rt-onboarding-help-list">
-                        <li>Watch <a href="https://www.youtube.com/watch?v=82Lt9pRYFS0" target="_blank" rel="noopener noreferrer">this basic video walkthrough</a> to get started.</li>
-                        <li>Talk to the <button type="button" class="rt-onboarding-open-chat" id="rt-onboarding-open-chat">Adventure Companion</button> bot. It has access to a large document regarding the extension when Tutorial Mode is enabled.</li>
+                        <li>观看 <a href="https://www.youtube.com/watch?v=82Lt9pRYFS0" target="_blank" rel="noopener noreferrer">基础视频演示教程</a> 以快速上手。</li>
+                        <li>与 <button type="button" class="rt-onboarding-open-chat" id="rt-onboarding-open-chat">冒险向导 (Adventure Companion)</button> 助手对话。在启用教程模式时，它可以访问有关本扩展的详尽文档。</li>
                     </ol>
                 </div>
 
-                <div class="rt-onboarding-divider"><span>Setup Guide</span></div>
+                <div class="rt-onboarding-divider"><span>设置指南</span></div>
 
                 <div class="rt-onboarding-setup-guide">
-                    <b class="rt-onboarding-setup-title">Initial Setup:</b>
+                    <b class="rt-onboarding-setup-title">初始设置：</b>
                     <ol class="rt-onboarding-setup-list">
-                        <li><b>API must be Chat Completion</b> — SillyTavern lists the outdated Text Completion option first. If that is selected, this extension will not work. Open the left-side API dropdown and choose Chat Completion.</li>
-                        <li>Ensure <b>Function Calling</b> is enabled in your Chat Completion preset if you want Hybrid RNG tool rolls and the default Persistent Maps opener (<b>CreateAreaMap</b>). You can skip function calling: set the Map Architect opener to <b>Text command</b> under Narrator Configuration (when Persistent Maps is on), and use Pre-Seeded RNG. You <i>can</i> turn Persistent Maps off in Game Systems / Components.</li>
-                        <li>Set up your connections in the extension's connection settings. I recommend a lightweight, relatively fast and cheap model for everything but the main narrator/GM. More on that below.</li>
-                        <li>Create a narrator character card. Leave the card content empty, as the framework handles all logic via the system/Main ST prompt.
+                        <li><b>API 必须为聊天补全 (Chat Completion)</b> — SillyTavern 默认将过时的文本补全 (Text Completion) 排在首位。如果选中了该项，本扩展将无法工作。请打开左侧 API 下拉菜单并选择聊天补全。</li>
+                        <li>如果你希望使用混合 RNG 工具掷骰以及默认的持久化地图开场 (<b>CreateAreaMap</b>)，请确保在你的聊天补全预设中启用了 <b>函数调用 (Function Calling)</b>。你也可以跳过函数调用：在“叙事者配置”中将地图构建器开场方式设为 <b>文本指令</b>（当开启持久化地图时），并使用预掷骰 RNG。你<i>也可以</i>在游戏系统 / 组件中关闭持久化地图。</li>
+                        <li>在扩展的连接设置中配置你的模型连接。除了主叙事者/DM 之外，建议其余所有功能均使用轻量、快速且成本较低的模型。详见下方说明。</li>
+                        <li>创建一张叙事者角色卡。卡片内容保持留空即可，因为本框架会通过酒馆主系统提示词处理所有逻辑。
                             <div class="rt-onboarding-gm-create">
-                                <label class="rt-onboarding-gm-label" for="rt-onboarding-gm-name">Narrator card name</label>
-                                <input id="rt-onboarding-gm-name" class="text_pole rt-onboarding-gm-name" type="text" value="Game Master" placeholder="Game Master" maxlength="120" aria-label="Narrator card name">
-                                <button type="button" class="rt-onboarding-open-chat" id="rt-onboarding-create-gm">Create narrator card</button>
+                                <label class="rt-onboarding-gm-label" for="rt-onboarding-gm-name">叙事者卡片名称</label>
+                                <input id="rt-onboarding-gm-name" class="text_pole rt-onboarding-gm-name" type="text" value="Game Master" placeholder="Game Master" maxlength="120" aria-label="叙事者卡片名称">
+                                <button type="button" class="rt-onboarding-open-chat" id="rt-onboarding-create-gm">创建叙事者卡片</button>
                             </div>
-                            <div class="rt-onboarding-gm-note">Multihog doesn&apos;t use a one-on-one chat format but uses a format written like a book, that seamlessly allows for multiple characters. The messages are attributed to a narrator, not a single character.</div>
+                            <div class="rt-onboarding-gm-note">Multihog 不采用传统的一对一聊天格式，而是采用书籍风格的叙事格式，可无缝容纳多名角色登场。消息归属于叙事者，而非单一角色。</div>
                         </li>
-                        <li>Use one of the character creation options above to roll a new character. You can either use the Character Creator option to clearly specify your character, use Other Ways to Begin for a more rough description, or use Instant Action to get started quicker.</li>
+                        <li>使用上方的任一角色创建选项来生成新角色。你可以使用“角色创建器”详细定制角色，使用“其它开局方式”提供概括性描述，或使用“快速开局”更迅速地上手。</li>
                     </ol>
                     <div style="margin-top: 8px;">
-                        🪙 <b>Token Optimization:</b> A summarizer that <b>hides verbatim messages</b> is essential — without it, tool-use and long chats will balloon token cost. Use something like <a href="https://github.com/Lodactio/Extension-Summaryception" target="_blank" rel="noopener noreferrer"><b>Summaryception</b></a> that auto-ghosts/hides older messages so the narrator only sees the last ~10 turns verbatim. Combined with <b>Lorebook Agent</b>, memory stays in lore and summaries instead of raw chat, which keeps the AI on track and the cost down.
+                        🪙 <b>Token 消耗优化：</b> 具备<b>隐藏历史原消息</b>功能的摘要器至关重要——没有它，工具调用和长对话会导致 Token 成本急剧攀升。推荐使用类似 <a href="https://github.com/Lodactio/Extension-Summaryception" target="_blank" rel="noopener noreferrer"><b>Summaryception</b></a> 的扩展，它能自动幽灵化/隐藏较早的消息，使叙事者只需逐字看到最近约 10 轮的对话。结合<b>世界书代理</b>，记忆会保存在设定集和摘要中而非原始聊天记录中，既能让 AI 保持逻辑一致，又能大幅削减 Token 成本。
                     </div>
                     <div style="margin-top: 12px;">
-                        🤖 <b>What Model to Use?</b><br><br>
-                        For the narrator, I'd recommend trying at least the following:<br>
-                        <ul style="margin: 4px 0 10px 20px; padding-left: 16px;"><li>MiMo 2.5 Pro</li><li>Deepseek V4 Pro and latest Flash</li><li>GPT-5.6 Luna, for its great cost-efficiency. Seems to be a decent model overall.</li></ul>
-                        <i>For the State Tracker and Lorebook Agent, I've been recommending the Gemini Flash-Lite and Flash models. However, now I'm not sure at all anymore. Deepseek V4 Flash 0731 recently came out and is very promising, and the same goes for GPT-5.6 Luna. These are seriously inexpensive models and seem to be heavy-hitters in terms of performance.</i><br><br>
-                        <i>If your model thinks too long in combat, enable</i> <b>Combat API Override</b> <i>in State Tracker settings — it auto-switches when the</i> <code>[COMBAT]</code> <i>tag is active in the tracker and switches back when combat ends.</i> <b><i>This way you can have a faster model, so combat is faster.</i></b><br><br>
-                        These are recommendations, not rules — experiment. Different models shine for different styles of play.
+                        🤖 <b>该选择什么模型？</b><br><br>
+                        对于主叙事者，建议至少尝试以下模型：<br>
+                        <ul style="margin: 4px 0 10px 20px; padding-left: 16px;"><li>MiMo 2.5 Pro</li><li>Deepseek V4 Pro 以及最新的 Flash</li><li>GPT-5.6 Luna，性价比极高，综合表现扎实。</li></ul>
+                        <i>对于状态追踪器与世界书代理，过去我一直推荐 Gemini Flash-Lite 和 Flash 模型。但 Deepseek V4 Flash 与 GPT-5.6 Luna 同样极具性价比且性能强劲。</i><br><br>
+                        <i>如果你的主模型在战斗中思考耗时过长，可以在状态追踪器设置中启用</i> <b>战斗 API 覆盖</b> <i>——当追踪器中的</i> <code>[COMBAT]</code> <i>标签激活时会自动切换为轻量模型，战斗结束后自动切回。</i> <b><i>这样就能用更快的模型加速战斗轮推进。</i></b><br><br>
+                        以上仅为建议而非硬性规则——请根据个人喜好尝试。不同模型适合不同的跑团风格。
                     </div>
                 </div>
 
                 <!-- Narrator Configuration (Salad Bar) -->
                 <div class="rt-onboarding-secondary rt-onboarding-drawer rt-onboarding-narrator-drawer">
                     <button type="button" class="rt-onboarding-drawer-toggle" id="rt-onboarding-narrator-drawer-toggle" aria-expanded="false" aria-controls="rt-onboarding-narrator-drawer-body">
-                        <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>Narrator Configuration<small>Set pacing, RNG, quests, and optional systems</small></span></span>
+                        <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>叙事者配置<small>设置叙事节奏、RNG、任务与可选子系统</small></span></span>
                         <span class="rt-onboarding-drawer-chevron" aria-hidden="true">&#9656;</span>
                     </button>
                     <div class="rt-onboarding-drawer-body" id="rt-onboarding-narrator-drawer-body">
                     <div class="rt-onboarding-drawer-body-inner">
                     <div class="rt-onboarding-narrator-content" style="width: 100%; box-sizing: border-box;">
-                    <small style="display: block; margin-bottom: 8px; opacity: 0.65; font-style: italic; line-height: 1.3;">Select your preferred modes and components. Changes apply to your system prompt automatically.</small>
+                    <small style="display: block; margin-bottom: 8px; opacity: 0.65; font-style: italic; line-height: 1.3;">选择你偏好的模式与组件。所作更改将自动应用到你的系统提示词。</small>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
-                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Pacing/Output Length</span>
-                        <button type="button" class="rt-narrative-pacing-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">What are these?</button>
+                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">节奏 / 输出长度</span>
+                        <button type="button" class="rt-narrative-pacing-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">这是什么？</button>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="normal" id="rt_onboarding_narrative_pacing_normal" /><span>Normal (no length instructions)</span></label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="shorter_outputs" id="rt_onboarding_narrative_pacing_shorter_outputs" /><span>Shorter Outputs</span></label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="high_agency" id="rt_onboarding_narrative_pacing_high_agency" /><span>High-Agency Mode</span></label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="downtime" id="rt_onboarding_narrative_pacing_downtime" /><span>Downtime/Slice of Life Mode</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="normal" id="rt_onboarding_narrative_pacing_normal" /><span>正常（无长度限制指令）</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="shorter_outputs" id="rt_onboarding_narrative_pacing_shorter_outputs" /><span>精简输出（较短篇幅）</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="high_agency" id="rt_onboarding_narrative_pacing_high_agency" /><span>高能动性模式（High-Agency Mode）</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="downtime" id="rt_onboarding_narrative_pacing_downtime" /><span>休整 / 日常生活模式（Downtime/Slice of Life）</span></label>
                     </div>
                     
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
-                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">RNG</span>
-                        <button class="rt-rng-help-icon" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="Open RNG systems explanation">What are these?</button>
+                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">RNG（随机检定）</span>
+                        <button class="rt-rng-help-icon" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="打开 RNG 系统说明">这是什么？</button>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="radio" name="rt_onboarding_rng_mode" value="hybrid" id="rt_onboarding_rng_hybrid" />
-                            <span>Pre-Seeded + Tool Calls (Recommended without CYOA Mode)</span>
+                            <span>预掷骰 + 工具调用（非 CYOA 模式下推荐）</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="radio" name="rt_onboarding_rng_mode" value="legacy" id="rt_onboarding_rng_legacy" />
-                            <span>Pre-Seeded Only (Recommended with CYOA Mode)</span>
+                            <span>仅预掷骰（CYOA 模式下推荐）</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="radio" name="rt_onboarding_rng_mode" value="none" id="rt_onboarding_rng_none" />
-                            <span>No RNG (LLM makes up numbers, not recommended)</span>
+                            <span>无 RNG（LLM 自行编造数值，不推荐）</span>
                         </label>
                     </div>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">
-                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Quests</span>
-                        <button class="rt-quests-hardcore-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="Explain hardcore quest mechanics">What are these?</button>
+                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">任务系统</span>
+                        <button class="rt-quests-hardcore-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="解释硬核任务机制">这是什么？</button>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_quests_enabled" />
-                            <span>Enable Quests</span>
+                            <span>启用任务系统</span>
                         </label>
                         <div id="rt_onboarding_quest_options" style="padding-left: 20px; display: none; flex-direction: column; gap: 4px;">
                             <div style="margin-top: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">
-                                <span style="font-size: 0.75em; opacity: 0.6; text-transform: uppercase; font-weight: bold;">Hardcore / Optional</span>
+                                <span style="font-size: 0.75em; opacity: 0.6; text-transform: uppercase; font-weight: bold;">硬核 / 可选设置</span>
                             </div>
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                                 <input type="checkbox" id="rt_onboarding_quests_deadlines" />
-                                <span>Deadlines</span>
+                                <span>截止期限</span>
                             </label>
                             <div id="rt_onboarding_quests_frustration_wrap" style="padding-left: 20px; display: none;">
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                                     <input type="checkbox" id="rt_onboarding_quests_frustration" />
-                                    <span style="opacity: 0.9;">↳ Frustration (Experimental)</span>
+                                    <span style="opacity: 0.9;">↳ 挫败感机制（实验性）</span>
                                 </label>
                             </div>
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                                 <input type="checkbox" id="rt_onboarding_quests_show_archive" checked />
-                                <span>Show completed/failed quests</span>
+                                <span>显示已完成/失败的任务</span>
                             </label>
                         </div>
                     </div>
 
-                    <div style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">Optional Components</div>
+                    <div style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">可选组件</div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_loot" />
-                            <span>🎲 Loot Rolls</span>
+                            <span>🎲 战利品掷骰</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_random_events" />
-                            <span>🌍 Random Event Rolls</span>
+                            <span>🌍 随机遭遇事件掷骰</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_resting" />
-                            <span>💤 Resting Restrictions (=&gt;9h between rests)</span>
+                            <span>💤 休息间隔限制（两次长休间隔需 ≥9 小时）</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_party_bench" />
-                            <span>⛺ Benched Party (Tracks temporarily separated companions)</span>
+                            <span>⛺ 待命队伍（追踪暂时离队的同伴）</span>
                         </label>
                         <div>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;" title="Builds a hidden location map before exploring a dungeon, ruin, town, or city. New maps need CreateAreaMap (function calling) or the text-command opener below.">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;" title="在探索地下城、废墟、城镇或城市前构建隐藏的地点地图。新地图需要 CreateAreaMap（函数调用）或下方的文本指令开场方式。">
                             <input type="checkbox" id="rt_onboarding_mod_dungeon_reality_and_hidden_mapping" />
-                            <span>🗺️ Persistent Maps</span>
+                            <span>🗺️ 持久化地图</span>
                         </label>
                         <div id="rt_onboarding_map_architect_opener_wrap" style="padding-left: 20px; display: none; flex-direction: column; gap: 4px;">
-                            <span style="font-size: 0.75em; opacity: 0.6; text-transform: uppercase; font-weight: bold; margin-top: 2px;">Map Architect opener</span>
-                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;" title="Default. The narrator calls CreateAreaMap; SillyTavern pauses the turn until the map is ready.">
+                            <span style="font-size: 0.75em; opacity: 0.6; text-transform: uppercase; font-weight: bold; margin-top: 2px;">地图构建器开场方式</span>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;" title="默认方式。叙事者调用 CreateAreaMap；SillyTavern 会暂停当前轮次直到地图构建就绪。">
                                 <input type="radio" name="rt_onboarding_map_architect_opener" value="tool" id="rt_onboarding_map_architect_opener_tool" />
-                                <span>Tool call (CreateAreaMap) — requires function calling</span>
+                                <span>工具调用 (CreateAreaMap) — 需要函数调用支持</span>
                             </label>
-                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;" title="For models or presets without function calling. The narrator emits a [CREATE_AREA_MAP] block and stops; Map Architect runs, then narration continues.">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;" title="适用于不支持函数调用的模型或预设。叙事者输出 [CREATE_AREA_MAP] 区块并暂停；地图构建器运行完毕后叙事继续。">
                                 <input type="radio" name="rt_onboarding_map_architect_opener" value="text" id="rt_onboarding_map_architect_opener_text" />
-                                <span>Text command — no function calling</span>
+                                <span>文本指令 — 无需函数调用</span>
                             </label>
                         </div>
                         </div>
                         <div style="display:flex;align-items:center;gap:6px;">
                             <input type="checkbox" id="rt_onboarding_mod_cyoa_mode" />
-                            <span>🧭 CYOA Mode (action choices every turn)</span>
-                            <button id="rt_onboarding_cyoa_settings_btn" style="background:none;border:1px solid rgba(255,255,255,0.25);border-radius:4px;color:inherit;font-size:0.75em;padding:1px 6px;cursor:pointer;flex-shrink:0;opacity:0.8;" title="CYOA Settings"><i class="fa-solid fa-gear"></i></button>
+                            <span>🧭 CYOA 模式（每轮提供行动选项）</span>
+                            <button id="rt_onboarding_cyoa_settings_btn" style="background:none;border:1px solid rgba(255,255,255,0.25);border-radius:4px;color:inherit;font-size:0.75em;padding:1px 6px;cursor:pointer;flex-shrink:0;opacity:0.8;" title="CYOA 设置"><i class="fa-solid fa-gear"></i></button>
                         </div>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_npc_rel_bars" />
-                            <span>💞 Relationship System (Friendship &amp; Affection)</span>
+                            <span>💞 关系好感系统（友谊与爱慕）</span>
                         </label>
                     </div>
 
-                    <button id="rt_onboarding_btn_update_sysprompt" style="width: 100%; margin-top: 10px; padding: 7px 12px; background: rgba(0, 200, 140, 0.18); border: 1px solid #00c88c; border-radius: 4px; color: var(--rt-text, #eee); font-size: 0.88em; cursor: pointer;" title="Writes the system prompt to your Quick Prompt Main box based on the options selected above.">
-                        ↑ Apply System Prompt
+                    <button id="rt_onboarding_btn_update_sysprompt" style="width: 100%; margin-top: 10px; padding: 7px 12px; background: rgba(0, 200, 140, 0.18); border: 1px solid #00c88c; border-radius: 4px; color: var(--rt-text, #eee); font-size: 0.88em; cursor: pointer;" title="根据上方所选选项将系统提示词写入到酒馆的快捷主提示词输入框中。">
+                        ↑ 应用系统提示词
                     </button>
                 </div>
                 </div>
@@ -2559,16 +2559,16 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 </div>
                 <div class="rt-onboarding-connection-shortcut" style="width:100%;flex-shrink:0;">
                     <button type="button" class="menu_button interactable" id="rt-open-character-creation-connection-settings" style="width:100%;">
-                        <i class="fa-solid fa-plug-circle-bolt"></i> Character Creation Connection
+                        <i class="fa-solid fa-plug-circle-bolt"></i> 角色创建专用连接
                     </button>
-                    <small>Shared by Character Creator, Instant Action, and Other Ways to Begin. Configure it under <b>Connections &amp; Models</b> in extension settings.</small>
+                    <small>由角色创建器、快速开局以及其它开局方式共享。可在扩展设置的 <b>连接与模型</b> 中进行配置。</small>
                 </div>
             </div>`;
         }
 
         const blocks = ensurePartyShellForBenchedRoster(parseMemoBlocks(memo));
         if (Object.keys(blocks).length === 0) {
-            return `<div class="rt-empty">No structured blocks found.<br><small>Switch to Raw view to inspect the memo.</small></div>`;
+            return `<div class="rt-empty">未发现结构化数据区块。<br><small>切换到原始视图以检查备忘录。</small></div>`;
         }
 
         const s = getSettings();
@@ -2620,15 +2620,15 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
         if (tag === 'QUESTS') return ''; // Quest log has dedicated high-fidelity renderer, skip standard card
         const content = blocks[tag];
         if (content === undefined && filterTag) {
-            return `<div class="rt-empty">Waiting for ${tag} data...</div>`;
+            return `<div class="rt-empty">等待 ${tag} 数据...</div>`;
         }
         if (content === undefined) return '';
 
         // If main panel context, filter out detached windows
         if (!uiOptions.bodyOnly && !filterTag && detached.has(tag)) {
             return `<div class="rt-detached-placeholder" data-tag="${tag}">
-                <span class="rt-placeholder-icon">⧉</span> ${tag} is detached
-                <button class="rt-reattach-btn-inline" data-tag="${tag}" title="Re-attach">↓</button>
+                <span class="rt-placeholder-icon">⧉</span> ${tag} 已分离为独立窗口
+                <button class="rt-reattach-btn-inline" data-tag="${tag}" title="重新附加">↓</button>
             </div>`;
         }
 
@@ -2675,21 +2675,21 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
 
         // Don't show detach button if already in detached context (filterTag provided)
         const detachBtn = !filterTag ? `
-            <button class="rt-detach-btn" data-tag="${tag}" title="Detach panel">
+            <button class="rt-detach-btn" data-tag="${tag}" title="分离面板">
                 ⧉
             </button>
         ` : '';
 
         const personaFromCharBtn = tag === 'CHARACTER' ? `
-            <button class="rt-char-to-persona-btn" data-tag="CHARACTER" title="Create a Lorebook Agent Player Card from this CHARACTER sheet (uses the sheet plus the last 3 story messages)">
-                Create PC Card
+            <button class="rt-char-to-persona-btn" data-tag="CHARACTER" title="基于当前角色卡（CHARACTER）创建世界书代理玩家卡（将结合角色卡内容及最近 3 条剧情消息）">
+                创建 PC 玩家卡
             </button>
         ` : '';
 
         const partyCompactBtn = tag === 'PARTY' ? renderPartyCompactButton(isPartyCompact) : '';
 
         const fullViewBtn = NO_PAGINATE.has(renderType) ? '' : `
-            <button class="rt-fullview-btn${isFullView ? ' active' : ''}" data-tag="${tag}" title="${isFullView ? 'Switch to Paged View' : 'Switch to Full List'}">
+            <button class="rt-fullview-btn${isFullView ? ' active' : ''}" data-tag="${tag}" title="${isFullView ? '切换到分页视图' : '切换到完整列表'}">
                 ${isFullView ? '📜' : '📑'}
             </button>
         `;
@@ -2728,10 +2728,10 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     ${partyCompactBtn}
                     ${detachBtn}
                     ${fullViewBtn}
-                    ${uiOptions.showCategorySettings === false ? '' : `<button class="rt-category-settings-btn" data-tag="${tag}" title="Category Rendering Options">
+                    ${uiOptions.showCategorySettings === false ? '' : `<button class="rt-category-settings-btn" data-tag="${tag}" title="分类渲染选项">
                         <i class="fa-solid fa-cog"></i>
                     </button>`}
-                    <span class="rt-item-count">${items.length} ${items.length === 1 ? 'entry' : 'entries'}</span>
+                    <span class="rt-item-count">${items.length} 条</span>
                     <span class="rt-collapse-icon">${isCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
@@ -2761,7 +2761,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 <span>${escapeHtml(group.icon)} ${escapeHtml(group.name)}</span>
                 <div class="rt-section-header-right">
                     ${partyCompactBtn}
-                    <span class="rt-item-count">${tags.length} ${tags.length === 1 ? 'module' : 'modules'}</span>
+                    <span class="rt-item-count">${tags.length} 个模块</span>
                     <span class="rt-collapse-icon">${isCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
@@ -2916,7 +2916,7 @@ function renderBenchedPartyPanel(benchedContent, isPanelCollapsed, expandedNames
 
     return `<div class="rt-benched-panel${isPanelCollapsed ? ' rt-collapsed' : ''}">
         <div class="rt-section-header rt-benched-panel-header" data-tag="BENCHED PARTY">
-            <span>⛺ Benched <span class="rt-benched-count">${roster.length}</span></span>
+            <span>⛺ 待命同伴 <span class="rt-benched-count">${roster.length}</span></span>
             <span class="rt-collapse-icon">${isPanelCollapsed ? '&#9656;' : '&#9662;'}</span>
         </div>
         <div class="rt-benched-chips">${chips}</div>
@@ -2936,7 +2936,7 @@ export function renderTabModeView(memo, sectionPages, questsCtx = null) {
 
     const blocks = ensurePartyShellForBenchedRoster(parseMemoBlocks(memo));
     if (Object.keys(blocks).length === 0) {
-        return `<div class="rt-empty">No structured blocks found.<br><small>Switch to Raw view to inspect the memo.</small></div>`;
+        return `<div class="rt-empty">未发现结构化数据区块。<br><small>切换到原始视图以检查备忘录。</small></div>`;
     }
 
     const s = getSettings();
@@ -2970,7 +2970,7 @@ export function renderTabModeView(memo, sectionPages, questsCtx = null) {
         return `<div class="rt-tabmode-wrap">
             <div class="rt-tabmode-pinned">${pinnedHtml}</div>
             ${vitalsHtml}
-            <div class="rt-empty">No additional modules to display.</div>
+            <div class="rt-empty">暂无其它模块可显示。</div>
         </div>`;
     }
 
@@ -2982,14 +2982,14 @@ export function renderTabModeView(memo, sectionPages, questsCtx = null) {
     const tabMeta = (entry) => {
         if (entry.kind === 'group') return { icon: entry.group.icon, label: entry.group.name };
         const tag = entry.tag;
-        if (tag === 'QUESTS') return { icon: BLOCK_ICONS.QUESTS || '📋', label: 'Quests' };
+        if (tag === 'QUESTS') return { icon: BLOCK_ICONS.QUESTS || '📋', label: '任务' };
         const customField = (s.customFields || []).find(f => f.tag.toUpperCase() === tag);
         return { icon: customField?.icon || BLOCK_ICONS[tag] || '📄', label: customField?.label || tag };
     };
 
     const tabBadge = (entry) => {
         if (entry.kind === 'group') {
-            return `<span class="rt-tab-badge" title="${entry.tags.length} grouped modules">${entry.tags.length}</span>`;
+            return `<span class="rt-tab-badge" title="${entry.tags.length} 个分组模块">${entry.tags.length}</span>`;
         }
         const tag = entry.tag;
         if (tag === 'QUESTS') {
@@ -3003,7 +3003,7 @@ export function renderTabModeView(memo, sectionPages, questsCtx = null) {
         // PARTY's tab carries a secondary badge for its folded-in benched sub-panel count.
         if (tag === 'PARTY' && blocks['BENCHED PARTY'] !== undefined) {
             const benchedCount = extractBenchedRoster(blocks['BENCHED PARTY']).length;
-            if (benchedCount > 0) badges += `<span class="rt-tab-badge rt-tab-badge-secondary" title="Benched">⛺${benchedCount}</span>`;
+            if (benchedCount > 0) badges += `<span class="rt-tab-badge rt-tab-badge-secondary" title="待命同伴">⛺${benchedCount}</span>`;
         }
         return badges;
     };
@@ -3068,14 +3068,14 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
 
     if (!filterTag && detached.has(TAG)) {
         return `<div class="rt-detached-placeholder" data-tag="${TAG}">
-            <span class="rt-placeholder-icon">⧉</span> QUESTS is detached
-            <button class="rt-reattach-btn-inline" data-tag="${TAG}" title="Re-attach">↓</button>
+            <span class="rt-placeholder-icon">⧉</span> 任务模块已分离为独立窗口
+            <button class="rt-reattach-btn-inline" data-tag="${TAG}" title="重新附加">↓</button>
         </div>`;
     }
 
     const allQuests = quests || [];
     const isCollapsed = collapsed.has(TAG);
-    const detachBtn = !filterTag ? `<button class="rt-detach-btn" data-tag="${TAG}" title="Detach panel">⧉</button>` : '';
+    const detachBtn = !filterTag ? `<button class="rt-detach-btn" data-tag="${TAG}" title="分离面板">⧉</button>` : '';
 
     if (allQuests.length === 0) {
         return `<div class="rt-section-card${isCollapsed ? ' rt-collapsed' : ''}" data-tag="${TAG}">
@@ -3083,11 +3083,11 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
                 <span>📋 QUESTS</span>
                 <div class="rt-section-header-right">
                     ${detachBtn}
-                    <span class="rt-item-count">0 entries</span>
+                    <span class="rt-item-count">0 条</span>
                     <span class="rt-collapse-icon">${isCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
-            <div class="rt-section-body"><div class="rt-card-line" style="opacity:0.6;">No active quests.</div></div>
+            <div class="rt-section-body"><div class="rt-card-line" style="opacity:0.6;">暂无进行中的任务。</div></div>
         </div>`;
     }
 
@@ -3118,8 +3118,8 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
         const fillPct      = Math.round((displayFrust + 1) * scale);
 
         const barTitle = showFrustration && moodData.label
-            ? `NPC Mood: ${label} (${frust >= 0 ? '+' : ''}${frust.toFixed(2)})`
-            : (hasDeadline && !emergent ? `Time Progress: ${label}` : '');
+            ? `NPC 态度: ${label} (${frust >= 0 ? '+' : ''}${frust.toFixed(2)})`
+            : (hasDeadline && !emergent ? `时间推进进度: ${label}` : '');
 
         // Tick mark at the neutral position (33%) and deadline position (67%)
         // Emergent quests: no NPC expects completion → no mood/frustration bar
@@ -3131,17 +3131,17 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
             </div>` : '';
 
         let statusBadgeClass = 'rt-quest-badge-active';
-        let statusLabel = 'Active';
-        if (quest.status === 'completed') { statusBadgeClass = 'rt-quest-badge-completed'; statusLabel = 'Completed'; }
-        if (quest.status === 'past deadline') { statusBadgeClass = 'rt-quest-badge-failed'; statusLabel = 'Past Deadline'; }
-        if (quest.status === 'failed')    { statusBadgeClass = 'rt-quest-badge-failed';    statusLabel = 'Failed'; }
+        let statusLabel = '进行中';
+        if (quest.status === 'completed') { statusBadgeClass = 'rt-quest-badge-completed'; statusLabel = '已完成'; }
+        if (quest.status === 'past deadline') { statusBadgeClass = 'rt-quest-badge-failed'; statusLabel = '逾期'; }
+        if (quest.status === 'failed')    { statusBadgeClass = 'rt-quest-badge-failed';    statusLabel = '已失败'; }
 
         const questIsCompleted = quest.status === 'completed';
 
         const objectives = (quest.objectives || []).map(obj => {
             const done = obj.status === 'completed' || (questIsCompleted && obj.status !== 'failed');
             const failed = obj.status === 'failed';
-            const optLabel = obj.required ? '' : ' <span class="rt-quest-optional">(Optional)</span>';
+            const optLabel = obj.required ? '' : ' <span class="rt-quest-optional">(可选)</span>';
             let objClass = 'rt-quest-obj';
             if (done) objClass += ' rt-quest-obj-done';
             if (failed) objClass += ' rt-quest-obj-failed';
@@ -3178,7 +3178,7 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
             acceptedRow = `
                 <div class="rt-quest-deadline">
                     <div class="rt-quest-deadline-header">
-                        <span class="rt-entity-sub-label">Accepted:</span> ${escapeHtml(quest.accepted_time)} <i style="opacity: 0.7; font-size: 0.9em;">(${formatTimeDiff(diff, false)})</i>
+                        <span class="rt-entity-sub-label">接取时间:</span> ${escapeHtml(quest.accepted_time)} <i style="opacity: 0.7; font-size: 0.9em;">(${formatTimeDiff(diff, false)})</i>
                     </div>
                 </div>`;
         }
@@ -3186,7 +3186,7 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
         const deadlineRow = (hasDeadline && showDeadlines) ? `
             <div class="rt-quest-deadline" style="${acceptedRow ? 'border-top: none; margin-top: 0;' : ''}">
                 <div class="rt-quest-deadline-header">
-                    <span class="rt-entity-sub-label">Deadline:</span> ${escapeHtml(quest.deadline_time)}${timeLeftHtml}
+                    <span class="rt-entity-sub-label">截止时间:</span> ${escapeHtml(quest.deadline_time)}${timeLeftHtml}
                     ${showFrustration ? `<span class="rt-quest-mood-label" style="color:${barColor};">${label}</span>` : ''}
                 </div>
                 ${moodBarHtml}
@@ -3198,7 +3198,7 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
         if (isFailed) cardClass += ' rt-quest-card-failed';
 
         const dismissBtn = dismissible
-            ? `<button type="button" class="rt-quest-dismiss-btn" data-quest-id="${escapeHtml(quest.id)}" title="Remove from log">✕</button>`
+            ? `<button type="button" class="rt-quest-dismiss-btn" data-quest-id="${escapeHtml(quest.id)}" title="从任务日志中移除">✕</button>`
             : '';
 
         return `<div class="${cardClass}" data-quest-id="${escapeHtml(quest.id)}">
@@ -3228,16 +3228,16 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
     const completedCardsHtml = completedQuests.map(q => renderQuestCard(q, { dismissible: true })).join('');
     const failedCardsHtml = failedQuests.map(q => renderQuestCard(q, { dismissible: true })).join('');
 
-    let bodyHtml = activeCardsHtml || '<div class="rt-card-line" style="opacity:0.6; padding: 10px;">No active quests.</div>';
+    let bodyHtml = activeCardsHtml || '<div class="rt-card-line" style="opacity:0.6; padding: 10px;">暂无进行中的任务。</div>';
 
     if (completedQuests.length > 0) {
         const isCompletedCollapsed = collapsed.has(TAG + '_COMPLETED');
         bodyHtml += `
         <div class="rt-section-card rt-sub-section${isCompletedCollapsed ? ' rt-collapsed' : ''}" data-tag="${TAG}_COMPLETED" style="margin-top: 10px; background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); border-radius: 6px;">
             <div class="rt-section-header" data-tag="${TAG}_COMPLETED" style="padding: 6px 10px; font-size: 0.9em; background: rgba(0,0,0,0.2); border-top-left-radius: 6px; border-top-right-radius: 6px;">
-                <span style="opacity:0.8;">✅ COMPLETED</span>
+                <span style="opacity:0.8;">✅ 已完成任务</span>
                 <div class="rt-section-header-right">
-                    <span class="rt-item-count" style="opacity:0.6;">${completedQuests.length} ${completedQuests.length === 1 ? 'entry' : 'entries'}</span>
+                    <span class="rt-item-count" style="opacity:0.6;">${completedQuests.length} 条</span>
                     <span class="rt-collapse-icon" style="opacity:0.6;">${isCompletedCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
@@ -3250,9 +3250,9 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
         bodyHtml += `
         <div class="rt-section-card rt-sub-section${isFailedCollapsed ? ' rt-collapsed' : ''}" data-tag="${TAG}_FAILED" style="margin-top: 10px; background: rgba(0,0,0,0.2); border-color: rgba(255,80,80,0.12); border-radius: 6px;">
             <div class="rt-section-header" data-tag="${TAG}_FAILED" style="padding: 6px 10px; font-size: 0.9em; background: rgba(80,0,0,0.15); border-top-left-radius: 6px; border-top-right-radius: 6px;">
-                <span style="opacity:0.8;">❌ FAILED</span>
+                <span style="opacity:0.8;">❌ 已失败任务</span>
                 <div class="rt-section-header-right">
-                    <span class="rt-item-count" style="opacity:0.6;">${failedQuests.length} ${failedQuests.length === 1 ? 'entry' : 'entries'}</span>
+                    <span class="rt-item-count" style="opacity:0.6;">${failedQuests.length} 条</span>
                     <span class="rt-collapse-icon" style="opacity:0.6;">${isFailedCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
@@ -3277,10 +3277,10 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
             <span>📋 QUESTS</span>
             <div class="rt-section-header-right">
                 ${detachBtn}
-                <button class="rt-category-settings-btn" data-tag="${TAG}" title="Category Rendering Options">
+                <button class="rt-category-settings-btn" data-tag="${TAG}" title="分类渲染选项">
                     <i class="fa-solid fa-cog"></i>
                 </button>
-                <span class="rt-item-count">${activeQuests.length} active</span>
+                <span class="rt-item-count">${activeQuests.length} 条进行中</span>
                 <span class="rt-collapse-icon">${isCollapsed ? '&#9656;' : '&#9662;'}</span>
             </div>
         </div>
@@ -3299,14 +3299,14 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
             const time = new Date(step.timestamp).toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
             let icon = 'fa-brain';
             let color = 'var(--rt-custom-text-muted)';
-            let title = 'Thought';
+            let title = '思考';
 
             switch (step.type) {
-                case 'tool': icon = 'fa-screwdriver-wrench'; color = '#3498db'; title = 'Tool'; break;
-                case 'result': icon = 'fa-list-ul'; color = '#9b59b6'; title = 'Result'; break;
-                case 'error': icon = 'fa-circle-exclamation'; color = '#e74c3c'; title = 'Error'; break;
-                case 'finish': icon = 'fa-circle-check'; color = '#2ecc71'; title = 'Finished'; break;
-                case 'start': icon = 'fa-play'; color = '#f1c40f'; title = 'Starting'; break;
+                case 'tool': icon = 'fa-screwdriver-wrench'; color = '#3498db'; title = '工具调用'; break;
+                case 'result': icon = 'fa-list-ul'; color = '#9b59b6'; title = '结果'; break;
+                case 'error': icon = 'fa-circle-exclamation'; color = '#e74c3c'; title = '错误'; break;
+                case 'finish': icon = 'fa-circle-check'; color = '#2ecc71'; title = '完成'; break;
+                case 'start': icon = 'fa-play'; color = '#f1c40f'; title = '开始'; break;
             }
 
             const content = escapeHtml(step.content);
@@ -3318,7 +3318,7 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
                     <span style="font-size: 9px; opacity: 0.5;">${time}</span>
                     <i class="fa-solid ${icon}" style="color: ${color}; width: 14px; text-align: center;"></i>
                     <b style="color: ${color}; text-transform: uppercase; letter-spacing: 0.5px;">${title}</b>
-                    ${metadata.time ? `<span style="margin-left: auto; font-size: 10px; opacity: 0.6;">Worked for ${metadata.time}s</span>` : ''}
+                    ${metadata.time ? `<span style="margin-left: auto; font-size: 10px; opacity: 0.6;">耗时 ${metadata.time} 秒</span>` : ''}
                 </div>
                 <div class="rt-terminal-content" style="margin-top: 4px; padding-left: 22px; line-height: 1.4; white-space: pre-wrap; word-break: break-all; color: var(--rt-custom-text);">
                     ${content}

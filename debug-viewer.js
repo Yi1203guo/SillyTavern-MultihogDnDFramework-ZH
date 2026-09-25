@@ -20,22 +20,22 @@ export function initializeDebugViewer() {
     debugPanel.style.display = 'none';
 
     debugPanel.innerHTML = `
-        <div class="rt-resizer-tr" id="rt-debug-resizer-tr" title="Resize from top-right"></div>
-        <div class="rt-resizer-br" id="rt-debug-resizer-br" title="Resize from bottom-right"></div>
+        <div class="rt-resizer-tr" id="rt-debug-resizer-tr" title="从右上角调整大小"></div>
+        <div class="rt-resizer-br" id="rt-debug-resizer-br" title="从右下角调整大小"></div>
         <div class="rpg-debug-header">
             <div class="rpg-debug-header-left">
                 <span class="rpg-debug-icon">🛠️</span>
-                <span class="rpg-debug-title">Context Debugger</span>
+                <span class="rpg-debug-title">上下文调试器</span>
             </div>
             <div class="rpg-debug-header-right">
-                <button type="button" id="rpg-debug-expand-all" title="Expand all sections">▾▾</button>
-                <button type="button" id="rpg-debug-collapse-all" title="Collapse all sections">▸▸</button>
-                <button type="button" id="rpg-debug-clear" title="Clear History">🧹</button>
+                <button type="button" id="rpg-debug-expand-all" title="展开全部区域">▾▾</button>
+                <button type="button" id="rpg-debug-collapse-all" title="折叠全部区域">▸▸</button>
+                <button type="button" id="rpg-debug-clear" title="清空历史">🧹</button>
                 <button type="button" id="rpg-debug-close">✕</button>
             </div>
         </div>
         <div class="rpg-debug-content">
-            <div class="rpg-debug-empty">No transactions logged yet.</div>
+            <div class="rpg-debug-empty">暂无记录的事务。</div>
         </div>
     `;
 
@@ -262,7 +262,7 @@ function renderSection(transactionId, kind, label, roleClass, text) {
             <button type="button" class="rpg-debug-section-toggle rpg-debug-label ${roleClass}" aria-expanded="${open ? 'true' : 'false'}">
                 <i class="fa-solid fa-chevron-right rpg-debug-chevron" aria-hidden="true"></i>
                 <span>${label}</span>
-                <span class="rpg-debug-section-chars">${body.length.toLocaleString()} chars</span>
+                <span class="rpg-debug-section-chars">${body.length.toLocaleString()} 字符</span>
             </button>
             <div class="rpg-debug-text-preview">${escapeHtml(previewText(body))}</div>
             <div class="rpg-debug-text${kind === 'response' ? ' response' : ''}">${escapeHtml(body)}</div>
@@ -274,7 +274,7 @@ function renderTransactions() {
     const content = debugPanel.querySelector('.rpg-debug-content');
     if (!content) return;
     if (transactions.length === 0) {
-        content.innerHTML = '<div class="rpg-debug-empty">No transactions logged yet.</div>';
+        content.innerHTML = '<div class="rpg-debug-empty">暂无记录的事务。</div>';
         return;
     }
 
@@ -284,12 +284,12 @@ function renderTransactions() {
         const messageHtml = (t.messages || []).map((m, i) => renderSection(
             t.id,
             `${m.role === 'system' ? 'system' : 'user'}:${i}`,
-            m.role === 'system' ? 'SYSTEM PROMPT' : 'USER MESSAGE',
+            m.role === 'system' ? '系统提示词' : '用户消息',
             m.role === 'system' ? 'system' : 'input',
             m.content,
         )).join('');
         const responseHtml = t.response
-            ? renderSection(t.id, 'response', 'AI RESPONSE', 'output', t.response)
+            ? renderSection(t.id, 'response', 'AI 回复', 'output', t.response)
             : '';
         return `
         <div class="rpg-debug-transaction" data-id="${t.id}">

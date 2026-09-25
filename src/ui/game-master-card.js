@@ -37,8 +37,8 @@ export async function createOrSelectGameMasterCard(options = {}) {
         const raw = await res.json();
         allChars = Array.isArray(raw) ? raw : [];
     } catch (err) {
-        const msg = String(err?.message || err || 'Failed to load character cards.');
-        globalThis.toastr?.error?.(msg.substring(0, 180), 'Multihog D&D Framework');
+        const msg = String(err?.message || err || '无法加载角色卡。');
+        globalThis.toastr?.error?.(msg.substring(0, 180), 'Multihog D&D 规则框架');
         return { ok: false, created: false, selected: false, avatar: '', name };
     }
 
@@ -59,11 +59,11 @@ export async function createOrSelectGameMasterCard(options = {}) {
     if (existing) {
         try {
             const selected = await selectByAvatarOrName(existing.avatar, name);
-            globalThis.toastr?.info?.(`"${name}" already exists — selected it.`, 'Multihog D&D Framework');
+            globalThis.toastr?.info?.(`"${name}" 已存在 —— 已选择该角色卡。`, 'Multihog D&D 规则框架');
             return { ok: true, created: false, selected, avatar: existing.avatar || '', name };
         } catch (err) {
-            const msg = String(err?.message || err || 'Failed to select Game Master card.');
-            globalThis.toastr?.error?.(msg.substring(0, 180), 'Multihog D&D Framework');
+            const msg = String(err?.message || err || '无法选择地下城主 (GM) 角色卡。');
+            globalThis.toastr?.error?.(msg.substring(0, 180), 'Multihog D&D 规则框架');
             return { ok: false, created: false, selected: false, avatar: existing.avatar || '', name };
         }
     }
@@ -77,11 +77,11 @@ export async function createOrSelectGameMasterCard(options = {}) {
         if (!res.ok) throw new Error(await res.text());
         const avatarKey = (await res.text()).trim();
         const selected = await selectByAvatarOrName(avatarKey, name);
-        globalThis.toastr?.success?.(`Created and selected "${name}".`, 'Multihog D&D Framework');
+        globalThis.toastr?.success?.(`已创建并选择 "${name}"。`, 'Multihog D&D 规则框架');
         return { ok: true, created: true, selected, avatar: avatarKey, name };
     } catch (err) {
-        const msg = String(err?.message || err || 'Failed to create Game Master card.');
-        globalThis.toastr?.error?.(msg.substring(0, 180), 'Multihog D&D Framework');
+        const msg = String(err?.message || err || '无法创建地下城主 (GM) 角色卡。');
+        globalThis.toastr?.error?.(msg.substring(0, 180), 'Multihog D&D 规则框架');
         return { ok: false, created: false, selected: false, avatar: '', name };
     }
 }

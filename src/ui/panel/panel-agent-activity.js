@@ -48,10 +48,10 @@ export function wireAgentActivity({
         if (agentNavLabel) {
             if (redoLen === 0) {
                 agentNavLabel.textContent = '[ LIVE ]';
-                agentNavLabel.title = 'Lorebook is at current live state';
+                agentNavLabel.title = '世界书当前处于最新实时状态';
             } else {
                 agentNavLabel.textContent = `[ -${redoLen} ]`;
-                agentNavLabel.title = `Rolled back ${redoLen} agent pass${redoLen !== 1 ? 'es' : ''} — use → to redo`;
+                agentNavLabel.title = `已回滚 ${redoLen} 次智能体处理 —— 点击 → 重做`;
             }
             agentNavLabel.classList.remove('clickable');
         }
@@ -73,12 +73,12 @@ export function wireAgentActivity({
                 if (ok) {
                     runtimeState.loreRedoStack.push({ prePassSnapshot: histEntry, postPassState });
                 } else {
-                    toastr['error']('Rollback failed; safety recovery was attempted. Check console.', 'Lorebook Agent');
+                    toastr['error']('回滚失败；已尝试安全恢复。请检查控制台。', '世界书智能体');
                 }
             } catch (error) {
                 if (!ownsChat()) return;
                 console.error('[RPG Tracker] Could not capture a safe rollback recovery state:', error);
-                toastr['error']('Undo stopped because a complete safety snapshot could not be made.', 'Lorebook Agent');
+                toastr['error']('撤销中止：无法创建完整的安全快照。', '世界书智能体');
             }
             syncAgentNav();
             await refreshManifest('rollback');
@@ -106,7 +106,7 @@ export function wireAgentActivity({
             if (!ownsChat()) return;
             if (!ok) {
                 runtimeState.loreRedoStack.push(redoEntry);
-                toastr['error']('Redo failed. Check console.', 'Lorebook Agent');
+                toastr['error']('重做失败。请检查控制台。', '世界书智能体');
             }
             syncAgentNav();
             await refreshManifest('redo');
@@ -157,14 +157,14 @@ export function wireAgentActivity({
     // ── Last Run status display ────────────────────────────────────────────
     const lastRunEl = agentPanel.querySelector('#rt-agent-last-run');
     function formatLastRunRelative(epochMs) {
-        if (!epochMs) return 'never';
+        if (!epochMs) return '从未';
         const sec = Math.floor((Date.now() - epochMs) / 1000);
-        if (sec < 45) return 'just now';
+        if (sec < 45) return '刚刚';
         const min = Math.floor(sec / 60);
-        if (min < 60) return `${min}m ago`;
+        if (min < 60) return `${min}分钟前`;
         const hr = Math.floor(min / 60);
-        if (hr < 24) return `${hr}h ago`;
-        return `${Math.floor(hr / 24)}d ago`;
+        if (hr < 24) return `${hr}小时前`;
+        return `${Math.floor(hr / 24)}天前`;
     }
     function syncLastRunDisplay() {
         if (!lastRunEl) return;
@@ -172,19 +172,19 @@ export function wireAgentActivity({
         const runEvery = s.routerRunEvery || 3;
         const tick = getRouterTick();
         const lastRunAt = s.routerLastRunAt || 0;
-        const parts = [`Last run: ${formatLastRunRelative(lastRunAt)}`];
+        const parts = [`上次运行: ${formatLastRunRelative(lastRunAt)}`];
         if (runEvery > 1) {
             const nextIn = Math.max(0, runEvery - tick);
-            parts.push(`Next in: ${nextIn} msg${nextIn !== 1 ? 's' : ''}`);
+            parts.push(`下次运行: ${nextIn} 条后`);
         }
         if (s.mapUpdaterEnabled !== false && isLocationMappingEnabled(s)) {
             const mapEvery = Math.max(1, Number(s.mapUpdaterRunEvery) || 1);
             const mapTick = typeof getMapUpdaterTick === 'function' ? getMapUpdaterTick() : 0;
             if (mapEvery > 1) {
                 const mapNext = Math.max(0, mapEvery - mapTick);
-                parts.push(`Map in: ${mapNext} msg${mapNext !== 1 ? 's' : ''}`);
+                parts.push(`地图更新: ${mapNext} 条后`);
             } else {
-                parts.push('Map: every turn');
+                parts.push('地图更新: 每回合');
             }
         }
         lastRunEl.textContent = parts.join(' · ');

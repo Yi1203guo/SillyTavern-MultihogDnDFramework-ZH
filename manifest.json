@@ -1,21 +1,11 @@
 {
-
-    "display_name": "Multihog D&D Framework",
-
+    "display_name": "Multihog D&D 规则框架",
     "version": "2026.8.96",
-
     "author": "Disgusting Fatbody",
-
     "js": "index.js",
-
     "css": "style.css",
-
     "loading_order": 20,
-
     "generate_interceptor": "rpgTrackerInterceptor",
-
-    "homePage": "https://github.com/MultihogAurelius/SillyTavern-MultihogDnDFramework",
-
+    "homePage": "https://github.com/Yi1203guo/SillyTavern-MultihogDnDFramework-ZH",
     "auto_update": true
-
 }

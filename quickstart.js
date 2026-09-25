@@ -22,10 +22,10 @@ import { createChatCommitGuard } from './src/state/pass-affinity.js';
 let _quickStartRunning = false;
 
 const GENRE_LABELS = {
-    fantasy: 'Fantasy',
-    realistic: 'Modern',
-    scifi: 'Sci-Fi',
-    horror: 'Horror',
+    fantasy: '奇幻',
+    realistic: '现代',
+    scifi: '科幻',
+    horror: '恐怖',
 };
 
 /**
@@ -110,7 +110,7 @@ function sendOutgoingChatMessage(text) {
  */
 export async function runQuickStart(genre, rootEl = null, selectedName = '', instructionText = '') {
     if (_quickStartRunning) {
-        toastr['info']('Quick Start is already running. Please wait.', 'Quick Start');
+        toastr['info']('快速启动正在运行中，请稍候。', '快速启动');
         return;
     }
 
@@ -125,9 +125,9 @@ export async function runQuickStart(genre, rootEl = null, selectedName = '', ins
     setQuickStartBusy(root, true);
 
     try {
-        setQuickStartStatus(root, 'Enabling systems…');
+        setQuickStartStatus(root, '正在启用系统…');
         await applyQuickStartConfiguration(ownsChat);
-        if (!ownsChat()) throw new Error('Quick Start stopped because the active chat changed.');
+        if (!ownsChat()) throw new Error('由于当前聊天已切换，快速启动已停止。');
 
         const s = getSettings();
         s.onboardingGenre = validGenre;
@@ -150,16 +150,16 @@ export async function runQuickStart(genre, rootEl = null, selectedName = '', ins
         const genreLabel = GENRE_LABELS[validGenre] || validGenre;
         const setupLevel = extractInstantActionLevel(instantActionInstructions);
         const levelDetail = setupLevel != null
-            ? `Lv ${setupLevel} (Initial Setup)`
-            : (noLevel ? 'no levels' : `Lv ${level}`);
+            ? `Lv ${setupLevel} (初始设置)`
+            : (noLevel ? '无等级' : `Lv ${level}`);
         const creationDetails = [
             genreLabel,
-            instantActionInstructions ? 'custom setup' : className,
-            nameVal || 'AI-chosen name',
+            instantActionInstructions ? '自定义设定' : className,
+            nameVal || 'AI 生成名字',
             levelDetail,
         ].join(' · ');
 
-        setQuickStartStatus(root, `Creating character (${creationDetails})…`);
+        setQuickStartStatus(root, `正在创建角色 (${creationDetails})…`);
         const { charName } = await generateQuickStartCharacter({
             chatId: passChatId, canCommit: ownsChat,
             genre: validGenre,
@@ -170,53 +170,53 @@ export async function runQuickStart(genre, rootEl = null, selectedName = '', ins
             instantActionInstructions,
         });
         if (!ownsChat()) {
-            throw new Error('Quick Start stopped because the active chat changed.');
+            throw new Error('由于当前聊天已切换，快速启动已停止。');
         }
 
-        setQuickStartStatus(root, 'Creating Lorebook Agent Player Card…');
+        setQuickStartStatus(root, '正在创建世界书智能体玩家卡片…');
         const bio = await generatePersonaBio(
             charName,
             wordCount,
             buildInstantActionPromptSection(instantActionInstructions),
         );
         if (!ownsChat()) {
-            throw new Error('Quick Start stopped because the active chat changed.');
+            throw new Error('由于当前聊天已切换，快速启动已停止。');
         }
         if (!bio) {
-            throw new Error('Persona generation returned empty.');
+            throw new Error('人物卡生成结果为空。');
         }
         const ok = await addPlayerCardToLorebookAgent(charName, bio, wordCount, { chatId: passChatId, canCommit: ownsChat });
         if (!ok) {
             throw new Error(
                 ownsChat()
-                    ? 'Could not add Player Card — no active chat.'
-                    : 'Quick Start stopped because the active chat changed.',
+                    ? '无法添加玩家卡片——无活动聊天。'
+                    : '由于当前聊天已切换，快速启动已停止。',
             );
         }
 
         if (!ownsChat()) {
-            throw new Error('Quick Start stopped because the active chat changed.');
+            throw new Error('由于当前聊天已切换，快速启动已停止。');
         }
-        setQuickStartStatus(root, 'Creating name-only chat persona…');
+        setQuickStartStatus(root, '正在创建纯名称聊天人物…');
         await activateSillyTavernPersona(charName, { chatId: passChatId, canCommit: ownsChat });
 
         if (!ownsChat()) {
-            throw new Error('Quick Start stopped because the active chat changed.');
+            throw new Error('由于当前聊天已切换，快速启动已停止。');
         }
-        const readyDetail = instantActionInstructions ? 'custom instructions' : className;
+        const readyDetail = instantActionInstructions ? '自定义指令' : className;
         if (s.onboardingSendStarterMessage !== false) {
-            setQuickStartStatus(root, 'Starting adventure…');
+            setQuickStartStatus(root, '正在开启冒险…');
             sendOutgoingChatMessage(buildInstantActionOpeningMessage(instantActionInstructions));
-            setQuickStartStatus(root, `Ready — ${charName} (${readyDetail})`);
+            setQuickStartStatus(root, `已就绪 — ${charName} (${readyDetail})`);
         } else {
-            setQuickStartStatus(root, `Ready — ${charName} (${readyDetail}). Type your first action.`);
+            setQuickStartStatus(root, `已就绪 — ${charName} (${readyDetail})。请输入你的第一个行动。`);
         }
-        toastr['success'](`Quick Start ready: ${charName} · ${readyDetail}`, 'Quick Start');
+        toastr['success'](`快速启动已就绪：${charName} · ${readyDetail}`, '快速启动');
     } catch (err) {
         const msg = err?.message || String(err);
         console.error('[Quick Start]', err);
-        setQuickStartStatus(root, 'Ready');
-        toastr['error'](`Quick Start failed: ${msg}`, 'Quick Start', { timeOut: 8000 });
+        setQuickStartStatus(root, '就绪');
+        toastr['error'](`快速启动失败：${msg}`, '快速启动', { timeOut: 8000 });
     } finally {
         _quickStartRunning = false;
         setQuickStartBusy(root, false);
@@ -267,7 +267,7 @@ export function bindQuickStartEvents(rootEl) {
             });
             if (rollButton) rollButton.disabled = false;
             if (startButton) startButton.disabled = false;
-            setQuickStartStatus(rootEl, `${GENRE_LABELS[selectedGenre] || selectedGenre} selected — name optional`);
+            setQuickStartStatus(rootEl, `已选择${GENRE_LABELS[selectedGenre] || selectedGenre}——名字可选`);
         });
     });
 
@@ -278,15 +278,15 @@ export function bindQuickStartEvents(rootEl) {
         selectedName = pickGenreCharacterName(selectedGenre);
         if (nameInput) nameInput.value = selectedName;
         if (startButton) startButton.disabled = false;
-        setQuickStartStatus(rootEl, 'Name ready — reroll or begin');
+        setQuickStartStatus(rootEl, '名字已就绪——可重掷或直接开始');
     });
 
     nameInput?.addEventListener('input', () => {
         selectedName = nameInput.value.trim();
         if (selectedName) {
-            setQuickStartStatus(rootEl, 'Name ready — edit, reroll, or begin');
+            setQuickStartStatus(rootEl, '名字已就绪——可编辑、重掷或直接开始');
         } else if (selectedGenre) {
-            setQuickStartStatus(rootEl, 'Name blank — the AI will choose');
+            setQuickStartStatus(rootEl, '名字为空——将由 AI 自动生成');
         }
     });
 

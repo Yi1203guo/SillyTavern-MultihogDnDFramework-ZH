@@ -296,7 +296,7 @@ function setEmptyState(overlay, query, matchCount) {
     if (empty instanceof HTMLElement) {
         empty.hidden = !noHits;
         empty.textContent = noHits
-            ? `No settings match “${query.trim()}”.`
+            ? `未找到匹配 “${query.trim()}” 的设置。`
             : '';
     }
     if (root instanceof HTMLElement) {

@@ -114,13 +114,13 @@ function spawnGeometry() {
 function renderDetachedBody(scene) {
     const map = scene?.dungeonMap;
     if (!map?.document) {
-        return '<div class="rt-dungeon-graph-empty">No mapped site at the current location.</div>';
+        return '<div class="rt-dungeon-graph-empty">当前位置没有已绘制的地点。</div>';
     }
     const graph = buildDungeonMapGraph(map.document, dungeonMapGraphOptions(
         scene.rawLocationText || scene.resolvedPath || '',
     ));
     if (!graph.nodes.length) {
-        return '<div class="rt-dungeon-graph-empty">No revealed rooms yet.</div>';
+        return '<div class="rt-dungeon-graph-empty">尚无可展示的房间。</div>';
     }
     return `<div class="rt-dungeon-graph-scroll rt-dungeon-graph-scroll-expanded">${renderDungeonMapGraphSvg(graph, {
         compact: false,
@@ -449,18 +449,18 @@ function escapePopupText(value) {
 export function renderMapEvolutionHistoryHtml(backlogBySite, siteRoot, { revealAll = false } = {}) {
     const history = describeEvolutionBacklog(backlogBySite, siteRoot, -1, { lookback: 20 });
     if (!history.entries.length) {
-        return '<div class="rt-dungeon-map-evolution-empty">No Map Evolution passes have been recorded for this site.</div>';
+        return '<div class="rt-dungeon-map-evolution-empty">该地点尚未记录任何地图演化轮次。</div>';
     }
     const rows = history.entries.map(entry => {
         const material = entry.kind === 'commit';
-        const label = material ? 'Material commit' : 'Quiet checkpoint';
+        const label = material ? '实质性提交' : '静默检查点';
         const icon = material ? 'fa-code-commit' : 'fa-pause';
-        const passes = !material && entry.passes > 1 ? ` · ${entry.passes} passes` : '';
+        const passes = !material && entry.passes > 1 ? ` · ${entry.passes} 轮` : '';
         const elapsed = entry.elapsedMinutes >= 0
             ? formatEvolutionElapsedMinutes(entry.elapsedMinutes)
-            : 'Unknown elapsed time';
+            : '未知经过时间';
         const details = material && !revealAll
-            ? 'Material details hidden. Turn on Reveal All to inspect this commit.'
+            ? '实质性详情已隐藏。开启“全部显示”以查看此提交。'
             : stripEvolutionDigestSitePrefix(entry.summary, siteRoot);
         const operation = material && revealAll && entry.operationId
             ? `<code>${escapePopupText(entry.operationId)}</code>`
@@ -491,7 +491,7 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
 
     const ctx = globalThis.SillyTavern?.getContext?.();
     if (!ctx?.callGenericPopup || !mapDocument) return;
-    const site = siteLabel || mapDocument.site || 'Site map';
+    const site = siteLabel || mapDocument.site || '地点地图';
     let currentDocument = mapDocument;
     let revealAll = isDungeonMapRevealAll();
     let currentView = 'readable';
@@ -501,31 +501,31 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
     popupDom.className = 'rt-dungeon-map-popup';
     popupDom.innerHTML = `
         <div class="rt-dungeon-map-title"><i class="fa-solid fa-map-location-dot"></i> ${escapePopupText(site)}</div>
-        <div class="rt-dungeon-map-subtitle">Revealed rooms, routes, and known assets. Unrevealed map facts and material Evolution details stay hidden unless you turn on Reveal All.</div>
+        <div class="rt-dungeon-map-subtitle">已展示的房间、路线与已知资产。未展示的地图信息和实质性演化详情将保持隐藏，除非开启“全部显示”。</div>
         <div class="rt-dungeon-map-toolbar">
-            <label class="rt-dungeon-map-reveal-toggle"><input type="checkbox" class="rt-dungeon-map-reveal-all"${revealAll ? ' checked' : ''}> Reveal All</label>
+            <label class="rt-dungeon-map-reveal-toggle"><input type="checkbox" class="rt-dungeon-map-reveal-all"${revealAll ? ' checked' : ''}> 全部显示</label>
         </div>
         <section class="rt-dungeon-map-updater-section">
             <div class="rt-dungeon-map-updater-header">
-                <div class="rt-dungeon-map-updater-title"><i class="fa-solid fa-arrows-rotate"></i> Map Updater</div>
+                <div class="rt-dungeon-map-updater-title"><i class="fa-solid fa-arrows-rotate"></i> 地图更新器</div>
             </div>
         </section>
         <div class="rt-dungeon-map-view-row">
-            <div class="rt-dungeon-map-view-switch" role="tablist" aria-label="Map view">
-                <button type="button" class="rt-dungeon-map-view-btn rt-dungeon-map-view-btn-active" data-map-view="readable" role="tab" aria-selected="true"><i class="fa-solid fa-list"></i> Map Entries</button>
-                <button type="button" class="rt-dungeon-map-view-btn" data-map-view="raw" role="tab" aria-selected="false" ${revealAll ? '' : 'disabled '}title="${revealAll ? 'Edit raw map JSON' : 'Turn on Reveal All to edit raw JSON'}"><i class="fa-solid fa-code"></i> Raw JSON</button>
+            <div class="rt-dungeon-map-view-switch" role="tablist" aria-label="地图视图">
+                <button type="button" class="rt-dungeon-map-view-btn rt-dungeon-map-view-btn-active" data-map-view="readable" role="tab" aria-selected="true"><i class="fa-solid fa-list"></i> 地图条目</button>
+                <button type="button" class="rt-dungeon-map-view-btn" data-map-view="raw" role="tab" aria-selected="false" ${revealAll ? '' : 'disabled '}title="${revealAll ? '编辑原始地图 JSON' : '开启“全部显示”以编辑原始 JSON'}"><i class="fa-solid fa-code"></i> 原始 JSON</button>
             </div>
-            <button type="button" class="menu_button interactable rt-map-updater-direct-toggle" title="Show or hide Map Updater direct prompt" aria-expanded="true"><i class="fa-solid fa-comment-dots"></i> Direct Prompt</button>
+            <button type="button" class="menu_button interactable rt-map-updater-direct-toggle" title="显示或隐藏地图更新器直接提示词" aria-expanded="true"><i class="fa-solid fa-comment-dots"></i> 直接提示词</button>
         </div>
         <div class="rt-map-updater-direct-panel">
             <div class="rt-map-updater-direct-bar">
-                <textarea class="rt-map-updater-direct-input text_pole" rows="2" placeholder="Instruct Map Updater for this site only… (Enter to run, Shift+Enter for newline)"></textarea>
+                <textarea class="rt-map-updater-direct-input text_pole" rows="2" placeholder="指示地图更新器（仅针对此地点）…（Enter 运行，Shift+Enter 换行）"></textarea>
                 <div class="rt-map-updater-direct-actions">
-                    <label class="rt-lookback-field rt-map-updater-direct-lookback-label" title="Recent story lookback for this manual Map Updater run">
-                        <span class="rt-lookback-field-label">Lookback:</span>
+                    <label class="rt-lookback-field rt-map-updater-direct-lookback-label" title="本次手动地图更新器运行的回溯轮数">
+                        <span class="rt-lookback-field-label">回溯轮数:</span>
                         <input type="text" inputmode="numeric" pattern="[0-9]*" class="rt-lookback-field-input rt-map-updater-direct-lookback" min="0" max="100" value="10">
                     </label>
-                    <button type="button" class="rt-map-updater-direct-run menu_button interactable"><i class="fa-solid fa-play"></i> Run</button>
+                    <button type="button" class="rt-map-updater-direct-run menu_button interactable"><i class="fa-solid fa-play"></i> 运行</button>
                 </div>
             </div>
             <span class="rt-map-updater-direct-status" role="status" aria-live="polite"></span>
@@ -534,19 +534,19 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
         <div class="rt-dungeon-map-readable" data-map-panel="readable"></div>
         <div class="rt-dungeon-map-raw-wrap" data-map-panel="raw" hidden>
             <div class="rt-dungeon-map-raw-toolbar">
-                <button type="button" class="menu_button interactable rt-dungeon-map-raw-save"><i class="fa-solid fa-floppy-disk"></i> Save JSON</button>
+                <button type="button" class="menu_button interactable rt-dungeon-map-raw-save"><i class="fa-solid fa-floppy-disk"></i> 保存 JSON</button>
                 <span class="rt-dungeon-map-raw-status" role="status" aria-live="polite"></span>
             </div>
-            <textarea class="rt-dungeon-map-raw" spellcheck="false" aria-label="Map JSON editor"></textarea>
+            <textarea class="rt-dungeon-map-raw" spellcheck="false" aria-label="地图 JSON 编辑器"></textarea>
         </div>
         <section class="rt-dungeon-map-evolution-section">
             <div class="rt-dungeon-map-evolution-header">
-                <div class="rt-dungeon-map-evolution-title"><i class="fa-solid fa-clock-rotate-left"></i> Map Evolution History</div>
-                <button type="button" class="menu_button interactable rt-dungeon-map-evolve-now"><i class="fa-solid fa-wand-magic-sparkles"></i> Map Evolution: Run Now</button>
-                <button type="button" class="menu_button interactable rt-dungeon-map-testing-ground"><i class="fa-solid fa-flask"></i> Testing Ground</button>
+                <div class="rt-dungeon-map-evolution-title"><i class="fa-solid fa-clock-rotate-left"></i> 地图演化历史</div>
+                <button type="button" class="menu_button interactable rt-dungeon-map-evolve-now"><i class="fa-solid fa-wand-magic-sparkles"></i> 地图演化: 立即运行</button>
+                <button type="button" class="menu_button interactable rt-dungeon-map-testing-ground"><i class="fa-solid fa-flask"></i> 测试场</button>
             </div>
             <div class="rt-dungeon-map-run-status" role="status" aria-live="polite"></div>
-            <div class="rt-dungeon-map-evolution-privacy">Material summaries follow Reveal All; quiet checkpoints never reveal hidden map contents.</div>
+            <div class="rt-dungeon-map-evolution-privacy">实质性摘要遵循“全部显示”设置；静默检查点绝不泄露隐藏的地图内容。</div>
             <div class="rt-dungeon-map-evolution-history"></div>
         </section>`;
     const readable = popupDom.querySelector('.rt-dungeon-map-readable');
@@ -589,7 +589,7 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
         );
         if (rawButton) {
             rawButton.disabled = !revealAll;
-            rawButton.title = revealAll ? 'Edit raw map JSON' : 'Turn on Reveal All to edit raw JSON';
+            rawButton.title = revealAll ? '编辑原始地图 JSON' : '开启“全部显示”以编辑原始 JSON';
         }
         if (rawSave) rawSave.disabled = !revealAll;
         if (!revealAll && currentView === 'raw') setMapView('readable');
@@ -633,7 +633,7 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
     raw?.addEventListener('input', () => {
         if (!ownsChat()) return;
         rawDirty = true;
-        if (rawStatus) rawStatus.textContent = 'Unsaved changes.';
+        if (rawStatus) rawStatus.textContent = '未保存的更改。';
     });
     rawSave?.addEventListener('click', ignoreChatCancellation(async () => {
 
@@ -643,21 +643,21 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
         if (!parsed.ok) {
             if (rawStatus) rawStatus.textContent = parsed.errors.join(' ');
             if (typeof globalThis.toastr?.error === 'function') {
-                globalThis.toastr.error(parsed.errors.join(' '), 'Map JSON', { timeOut: 8000 });
+                globalThis.toastr.error(parsed.errors.join(' '), '地图 JSON', { timeOut: 8000 });
             }
             return;
         }
         rawSave.disabled = true;
-        if (rawStatus) rawStatus.textContent = 'Saving…';
+        if (rawStatus) rawStatus.textContent = '保存中…';
         try {
             const routerSpec = '../../../router.js';
             const { persistManualDungeonMapDocument } = chatCommitResult(ownsChat, await import(routerSpec));
             chatCommitResult(ownsChat, await persistManualDungeonMapDocument(site, parsed.document));
             currentDocument = parsed.document;
             rawDirty = false;
-            if (rawStatus) rawStatus.textContent = 'Saved.';
+            if (rawStatus) rawStatus.textContent = '已保存。';
             if (typeof globalThis.toastr?.success === 'function') {
-                globalThis.toastr.success(`Map JSON saved for ${site}.`, 'Map Inspector', { timeOut: 4000 });
+                globalThis.toastr.success(`已保存 ${site} 的地图 JSON。`, '地图检查器', { timeOut: 4000 });
             }
             chatCommitResult(ownsChat, await reloadInspectorFromLiveMap({ resetRaw: true }));
         } catch (error) {
@@ -666,7 +666,7 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
             const message = String(error?.message || error);
             if (rawStatus) rawStatus.textContent = message;
             if (typeof globalThis.toastr?.error === 'function') {
-                globalThis.toastr.error(message, 'Map JSON', { timeOut: 10000 });
+                globalThis.toastr.error(message, '地图 JSON', { timeOut: 10000 });
             }
         } finally {
             rawSave.disabled = !revealAll;
@@ -677,15 +677,15 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
 
         if (!ownsChat()) return;
         if (runtimeState.isLoreOrMapAgentBusyRef?.()) {
-            if (runStatus) runStatus.textContent = 'Another lore or map agent is already running.';
+            if (runStatus) runStatus.textContent = '已有其他设定或地图智能体在运行中。';
             return;
         }
         if (typeof runtimeState.runMapEvolutionPassRef !== 'function') {
-            if (runStatus) runStatus.textContent = 'Map Evolution is not available yet.';
+            if (runStatus) runStatus.textContent = '地图演化暂不可用。';
             return;
         }
         runButton.disabled = true;
-        if (runStatus) runStatus.textContent = `Running Map Evolution for ${site}…`;
+        if (runStatus) runStatus.textContent = `正在为 ${site} 运行地图演化…`;
         try {
             const result = chatCommitResult(ownsChat, await runtimeState.runMapEvolutionPassRef({ trigger: 'manual', isManual: true, siteRoots: [site] }));
             if (result?.ok) {
@@ -693,22 +693,22 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
                 const applied = Number(result.applied) || 0;
                 const noops = Number(result.noops) || 0;
                 if (runStatus) runStatus.textContent = applied
-                    ? `Map Evolution committed ${applied} material update${applied === 1 ? '' : 's'} for ${site}.`
+                    ? `地图演化已为 ${site} 提交 ${applied} 条实质性更新。`
                     : noops
-                        ? `Map Evolution considered ${site} and made no material change.`
-                        : `Map Evolution completed for ${site}.`;
+                        ? `地图演化已检查 ${site}，无实质性更改。`
+                        : `地图演化已完成 ${site}。`;
             } else {
                 const skipped = String(result?.skipped || '');
                 if (runStatus) runStatus.textContent = skipped === 'busy'
-                    ? 'Another lore or map agent is already running.'
+                    ? '已有其他设定或地图智能体在运行中。'
                     : skipped === 'location_mapping_off'
-                        ? 'Persistent Maps is off.'
-                        : `Map Evolution could not complete for ${site}.`;
+                        ? '持久化地图未开启。'
+                        : `无法完成 ${site} 的地图演化。`;
             }
         } catch (error) {
             if (!ownsChat()) return;
 
-            if (runStatus) runStatus.textContent = `Map Evolution failed: ${String(error?.message || error)}`;
+            if (runStatus) runStatus.textContent = `地图演化失败: ${String(error?.message || error)}`;
         } finally {
             runButton.disabled = false;
         }
@@ -727,7 +727,7 @@ export async function openDungeonMapReadablePopup(mapDocument, { siteLabel = '',
         onSuccess: () => reloadInspectorFromLiveMap(),
     });
     chatCommitResult(ownsChat, await ctx.callGenericPopup(popupDom, ctx.POPUP_TYPE?.TEXT ?? 1, '', {
-        okButton: 'Close', cancelButton: false, wide: true, large: true,
+        okButton: '关闭', cancelButton: false, wide: true, large: true,
         allowVerticalScrolling: true,
         leftAlign: true,
         onClose: () => hideDungeonMapAssetTip(),
@@ -759,15 +759,15 @@ export function ensureDetachedDungeonMapPanel(handlers = {}) {
     panel.innerHTML = `
         <div class="rpg-tracker-header rt-detached-header" id="rt-dungeon-map-detached-header">
             <div class="rpg-tracker-header-left">
-                <span><i class="fa-solid fa-map-location-dot"></i> Site map</span>
+                <span><i class="fa-solid fa-map-location-dot"></i> 地点地图</span>
             </div>
             <div class="rpg-tracker-header-right">
-                <button type="button" class="rt-dungeon-map-details" title="Open map details" aria-label="Open map details">Map Details</button>
-                <button type="button" class="rpg-tracker-icon-btn rt-reattach-btn" title="Re-attach">✕</button>
+                <button type="button" class="rt-dungeon-map-details" title="打开地图详情" aria-label="打开地图详情">地图详情</button>
+                <button type="button" class="rpg-tracker-icon-btn rt-reattach-btn" title="重新附着">✕</button>
             </div>
         </div>
         <div class="rpg-tracker-content rpg-tracker-detached-body" id="rt-dungeon-map-detached-body"></div>
-        <div class="rt-resizer-br rt-detached-resizer-br" title="Resize"></div>
+        <div class="rt-resizer-br rt-detached-resizer-br" title="调整大小"></div>
     `;
     document.body.appendChild(panel);
 
@@ -828,7 +828,7 @@ export function updateDetachedDungeonMapPanel(scene, handlers = {}) {
     const merged = { ...(panel._dungeonMapHandlers || {}), ...handlers };
     panel._dungeonMapHandlers = merged;
     panel._dungeonMapScene = scene;
-    const site = scene?.dungeonMap?.siteRoot || scene?.dungeonMap?.document?.site || 'Site map';
+    const site = scene?.dungeonMap?.siteRoot || scene?.dungeonMap?.document?.site || '地点地图';
     const title = panel.querySelector('.rpg-tracker-header-left span');
     if (title) {
         title.replaceChildren();
@@ -859,7 +859,7 @@ export function reattachDungeonMapPanel() {
     document.getElementById(PANEL_ID)?.remove();
 }
 
-function mapUpdaterToast(kind, message, title = 'Map Updater') {
+function mapUpdaterToast(kind, message, title = '地图更新器') {
     const toast = globalThis.toastr;
     if (!toast || !message) return;
     if (kind === 'success') toast.success(message, title);
@@ -871,16 +871,16 @@ function mapUpdaterToast(kind, message, title = 'Map Updater') {
 function summarizeMapUpdaterResult(result) {
     const skipped = result?.skipped;
     if (skipped === 'location_mapping_off' || skipped === 'dungeon_reality_off') {
-        return { kind: 'warning', message: 'Persistent Maps is off.' };
+        return { kind: 'warning', message: '持久化地图未开启。' };
     }
-    if (skipped === 'no_active_map') return { kind: 'warning', message: 'No active dungeon or settlement map.' };
-    if (skipped === 'no_such_map') return { kind: 'warning', message: 'That mapped site could not be loaded.' };
-    if (skipped === 'disabled') return { kind: 'warning', message: 'Map Updater is disabled.' };
-    if (skipped === 'busy') return { kind: 'warning', message: 'Another agent is already running.' };
-    if (skipped === 'stopped') return { kind: 'info', message: 'Stopped.' };
-    if (result?.ok && result?.noop) return { kind: 'info', message: 'Nothing durable changed.' };
-    if (result?.ok) return { kind: 'success', message: 'Occupancy update applied.' };
-    return { kind: 'error', message: 'Could not apply a valid occupancy update.' };
+    if (skipped === 'no_active_map') return { kind: 'warning', message: '无活动的地下城或定居点地图。' };
+    if (skipped === 'no_such_map') return { kind: 'warning', message: '无法加载该映射地点。' };
+    if (skipped === 'disabled') return { kind: 'warning', message: '地图更新器已禁用。' };
+    if (skipped === 'busy') return { kind: 'warning', message: '已有其他智能体在运行中。' };
+    if (skipped === 'stopped') return { kind: 'info', message: '已停止。' };
+    if (result?.ok && result?.noop) return { kind: 'info', message: '没有持久性更改。' };
+    if (result?.ok) return { kind: 'success', message: '已应用占位状态更新。' };
+    return { kind: 'error', message: '无法应用有效的占位状态更新。' };
 }
 
 function bindMapUpdaterDirectControls(root, { siteRoot = null, onSuccess } = {}) {
@@ -926,12 +926,12 @@ function bindMapUpdaterDirectControls(root, { siteRoot = null, onSuccess } = {})
 
         if (!ownsView()) return;
         if (typeof runtimeState.isLoreOrMapAgentBusyRef === 'function' && runtimeState.isLoreOrMapAgentBusyRef()) {
-            mapUpdaterToast('warning', 'Another agent is already running.');
+            mapUpdaterToast('warning', '已有其他智能体在运行中。');
             return;
         }
         const run = runtimeState.runMapUpdaterPassRef;
         if (typeof run !== 'function') {
-            mapUpdaterToast('error', 'Map Updater is not available yet.');
+            mapUpdaterToast('error', '地图更新器暂不可用。');
             return;
         }
         const s = getSettings();
@@ -944,7 +944,7 @@ function bindMapUpdaterDirectControls(root, { siteRoot = null, onSuccess } = {})
             lookbackInput.value = String(lookback);
         }
         for (const button of runButtons) button.disabled = true;
-        setStatus('Running Map Updater…');
+        setStatus('正在运行地图更新器…');
         try {
             const result = chatCommitResult(ownsChat, await run({
                 isManual: true,

@@ -73,7 +73,7 @@ Rules:
 
     const promptText = /** @type {HTMLTextAreaElement} */ (document.getElementById('rpg_tracker_theme_prompt'))?.value?.trim();
     if (!promptText) {
-        setStatus(isIteration ? '⚠ Please describe the changes you want.' : '⚠ Please describe a theme first.', true);
+        setStatus(isIteration ? '⚠ 请描述您希望进行的更改。' : '⚠ 请先描述主题风格。', true);
         return;
     }
 
@@ -83,13 +83,13 @@ Rules:
 
     if (generateBtn) generateBtn.disabled = true;
     if (iterateBtn) iterateBtn.disabled = true;
-    setStatus(isIteration ? '⚡ Refining theme.' : '⚡ Generating theme.');
+    setStatus(isIteration ? '⚡ 正在优化主题。' : '⚡ 正在生成主题。');
 
     let raw = '';
     try {
         raw = await sendStateRequest(settings, systemPrompt, iterationContext);
     } catch (err) {
-        setStatus(`❌ Request failed: ${err.message}`, true);
+        setStatus(`❌ 请求失败: ${err.message}`, true);
         if (generateBtn) generateBtn.disabled = false;
         if (iterateBtn) iterateBtn.disabled = false;
         return;
@@ -97,7 +97,7 @@ Rules:
 
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-        setStatus('❌ AI did not return valid JSON. Try a different prompt or model.', true);
+        setStatus('❌ AI 未返回有效的 JSON。请尝试其他提示词或模型。', true);
         if (generateBtn) generateBtn.disabled = false;
         if (iterateBtn) iterateBtn.disabled = false;
         return;
@@ -107,7 +107,7 @@ Rules:
     try {
         vars = JSON.parse(jsonMatch[0]);
     } catch (e) {
-        setStatus('❌ Failed to parse AI response as JSON.', true);
+        setStatus('❌ 无法将 AI 回复解析为 JSON。', true);
         if (generateBtn) generateBtn.disabled = false;
         if (iterateBtn) iterateBtn.disabled = false;
         return;
@@ -122,7 +122,7 @@ Rules:
     ];
     const missing = expected.filter(k => !vars[k]);
     if (missing.length > 3) {
-        setStatus(`❌ AI response is missing too many theme keys: ${missing.join(', ')}`, true);
+        setStatus(`❌ AI 回复缺少过多主题键值: ${missing.join(', ')}`, true);
         if (generateBtn) generateBtn.disabled = false;
         if (iterateBtn) iterateBtn.disabled = false;
         return;
@@ -142,10 +142,10 @@ Rules:
     const sel = /** @type {HTMLSelectElement} */ (document.getElementById('rpg_tracker_theme_select'));
     if (sel) sel.value = 'rt-theme-custom';
 
-    setStatus(isIteration ? '✅ Theme refined!' : '✅ Theme generated!');
+    setStatus(isIteration ? '✅ 主题已优化！' : '✅ 主题已生成！');
     if (generateBtn) generateBtn.disabled = false;
     if (iterateBtn) iterateBtn.disabled = false;
-    toastr['success'](isIteration ? 'Theme refined successfully!' : 'New theme generated and applied!', 'Theme Wizard');
+    toastr['success'](isIteration ? '主题已成功优化！' : '新主题已生成并应用！', '主题向导');
     refreshSavedThemesList();
 }
 
@@ -177,7 +177,7 @@ export function refreshSavedThemesList() {
         nameSpan.style.fontSize = '0.85em';
         nameSpan.style.cursor = 'pointer';
         nameSpan.className = 'interactable';
-        nameSpan.title = 'Click to load this theme';
+        nameSpan.title = '点击加载此主题';
         nameSpan.addEventListener('click', () => {
             settings.customTheme = JSON.parse(JSON.stringify(vars));
             settings.trackerTheme = 'rt-theme-custom';
@@ -193,7 +193,7 @@ export function refreshSavedThemesList() {
             if (statusEl) {
                 statusEl.style.display = 'block';
                 statusEl.style.color = 'inherit';
-                statusEl.textContent = `⚡ Loaded library theme: ${name}`;
+                statusEl.textContent = `⚡ 已加载库主题: ${name}`;
             }
         });
 
@@ -201,13 +201,13 @@ export function refreshSavedThemesList() {
         delBtn.className = 'fa-solid fa-trash-can interactable';
         delBtn.style.fontSize = '0.8em';
         delBtn.style.opacity = '0.5';
-        delBtn.title = 'Delete theme';
+        delBtn.title = '删除主题';
         delBtn.addEventListener('click', () => {
-            if (confirm(`Are you sure you want to delete the theme "${name}"?`)) {
+            if (confirm(`确定要删除主题 "${name}" 吗？`)) {
                 delete settings.savedThemes[name];
                 saveSettings();
                 refreshSavedThemesList();
-                toastr['info'](`Deleted theme: ${name}`, 'Theme Library');
+                toastr['info'](`已删除主题: ${name}`, '主题库');
             }
         });
 
@@ -464,7 +464,7 @@ function resolvePickerColor(background, targetEl) {
 
 export function undoThemeChange(settings) {
     if (themeUndoStack.length === 0) {
-        toastr['info']('No steps to undo.', 'Theme Wizard');
+        toastr['info']('没有可撤销的步骤。', '主题向导');
         return;
     }
     const prev = themeUndoStack.pop();
@@ -475,6 +475,6 @@ export function undoThemeChange(settings) {
     if (statusEl) {
         statusEl.style.display = 'block';
         statusEl.style.color = 'inherit';
-        statusEl.textContent = `Undone last change. (${themeUndoStack.length} steps remaining)`;
+        statusEl.textContent = `已撤销上一步更改。(还剩 ${themeUndoStack.length} 步)`;
     }
 }
